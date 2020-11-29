@@ -1,0 +1,42 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style Selector="Button">
+    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+  </Style>
+
+  <Style Selector="Button.button">
+    <Setter Property="Background" Value="{StaticResource GreyColor}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="15 5" />
+    <Setter Property="Foreground" Value="White" />
+  </Style>
+  <Style Selector="Button.button:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
+  </Style>
+  <Style Selector="Button.button:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
+  </Style>
+
+  <Style Selector="Button.button.primary">
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+  </Style>
+  <Style Selector="Button.button.primary:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource PrimaryColorLight}" />
+  </Style>
+  <Style Selector="Button.button.primary:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource PrimaryColorLight}" />
+  </Style>
+
+  <Style Selector="Button.button.success">
+    <Setter Property="Background" Value="{StaticResource SuccessColor}" />
+  </Style>
+  <Style Selector="Button.button.success:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource SuccessColorLight}" />
+  </Style>
+  <Style Selector="Button.button.success:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource SuccessColorLight}" />
+  </Style>
+
+</Styles>

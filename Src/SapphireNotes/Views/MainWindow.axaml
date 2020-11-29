@@ -1,0 +1,125 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        xmlns:m="clr-namespace:SapphireNotes.Models;assembly=SapphireNotes"
+        xmlns:be="clr-namespace:SapphireNotes.Behaviors"
+        mc:Ignorable="d"
+        x:Class="SapphireNotes.Views.MainWindow"
+        Title="Sapphire Notes">
+
+  <Window.Styles>
+    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Buttons.axaml" />
+    <StyleInclude Source="/Styles/TextBoxes.axaml" />
+    <StyleInclude Source="/Styles/ScrollBar.axaml" />
+
+    <Style Selector="Window">
+      <Setter Property="Padding" Value="5" />
+    </Style>
+
+    <Style Selector="StackPanel.toolbar">
+      <Setter Property="Margin" Value="0 0 0 5" />
+    </Style>
+
+    <Style Selector="TabControl[TabStripPlacement=Top]">
+      <Setter Property="Padding" Value="0 0 0 0"/>
+    </Style>
+    <Style Selector="TabItem">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0 0 3 3" />
+    </Style>
+    <Style Selector="TabItem Border.tabHeader">
+      <Setter Property="Background" Value="{StaticResource GreyColor}" />
+      <Setter Property="Padding" Value="8 5" />
+    </Style>
+    <Style Selector="TabItem:pointerover Border.tabHeader">
+      <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
+    </Style>
+    <Style Selector="TabItem:selected Border.tabHeader">
+      <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+    </Style>
+    <Style Selector="TabItem Border.tabHeader TextBlock">
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    </Style>
+
+    <Style Selector="ContextMenu">
+      <Setter Property="Background" Value="#2d2d30" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  Padding="{TemplateBinding Padding}">
+            <ScrollViewer Classes="menuscroller">
+              <ItemsPresenter Name="PART_ItemsPresenter"
+                              Items="{TemplateBinding Items}"
+                              ItemsPanel="{TemplateBinding ItemsPanel}"
+                              ItemTemplate="{TemplateBinding ItemTemplate}"
+                              KeyboardNavigation.TabNavigation="Continue"/>
+            </ScrollViewer>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="TextBox">
+      <Setter Property="FontFamily" Value="{Binding Preferences.FontFamily, Mode=OneTime}" />
+      <Setter Property="FontSize" Value="{Binding Preferences.FontSize, Mode=OneTime}" />
+    </Style>
+
+  </Window.Styles>
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="1*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal" Grid.Row="0" Classes="toolbar">
+      <Button Name="newNoteButton" Classes="button success">New</Button>
+    </StackPanel>
+
+    <TabControl Items="{Binding Notes}" Grid.Row="1">
+      <TabControl.ItemTemplate>
+        <DataTemplate DataType="vm:NoteViewModel">
+          <Border Classes="tabHeader">
+            <TextBlock Text="{Binding Name}" />
+            <Border.ContextMenu>
+              <ContextMenu>
+                <MenuItem
+                  Header="Edit"
+                  Command="{Binding OnEditCommand}" />
+                <MenuItem
+                  Header="Archive"
+                  Command="{Binding OnArchiveCommand}" />
+                <MenuItem
+                  Header="Delete"
+                  Command="{Binding OnDeleteCommand}" />
+              </ContextMenu>
+            </Border.ContextMenu>
+          </Border>
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+      
+      <TabControl.ContentTemplate>
+        <DataTemplate DataType="vm:NoteViewModel">
+          <TextBox Name="textEditor" Text="{Binding Text}" 
+                   AcceptsReturn="True" TextWrapping="Wrap" 
+                   FontSize="{Binding FontSize,Mode=OneTime}"
+                   FontFamily="{Binding FontFamily,Mode=OneTime}"
+                   be:CaretBehavior.CursorPosition="{Binding CursorPosition}" />
+        </DataTemplate>
+      </TabControl.ContentTemplate>
+    </TabControl>
+  </Grid>
+  
+</Window>

@@ -1,0 +1,43 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        xmlns:be="clr-namespace:SapphireNotes.Behaviors"
+        x:Class="SapphireNotes.Views.EditNoteWindow"
+        Title="{Binding Title, Mode=OneTime}">
+
+  <Window.Styles>
+    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBoxes.axaml" />
+    <StyleInclude Source="/Styles/Buttons.axaml" />
+
+    <Style Selector="Window">
+      <Setter Property="SizeToContent" Value="WidthAndHeight" />
+    </Style>
+
+    <Style Selector="TextBox#noteNameTextBox">
+      <Setter Property="Width" Value="250" />
+    </Style>
+
+    <Style Selector="Border.buttonsWrap">
+      <Setter Property="Margin" Value="0 10 0 0" />
+    </Style>
+  </Window.Styles>
+
+  <Design.DataContext>
+    <vm:EditNoteViewModel/>
+  </Design.DataContext>
+
+  <StackPanel>
+    <TextBox Name="noteNameTextBox" Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
+
+    <Border Classes="buttonsWrap">
+      <DockPanel>
+        <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
+        <Button Name="cancelButton" HorizontalAlignment="Right" Classes="button">Cancel</Button>
+      </DockPanel>
+    </Border>
+  </StackPanel>
+
+</Window>

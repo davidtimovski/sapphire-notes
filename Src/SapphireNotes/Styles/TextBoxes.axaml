@@ -1,0 +1,19 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style Selector="TextBox">
+    <Setter Property="Background" Value="#1e1e1e" />
+    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="Padding" Value="8 6" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
+    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+  </Style>
+  <Style Selector="TextBox:pointerover /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+  </Style>
+  <Style Selector="TextBox:focus /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+  </Style>
+
+</Styles>

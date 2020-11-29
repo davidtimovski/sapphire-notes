@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ArchiveNoteWindow.axaml.cs">
+      <DependentUpon>ArchiveNoteWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DeleteNoteWindow.axaml.cs">
+      <DependentUpon>DeleteNoteWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ErrorWindow.axaml.cs">
+      <DependentUpon>ErrorWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EditNoteWindow.axaml.cs">
+      <DependentUpon>EditNoteWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Fonts\OpenSans-Regular.ttf" />
+  </ItemGroup>
+</Project>
