@@ -33,7 +33,7 @@ namespace SapphireNotes.Services
 #if DEBUG
             string appDataDirectory = string.Empty;
 #else
-            string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Sapphire Notes");
+            string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.ApplicationName);
             if (!Directory.Exists(appDataDirectory))
             {
                 Directory.CreateDirectory(appDataDirectory);

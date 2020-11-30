@@ -11,7 +11,7 @@
         public const int WindowMinHeight = 180;
 
         public string NotesDirectory { get; set; }
-        public string FontFamily { get; set; } = "resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans";
+        public string FontFamily { get; set; } = Constants.DefaultFontFamily;
         public short FontSize { get; set; } = 15;
         public short AutoSaveInterval { get; set; } = 10;
         public WindowPreferences Window { get; set; } = new WindowPreferences();

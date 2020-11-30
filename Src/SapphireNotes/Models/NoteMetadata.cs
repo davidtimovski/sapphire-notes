@@ -5,7 +5,7 @@
         public NoteMetadata()
         {
             FontSize = 15;
-            FontFamily = "resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans";
+            FontFamily = Constants.DefaultFontFamily;
         }
 
         public int FontSize { get; set; }
