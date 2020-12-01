@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using ReactiveUI;
+using SapphireNotes.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
@@ -7,9 +8,9 @@ namespace SapphireNotes.ViewModels
     public class ArchiveNoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private readonly INotesService _notesService;
-        private readonly NoteViewModel Note;
+        private readonly Note Note;
 
-        public ArchiveNoteViewModel(INotesService notesService, NoteViewModel note)
+        public ArchiveNoteViewModel(INotesService notesService, Note note)
         {
             _notesService = notesService;
 
@@ -17,7 +18,7 @@ namespace SapphireNotes.ViewModels
             Note = note;
         }
 
-        public NoteViewModel Archive()
+        public Note Archive()
         {
             _notesService.Archive(Note);
             return Note;

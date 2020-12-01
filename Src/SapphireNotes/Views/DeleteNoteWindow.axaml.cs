@@ -2,9 +2,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
-using ReactiveUI;
 
 namespace SapphireNotes.Views
 {
@@ -31,10 +31,10 @@ namespace SapphireNotes.Views
         {
             var vm = (DeleteNoteViewModel)DataContext;
 
-            NoteViewModel note = vm.Delete();
+            Note note = vm.Delete();
             Deleted.Invoke(this, new DeletedNoteEventArgs
             {
-                Note = note
+                DeletedNote = note
             });
 
             Close();
@@ -53,6 +53,6 @@ namespace SapphireNotes.Views
 
     public class DeletedNoteEventArgs : EventArgs
     {
-        public NoteViewModel Note { get; set; }
+        public Note DeletedNote { get; set; }
     }
 }

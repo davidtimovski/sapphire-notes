@@ -2,9 +2,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
-using ReactiveUI;
 
 namespace SapphireNotes.Views
 {
@@ -31,7 +31,7 @@ namespace SapphireNotes.Views
         {
             var vm = (ArchiveNoteViewModel)DataContext;
 
-            NoteViewModel note = vm.Archive();
+            Note note = vm.Archive();
             Archived.Invoke(this, new ArchivedNoteEventArgs
             {
                 Note = note
@@ -53,6 +53,6 @@ namespace SapphireNotes.Views
 
     public class ArchivedNoteEventArgs : EventArgs
     {
-        public NoteViewModel Note { get; set; }
+        public Note Note { get; set; }
     }
 }

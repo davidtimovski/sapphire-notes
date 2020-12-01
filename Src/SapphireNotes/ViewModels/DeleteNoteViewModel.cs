@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using ReactiveUI;
+using SapphireNotes.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
@@ -7,9 +8,9 @@ namespace SapphireNotes.ViewModels
     public class DeleteNoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private readonly INotesService _notesService;
-        private readonly NoteViewModel Note;
+        private readonly Note Note;
 
-        public DeleteNoteViewModel(INotesService notesService, NoteViewModel note)
+        public DeleteNoteViewModel(INotesService notesService, Note note)
         {
             _notesService = notesService;
 
@@ -17,7 +18,7 @@ namespace SapphireNotes.ViewModels
             Note = note;
         }
 
-        public NoteViewModel Delete()
+        public Note Delete()
         {
             _notesService.Delete(Note);
             return Note;

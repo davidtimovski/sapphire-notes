@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using ReactiveUI;
+using SapphireNotes.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
@@ -7,7 +8,7 @@ namespace SapphireNotes.ViewModels
     public class EditNoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private readonly INotesService _notesService;
-        private readonly NoteViewModel EditNote;
+        private readonly Note EditNote;
 
         public EditNoteViewModel(INotesService notesService)
         {
@@ -19,7 +20,7 @@ namespace SapphireNotes.ViewModels
             name = string.Empty;
         }
 
-        public EditNoteViewModel(INotesService notesService, NoteViewModel note)
+        public EditNoteViewModel(INotesService notesService, Note note)
         {
             _notesService = notesService;
 
@@ -29,14 +30,17 @@ namespace SapphireNotes.ViewModels
             EditNote = note;
         }
 
-        public NoteViewModel Create()
+        public Note Create()
         {
             return _notesService.Create(name);
         }
 
-        public void Update()
+        public (string originalName, Note updatedNote) Update()
         {
-            _notesService.Update(name, EditNote);
+            string originalName = EditNote.Name;
+            Note updatedNote = _notesService.Update(name, EditNote);
+
+            return (originalName, updatedNote);
         }
 
         private string title;

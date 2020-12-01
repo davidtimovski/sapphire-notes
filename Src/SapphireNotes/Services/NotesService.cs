@@ -4,18 +4,17 @@ using System.IO;
 using System.Linq;
 using SapphireNotes.Models;
 using SapphireNotes.Utils;
-using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Services
 {
     public interface INotesService
     {
-        NoteViewModel Create(string name);
-        void Update(string newName, NoteViewModel note);
-        void Archive(NoteViewModel note);
-        void Delete(NoteViewModel note);
-        void SaveAll(ICollection<NoteViewModel> notes);
-        NoteViewModel[] GetAll();
+        Note Create(string name);
+        Note Update(string newName, Note note);
+        void Archive(Note note);
+        void Delete(Note note);
+        void SaveAll(IEnumerable<Note> notes);
+        Note[] GetAll();
     }
 
     public class NotesService : INotesService
@@ -53,7 +52,7 @@ namespace SapphireNotes.Services
             }
         }
 
-        public NoteViewModel Create(string name)
+        public Note Create(string name)
         {
             name = name.Trim();
 
@@ -71,16 +70,16 @@ namespace SapphireNotes.Services
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             File.Create(path);
 
-            return new NoteViewModel(name, path, string.Empty, new NoteMetadata());
+            return new Note(name, path, string.Empty, new NoteMetadata());
         }
 
-        public void Update(string newName, NoteViewModel note)
+        public Note Update(string newName, Note note)
         {
             newName = newName.Trim();
 
             if (note.Name == newName)
             {
-                return;
+                return note;
             }
 
             if (newName.Length == 0)
@@ -99,9 +98,11 @@ namespace SapphireNotes.Services
 
             note.Name = newName;
             note.FilePath = path;
+
+            return note;
         }
 
-        public void Archive(NoteViewModel note)
+        public void Archive(Note note)
         {
             var archiveDirectory = Path.Combine(_preferences.NotesDirectory, ArchiveDirectoryName);
             if (!Directory.Exists(archiveDirectory))
@@ -112,12 +113,12 @@ namespace SapphireNotes.Services
             MoveToArchive(note.FilePath);
         }
 
-        public void Delete(NoteViewModel note)
+        public void Delete(Note note)
         {
             File.Delete(note.FilePath);
         }
 
-        public void SaveAll(ICollection<NoteViewModel> notes)
+        public void SaveAll(IEnumerable<Note> notes)
         {
             _notesMetadata.Clear();
 
@@ -128,18 +129,13 @@ namespace SapphireNotes.Services
                     File.WriteAllText(note.FilePath, note.Text);
                 }
 
-                _notesMetadata.Add(note.Name, new NoteMetadata
-                {
-                    FontSize = note.FontSize,
-                    FontFamily = note.FontFamily,
-                    CursorPosition = note.CursorPosition
-                });
+                _notesMetadata.Add(note.Name, note.Metadata);
             }
 
             SaveMetadata();         
         }
 
-        public NoteViewModel[] GetAll()
+        public Note[] GetAll()
         {
             if (Directory.Exists(_preferences.NotesDirectory))
             {
@@ -152,7 +148,7 @@ namespace SapphireNotes.Services
                 }
                 else
                 {
-                    var notes = new List<NoteViewModel>(textFiles.Length);
+                    var notes = new List<Note>(textFiles.Length);
                     foreach (string filePath in textFiles)
                     {
                         var name = Path.GetFileNameWithoutExtension(filePath);
@@ -169,7 +165,7 @@ namespace SapphireNotes.Services
                             _notesMetadata.Add(name, metadata);
                         }
 
-                        notes.Add(new NoteViewModel(name, filePath, contents, metadata));
+                        notes.Add(new Note(name, filePath, contents, metadata));
                     }
 
                     var orderedByLastWrite = notes.OrderByDescending(x => File.GetLastWriteTime(x.FilePath)).ToArray();
@@ -205,7 +201,7 @@ namespace SapphireNotes.Services
             File.Move(filePath, archivePath);
         }
 
-        private NoteViewModel[] CreateSampleNotes()
+        private Note[] CreateSampleNotes()
         {
             var note1name = "note 1";
             var note1path = Path.Combine(_preferences.NotesDirectory, note1name + ".txt");
@@ -223,10 +219,10 @@ namespace SapphireNotes.Services
                 stream.Write(note2Text);
             }
 
-            return new NoteViewModel[]
+            return new Note[]
             {
-                 new NoteViewModel(note1name, note1path, note1Text, new NoteMetadata()),
-                 new NoteViewModel(note2name, note2path, note2Text, new NoteMetadata())
+                 new Note(note1name, note1path, note1Text, new NoteMetadata()),
+                 new Note(note2name, note2path, note2Text, new NoteMetadata())
             };
         }
 

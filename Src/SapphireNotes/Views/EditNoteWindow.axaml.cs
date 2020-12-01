@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using ReactiveUI;
+using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Views
@@ -25,6 +26,7 @@ namespace SapphireNotes.Views
         }
 
         public event EventHandler<CreatedNoteEventArgs> Created;
+        public event EventHandler<UpdatedNoteEventArgs> Updated;
 
         private void SaveButtonClicked()
         {
@@ -34,15 +36,20 @@ namespace SapphireNotes.Views
             {
                 if (vm.IsNew)
                 {
-                    NoteViewModel note = vm.Create();
+                    Note note = vm.Create();
                     Created.Invoke(this, new CreatedNoteEventArgs
                     {
-                        Note = note
+                        CreatedNote = note
                     });
                 }
                 else
                 {
-                    vm.Update();
+                    var (originalName, updatedNote) = vm.Update();
+                    Updated.Invoke(this, new UpdatedNoteEventArgs
+                    {
+                        OriginalName = originalName,
+                        UpdatedNote = updatedNote
+                    });
                 }
 
                 Close();
@@ -67,6 +74,12 @@ namespace SapphireNotes.Views
 
     public class CreatedNoteEventArgs : EventArgs
     {
-        public NoteViewModel Note { get; set; }
+        public Note CreatedNote { get; set; }
+    }
+
+    public class UpdatedNoteEventArgs : EventArgs
+    {
+        public string OriginalName { get; set; }
+        public Note UpdatedNote { get; set; }
     }
 }

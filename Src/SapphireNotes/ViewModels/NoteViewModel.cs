@@ -32,6 +32,20 @@ namespace SapphireNotes.ViewModels
             OnDeleteCommand = ReactiveCommand.Create(Delete);
         }
 
+        public NoteViewModel(Note note)
+        {
+            FilePath = note.FilePath;
+            name = note.Name;
+            text = note.Text;
+            fontSize = note.Metadata.FontSize;
+            FontFamily = note.Metadata.FontFamily;
+            cursorPosition = note.Metadata.CursorPosition;
+
+            OnEditCommand = ReactiveCommand.Create(Edit);
+            OnArchiveCommand = ReactiveCommand.Create(Archive);
+            OnDeleteCommand = ReactiveCommand.Create(Delete);
+        }
+
         public event EventHandler<EventArgs> Edited;
         public event EventHandler<EventArgs> Archived;
         public event EventHandler<EventArgs> Deleted;
@@ -95,6 +109,23 @@ namespace SapphireNotes.ViewModels
         {
             get => cursorPosition;
             set => this.RaiseAndSetIfChanged(ref cursorPosition, value);
+        }
+
+        public Note ToNote()
+        {
+            return new Note
+            {
+                FilePath = FilePath,
+                IsDirty = IsDirty,
+                Name = Name,
+                Text = Text,
+                Metadata = new NoteMetadata
+                {
+                    FontFamily = fontFamily,
+                    FontSize = fontSize,
+                    CursorPosition = cursorPosition
+                }
+            };
         }
 
         private ReactiveCommand<Unit, Unit> OnEditCommand { get; }

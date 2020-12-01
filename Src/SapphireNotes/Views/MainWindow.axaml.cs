@@ -3,9 +3,9 @@ using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ReactiveUI;
 using SapphireNotes.Services;
 using SapphireNotes.ViewModels;
-using ReactiveUI;
 using Splat;
 
 namespace SapphireNotes.Views
@@ -60,7 +60,7 @@ namespace SapphireNotes.Views
         private void NoteCreated(object sender, CreatedNoteEventArgs e)
         {
             var vm = (MainWindowViewModel)DataContext;
-            vm.AddNote(e.Note);
+            vm.AddNote(e.CreatedNote);
         }
     }
 }
