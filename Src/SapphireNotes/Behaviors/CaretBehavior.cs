@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
@@ -18,23 +19,25 @@ namespace SapphireNotes.Behaviors
             _index = index;
 
             var textBox = element as TextBox;
-            textBox.AttachedToVisualTree += TextBox_AttachedToVisualTree;
+            textBox.AttachedToVisualTree += SetTextBoxCaretIndexAndFocus;
             textBox.PointerReleased += TextBox_PointerReleased;
+
+            SetTextBoxCaretIndexAndFocus(textBox, null);
 
             return index;
         }
 
-        private static void TextBox_PointerReleased(object sender, PointerReleasedEventArgs e)
-        {
-            var textbox = sender as TextBox;
-            SetCursorPosition(textbox, textbox.CaretIndex);
-        }
-
-        private static void TextBox_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+        private static void SetTextBoxCaretIndexAndFocus(object sender, EventArgs e)
         {
             var textBox = sender as TextBox;
             textBox.CaretIndex = _index;
             textBox.Focus();
+        }
+
+        private static void TextBox_PointerReleased(object sender, PointerReleasedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            SetCursorPosition(textBox, textBox.CaretIndex);
         }
 
         public static void SetCursorPosition(AvaloniaObject element, int value)
