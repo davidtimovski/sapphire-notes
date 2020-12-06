@@ -16,6 +16,9 @@
     <Compile Update="Views\ArchiveNoteWindow.axaml.cs">
       <DependentUpon>ArchiveNoteWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\InitialSetupWindow.axaml.cs">
+      <DependentUpon>InitialSetupWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DeleteNoteWindow.axaml.cs">
       <DependentUpon>DeleteNoteWindow.axaml</DependentUpon>
     </Compile>

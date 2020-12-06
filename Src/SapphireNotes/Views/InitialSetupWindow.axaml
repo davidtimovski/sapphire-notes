@@ -1,0 +1,62 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        x:Class="SapphireNotes.Views.InitialSetupWindow"
+        Title="Let's set things up">
+
+  <Window.Styles>
+    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBox.axaml" />
+    <StyleInclude Source="/Styles/Button.axaml" />
+
+    <Style Selector="TextBlock">
+      <Setter Property="MaxWidth" Value="450" />
+      <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
+      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    </Style>
+
+    <Style Selector="Border.welcome">
+      <Setter Property="Margin" Value="0 0 0 15" />
+    </Style>
+
+    <Style Selector="Border.welcome TextBlock">
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style Selector="Border.directory">
+      <Setter Property="Margin" Value="0 15 0 15" />
+    </Style>
+
+    <Style Selector="TextBox">
+      <Setter Property="Width" Value="450" />
+    </Style>
+
+    <Style Selector="Button.primary">
+      <Setter Property="Margin" Value="10 0 0 0" />
+    </Style>
+  </Window.Styles>
+
+  <Design.DataContext>
+    <vm:InitialSetupViewModel/>
+  </Design.DataContext>
+
+  <StackPanel>
+    <Border Classes="welcome">
+      <TextBlock  TextWrapping="Wrap">Welcome to Sapphire Notes.</TextBlock>
+    </Border>
+
+    <TextBlock TextWrapping="Wrap">Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
+
+    <Border Classes="directory">
+      <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" IsReadOnly="True" />
+    </Border>
+
+    <DockPanel HorizontalAlignment="Right">
+      <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
+      <Button Name="saveButton" IsVisible="{Binding SaveButtonVisible}" Classes="button primary">Save</Button>
+    </DockPanel>
+  </StackPanel>
+
+</Window>

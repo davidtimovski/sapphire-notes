@@ -16,6 +16,7 @@
     <StyleInclude Source="/Styles/ScrollBar.axaml" />
 
     <Style Selector="Window">
+      <Setter Property="SizeToContent" Value="Manual" />
       <Setter Property="Padding" Value="5" />
     </Style>
 

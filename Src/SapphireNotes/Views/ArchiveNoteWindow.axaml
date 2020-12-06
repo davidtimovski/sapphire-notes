@@ -10,11 +10,6 @@
     <StyleInclude Source="/Styles/Window.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
-    <Style Selector="Window">
-      <Setter Property="SizeToContent" Value="WidthAndHeight" />
-      <Setter Property="Padding" Value="15" />
-    </Style>
-
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>

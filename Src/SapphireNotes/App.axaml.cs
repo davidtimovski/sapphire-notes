@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using SapphireNotes.DependencyInjection;
@@ -17,24 +18,58 @@ namespace SapphireNotes
             AvaloniaXamlLoader.Load(this);
         }
 
+        private IClassicDesktopStyleApplicationLifetime _desktop;
+
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                _desktop = desktop;
+
                 var preferencesService = Locator.Current.GetRequiredService<IPreferencesService>();
 
-                desktop.MainWindow = new MainWindow
+                bool notesDirectorySet = preferencesService.Load();
+                if (notesDirectorySet)
                 {
-                    Width = preferencesService.Preferences.Window.Width,
-                    Height = preferencesService.Preferences.Window.Height,
-                    MinWidth = Preferences.WindowMinWidth,
-                    MinHeight = Preferences.WindowMinHeight,
-                    Position = new PixelPoint(preferencesService.Preferences.Window.PositionX, preferencesService.Preferences.Window.PositionY),
-                    DataContext = Locator.Current.GetRequiredService<MainWindowViewModel>()
-                };
+                    OpenMainWindow(preferencesService.Preferences);
+                }
+                else
+                {
+                    var window = new InitialSetupWindow
+                    {
+                        DataContext = new InitialSetupViewModel(preferencesService),
+                        Topmost = true,
+                        CanResize = false
+                    };
+                    window.Saved += InitialSetup_Saved;
+                    window.Show();
+                    window.Activate();
+                }
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private void InitialSetup_Saved(object sender, EventArgs e)
+        {
+            var preferencesService = Locator.Current.GetRequiredService<IPreferencesService>();
+            preferencesService.SavePreferences();
+
+            OpenMainWindow(preferencesService.Preferences);
+        }
+
+        private void OpenMainWindow(Preferences preferences)
+        {
+            _desktop.MainWindow = new MainWindow
+            {
+                Width = preferences.Window.Width,
+                Height = preferences.Window.Height,
+                MinWidth = Preferences.WindowMinWidth,
+                MinHeight = Preferences.WindowMinHeight,
+                Position = new PixelPoint(preferences.Window.PositionX, preferences.Window.PositionY),
+                DataContext = Locator.Current.GetRequiredService<MainWindowViewModel>()
+            };
+            _desktop.MainWindow.Show();
         }
     }
 }

@@ -14,7 +14,8 @@
 
   <Application.Resources>
     <FontFamily x:Key="MainFontFamily">resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans</FontFamily>
-    <sys:Double x:Key="FontSize">13</sys:Double>
+    <sys:Double x:Key="FontSize">14</sys:Double>
+    
     
     <SolidColorBrush x:Key="PrimaryColor">#007acc</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryColorLight">#1c97ea</SolidColorBrush>

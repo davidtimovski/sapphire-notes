@@ -13,10 +13,6 @@
     <StyleInclude Source="/Styles/ComboBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
-    <Style Selector="Window">
-      <Setter Property="SizeToContent" Value="WidthAndHeight" />
-    </Style>
-
     <Style Selector="TextBox#noteNameTextBox">
       <Setter Property="Width" Value="250" />
     </Style>
