@@ -3,42 +3,20 @@ using System.ComponentModel;
 using System.Reactive;
 using SapphireNotes.Models;
 using ReactiveUI;
+using SapphireNotes.Utils;
+using Avalonia.Media;
 
 namespace SapphireNotes.ViewModels
 {
     public class NoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public NoteViewModel()
-        {
-            name = string.Empty;
-        }
-
-        public NoteViewModel(string name)
-        {
-            this.name = name;
-        }
-
-        public NoteViewModel(string name, string filePath, string fileContents, NoteMetadata metadata)
-        {
-            FilePath = filePath;
-            this.name = name;
-            text = fileContents;
-            fontSize = metadata.FontSize;
-            FontFamily = metadata.FontFamily;
-            cursorPosition = metadata.CursorPosition;
-
-            OnEditCommand = ReactiveCommand.Create(Edit);
-            OnArchiveCommand = ReactiveCommand.Create(Archive);
-            OnDeleteCommand = ReactiveCommand.Create(Delete);
-        }
-
         public NoteViewModel(Note note)
         {
             FilePath = note.FilePath;
             name = note.Name;
             text = note.Text;
+            fontFamily = FontUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
-            FontFamily = note.Metadata.FontFamily;
             cursorPosition = note.Metadata.CursorPosition;
 
             OnEditCommand = ReactiveCommand.Create(Edit);
@@ -97,8 +75,8 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref fontSize, value);
         }
 
-        private string fontFamily;
-        public string FontFamily
+        private FontFamily fontFamily;
+        public FontFamily FontFamily
         {
             get => fontFamily;
             set => this.RaiseAndSetIfChanged(ref fontFamily, value);
@@ -121,7 +99,7 @@ namespace SapphireNotes.ViewModels
                 Text = Text,
                 Metadata = new NoteMetadata
                 {
-                    FontFamily = fontFamily,
+                    FontFamily = FontFamily.Name,
                     FontSize = fontSize,
                     CursorPosition = cursorPosition
                 }

@@ -8,6 +8,7 @@ using Avalonia.Threading;
 using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
+using SapphireNotes.Utils;
 using SapphireNotes.Views;
 
 namespace SapphireNotes.ViewModels
@@ -24,7 +25,7 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
             _notesService = notesService;
 
-            preferences = _preferencesService.Preferences;
+            preferences = new PreferencesViewModel(_preferencesService.Preferences);
 
             var notes = _notesService.GetAll();
             foreach (var note in notes)
@@ -90,7 +91,12 @@ namespace SapphireNotes.ViewModels
             if (noteVm != null)
             {
                 noteVm.Name = e.UpdatedNote.Name;
-                noteVm.FontFamily = e.UpdatedNote.Metadata.FontFamily;
+                noteVm.FontFamily = FontUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
+
+                // Hack to invoke update of FontFamily if FontSize wasn't changed
+                // https://github.com/AvaloniaUI/Avalonia/issues/5127
+                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
+
                 noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
             }
         }
@@ -151,8 +157,8 @@ namespace SapphireNotes.ViewModels
             _notesService.SaveAll(notes);
         }
 
-        private Preferences preferences;
-        private Preferences Preferences
+        private PreferencesViewModel preferences;
+        private PreferencesViewModel Preferences
         {
             get => preferences;
             set => this.RaiseAndSetIfChanged(ref preferences, value);

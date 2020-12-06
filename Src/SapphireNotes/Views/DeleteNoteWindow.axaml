@@ -8,7 +8,7 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
-    <StyleInclude Source="/Styles/Buttons.axaml" />
+    <StyleInclude Source="/Styles/Button.axaml" />
 
     <Style Selector="Window">
       <Setter Property="SizeToContent" Value="WidthAndHeight" />

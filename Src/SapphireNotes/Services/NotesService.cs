@@ -9,7 +9,7 @@ namespace SapphireNotes.Services
 {
     public interface INotesService
     {
-        Note Create(string name);
+        Note Create(string name, string fontFamily, int fontSize);
         Note Update(string newName, Note note);
         void Archive(Note note);
         void Delete(Note note);
@@ -52,7 +52,7 @@ namespace SapphireNotes.Services
             }
         }
 
-        public Note Create(string name)
+        public Note Create(string name, string fontFamily, int fontSize)
         {
             name = name.Trim();
 
@@ -70,7 +70,7 @@ namespace SapphireNotes.Services
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             File.Create(path);
 
-            return new Note(name, path, string.Empty, new NoteMetadata());
+            return new Note(name, path, string.Empty, new NoteMetadata(fontFamily, fontSize));
         }
 
         public Note Update(string newName, Note note)

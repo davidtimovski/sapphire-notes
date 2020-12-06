@@ -9,8 +9,9 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
-    <StyleInclude Source="/Styles/TextBoxes.axaml" />
-    <StyleInclude Source="/Styles/Buttons.axaml" />
+    <StyleInclude Source="/Styles/TextBox.axaml" />
+    <StyleInclude Source="/Styles/ComboBox.axaml" />
+    <StyleInclude Source="/Styles/Button.axaml" />
 
     <Style Selector="Window">
       <Setter Property="SizeToContent" Value="WidthAndHeight" />
@@ -18,6 +19,19 @@
 
     <Style Selector="TextBox#noteNameTextBox">
       <Setter Property="Width" Value="250" />
+    </Style>
+
+    <Style Selector="DockPanel.formControlWrap">
+      <Setter Property="Margin" Value="0 5 0 0" />
+    </Style>
+
+    <Style Selector="Border.labelWrap">
+      <Setter Property="Margin" Value="0 7" />
+    </Style>
+
+    <Style Selector="TextBlock.label">
+      <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
+      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
     </Style>
 
     <Style Selector="Border.buttonsWrap">
@@ -32,6 +46,22 @@
   <StackPanel>
     <TextBox Name="noteNameTextBox" Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
 
+    <DockPanel Classes="formControlWrap">
+      <Border Classes="labelWrap">
+        <TextBlock Text="Font" Classes="label" />
+      </Border>
+
+      <ComboBox Items="{Binding AvailableFonts}" HorizontalAlignment="Right" SelectedIndex="{Binding SelectedFontIndex}" />
+    </DockPanel>
+
+    <DockPanel Classes="formControlWrap">
+      <Border Classes="labelWrap">
+        <TextBlock Text="Font Size" Classes="label" />
+      </Border>
+
+      <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" HorizontalAlignment="Right" />
+    </DockPanel>
+    
     <Border Classes="buttonsWrap">
       <DockPanel>
         <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>

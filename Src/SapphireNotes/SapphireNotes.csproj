@@ -27,6 +27,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Fonts\OpenSans-Regular.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Arial.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Calibri.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Consolas.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\OpenSans.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Roboto.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\Verdana.ttf" />
   </ItemGroup>
 </Project>

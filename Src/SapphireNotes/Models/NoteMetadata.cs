@@ -2,14 +2,18 @@
 {
     public class NoteMetadata
     {
-        public NoteMetadata()
+        public NoteMetadata() : this(Constants.DefaultFontFamily, 15)
         {
-            FontSize = 15;
-            FontFamily = Constants.DefaultFontFamily;
         }
 
-        public int FontSize { get; set; }
+        public NoteMetadata(string fontFamily, int fontSize)
+        {
+            FontFamily = fontFamily;
+            FontSize = fontSize;
+        }
+
         public string FontFamily { get; set; }
+        public int FontSize { get; set; }
         public int CursorPosition { get; set; }
     }
 }

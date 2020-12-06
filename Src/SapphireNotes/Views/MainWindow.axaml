@@ -11,8 +11,8 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
-    <StyleInclude Source="/Styles/Buttons.axaml" />
-    <StyleInclude Source="/Styles/TextBoxes.axaml" />
+    <StyleInclude Source="/Styles/Button.axaml" />
+    <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/ScrollBar.axaml" />
 
     <Style Selector="Window">
@@ -66,12 +66,6 @@
         </ControlTemplate>
       </Setter>
     </Style>
-
-    <Style Selector="TextBox">
-      <Setter Property="FontFamily" Value="{Binding Preferences.FontFamily, Mode=OneTime}" />
-      <Setter Property="FontSize" Value="{Binding Preferences.FontSize, Mode=OneTime}" />
-    </Style>
-
   </Window.Styles>
 
   <Design.DataContext>
@@ -88,7 +82,7 @@
       <Button Name="newNoteButton" Classes="button success">New</Button>
     </StackPanel>
 
-    <TabControl Items="{Binding Notes}" Grid.Row="1">
+    <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate DataType="vm:NoteViewModel">
           <Border Classes="tabHeader">
@@ -114,8 +108,8 @@
         <DataTemplate DataType="vm:NoteViewModel">
           <TextBox Name="textEditor" Text="{Binding Text}" 
                    AcceptsReturn="True" TextWrapping="Wrap" 
-                   FontSize="{Binding FontSize,Mode=OneTime}"
-                   FontFamily="{Binding FontFamily,Mode=OneTime}"
+                   FontSize="{Binding FontSize}"
+                   FontFamily="{Binding FontFamily}"
                    be:CaretBehavior.CursorPosition="{Binding CursorPosition}" />
         </DataTemplate>
       </TabControl.ContentTemplate>

@@ -1,0 +1,92 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style Selector="ComboBox">
+    <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="Padding" Value="8 6" />
+    <Setter Property="MinHeight" Value="20" />
+    <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
+    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Name="PlaceholderTextBlock"
+                       Grid.Column="0"
+                       Margin="{TemplateBinding Padding}"
+                       IsVisible="{TemplateBinding SelectionBoxItem, Converter={x:Static ObjectConverters.IsNull}}" />
+            <ContentControl Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding ItemTemplate}"
+                            Margin="{TemplateBinding Padding}" />
+            <ToggleButton Name="toggle"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          ClickMode="Press"
+                          Focusable="False"
+                          IsChecked="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                          Grid.Column="1">
+              <Path Fill="{StaticResource WhiteColor}"
+                    Width="8"
+                    Height="4"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z" />
+            </ToggleButton>
+            <Popup Name="PART_Popup"
+                   IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}"
+                   MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                   MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                   PlacementTarget="{TemplateBinding}">
+              <Border BorderBrush="{DynamicResource ThemeBorderMidBrush}"
+                      BorderThickness="1">
+                <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                  <ItemsPresenter Name="PART_ItemsPresenter"
+                                  Items="{TemplateBinding Items}"
+                                  ItemsPanel="{TemplateBinding ItemsPanel}"
+                                  ItemTemplate="{TemplateBinding ItemTemplate}"
+                                  VirtualizationMode="{TemplateBinding VirtualizationMode}" />
+                </ScrollViewer>
+              </Border>
+            </Popup>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ComboBox:pointerover /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+  </Style>
+
+
+  <Style Selector="ComboBoxItem">
+    <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+    <Setter Property="Padding" Value="8 3"/>
+  </Style>
+
+  <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="#686868" />
+  </Style>
+  
+  <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+  </Style>
+  
+  <Style Selector="ComboBoxItem:selected:focus /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+  </Style>
+  
+  <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+  </Style>
+  
+  <Style Selector="ComboBoxItem:selected:focus:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
+  </Style>
+</Styles>
