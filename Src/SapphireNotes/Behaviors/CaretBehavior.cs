@@ -4,13 +4,14 @@ using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Behaviors
 {
     public class CaretBehavior : AvaloniaObject
     {
         public static readonly AttachedProperty<int> CursorPositionProperty = AvaloniaProperty.RegisterAttached<CaretBehavior, Interactive, int>(
-            "CursorPosition", default, false, BindingMode.TwoWay, ValidateCursorPosition);
+            "CursorPosition", default, false, BindingMode.OneTime, ValidateCursorPosition);
 
         private static int _index;
 
@@ -19,25 +20,24 @@ namespace SapphireNotes.Behaviors
             _index = index;
 
             var textBox = element as TextBox;
-            textBox.AttachedToVisualTree += SetTextBoxCaretIndexAndFocus;
-            textBox.PointerReleased += TextBox_PointerReleased;
+            textBox.AttachedToVisualTree += SetTextBoxCaretIndexThenFocus;
 
-            SetTextBoxCaretIndexAndFocus(textBox, null);
+            element.AddHandler(InputElement.PointerReleasedEvent, UpdateViewModelCursorPosition);
 
             return index;
+
+            void UpdateViewModelCursorPosition(object s, RoutedEventArgs e)
+            {
+                var vm = textBox.DataContext as NoteViewModel;
+                vm.CursorPosition = textBox.CaretIndex;
+            }
         }
 
-        private static void SetTextBoxCaretIndexAndFocus(object sender, EventArgs e)
+        private static void SetTextBoxCaretIndexThenFocus(object sender, EventArgs e)
         {
             var textBox = sender as TextBox;
             textBox.CaretIndex = _index;
             textBox.Focus();
-        }
-
-        private static void TextBox_PointerReleased(object sender, PointerReleasedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            SetCursorPosition(textBox, textBox.CaretIndex);
         }
 
         public static void SetCursorPosition(AvaloniaObject element, int value)
