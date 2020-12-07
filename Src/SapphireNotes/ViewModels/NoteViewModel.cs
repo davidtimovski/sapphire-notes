@@ -45,7 +45,7 @@ namespace SapphireNotes.ViewModels
             Deleted.Invoke(this, null);
         }
 
-        public bool IsDirty { get; private set; }
+        public bool IsDirty { get; set; }
 
         private string name;
         public string Name

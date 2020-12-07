@@ -35,7 +35,7 @@ namespace SapphireNotes.ViewModels
 
             if (preferences.AutoSaveInterval != 0)
             {
-                autoSaveTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+                autoSaveTimer.Tick += new EventHandler(SaveDirtyNotes);
                 autoSaveTimer.Interval = TimeSpan.FromSeconds(preferences.AutoSaveInterval);
                 autoSaveTimer.Start();
             }
@@ -62,7 +62,7 @@ namespace SapphireNotes.ViewModels
             }
 
             IEnumerable<Note> notes = Notes.Select(x => x.ToNote());
-            _notesService.SaveAll(notes);
+            _notesService.SaveAllWithMetadata(notes);
 
             _preferencesService.UpdateWindowSizePreferenceIfChanged(windowWidth, windowHeight, windowPositionX, windowPositionY);
         }
@@ -151,10 +151,18 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void SaveDirtyNotes(object sender, EventArgs e)
         {
-            IEnumerable<Note> notes = Notes.Select(x => x.ToNote());
-            _notesService.SaveAll(notes);
+            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty);
+            if (dirtyNotesVMs.Any())
+            {
+                _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
+
+                foreach (var note in dirtyNotesVMs)
+                {
+                    note.IsDirty = false;
+                }
+            }
         }
 
         private PreferencesViewModel preferences;
