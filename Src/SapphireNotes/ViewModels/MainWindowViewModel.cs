@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
@@ -25,20 +24,10 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
             _notesService = notesService;
 
-            preferences = new PreferencesViewModel(_preferencesService.Preferences);
+            LoadNotes();
 
-            var notes = _notesService.GetAll();
-            foreach (var note in notes)
-            {
-                AddNote(note);
-            }
-
-            if (preferences.AutoSaveInterval != 0)
-            {
-                autoSaveTimer.Tick += new EventHandler(SaveDirtyNotes);
-                autoSaveTimer.Interval = TimeSpan.FromSeconds(preferences.AutoSaveInterval);
-                autoSaveTimer.Start();
-            }
+            autoSaveTimer.Tick += new EventHandler(SaveDirtyNotes);
+            SetAutoSaveTimer();
         }
 
         public void AddNote(Note note)
@@ -49,6 +38,17 @@ namespace SapphireNotes.ViewModels
             noteVm.Archived += Note_Archived;
             noteVm.Deleted += Note_Deleted;
             Notes.Add(noteVm);
+        }
+
+        public void PreferencesSaved(bool notesDirectoryChanged)
+        {
+            SetAutoSaveTimer();
+
+            if (notesDirectoryChanged)
+            {
+                Notes.Clear();
+                LoadNotes();
+            }
         }
 
         public void OnClosing(int windowWidth, int windowHeight, int windowPositionX, int windowPositionY)
@@ -65,6 +65,26 @@ namespace SapphireNotes.ViewModels
             _notesService.SaveAllWithMetadata(notes);
 
             _preferencesService.UpdateWindowSizePreferenceIfChanged(windowWidth, windowHeight, windowPositionX, windowPositionY);
+        }
+
+        private void LoadNotes()
+        {
+            Note[] notes = _notesService.GetAll();
+            foreach (var note in notes)
+            {
+                AddNote(note);
+            }
+        }
+
+        private void SetAutoSaveTimer()
+        {
+            autoSaveTimer.Stop();
+
+            if (_preferencesService.Preferences.AutoSaveInterval != 0)
+            {
+                autoSaveTimer.Interval = TimeSpan.FromSeconds(_preferencesService.Preferences.AutoSaveInterval);
+                autoSaveTimer.Start();
+            }
         }
 
         private void Note_Edited(object sender, EventArgs e)
@@ -163,13 +183,6 @@ namespace SapphireNotes.ViewModels
                     note.IsDirty = false;
                 }
             }
-        }
-
-        private PreferencesViewModel preferences;
-        private PreferencesViewModel Preferences
-        {
-            get => preferences;
-            set => this.RaiseAndSetIfChanged(ref preferences, value);
         }
 
         private ObservableCollection<NoteViewModel> Notes { get; set; } = new ObservableCollection<NoteViewModel>();

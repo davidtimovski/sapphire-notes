@@ -37,10 +37,7 @@ namespace SapphireNotes.Views
 
         private void SaveButtonClicked()
         {
-            var vm = (InitialSetupViewModel)DataContext;
-
             Saved.Invoke(this, null);
-
             Close();
         }
 

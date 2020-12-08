@@ -8,6 +8,7 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
     <Style Selector="Border.buttonsWrap">
@@ -16,8 +17,6 @@
 
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="400" />
-      <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
-      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
     </Style>
 
     <Style Selector="Button.primary">

@@ -1,0 +1,90 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        x:Class="SapphireNotes.Views.PreferencesWindow"
+        Title="Preferences">
+
+  <Window.Styles>
+    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBlock.axaml" />
+    <StyleInclude Source="/Styles/TextBox.axaml" />
+    <StyleInclude Source="/Styles/Button.axaml" />
+    <StyleInclude Source="/Styles/CheckBox.axaml" />
+    <StyleInclude Source="/Styles/ComboBox.axaml" />
+    
+    <Style Selector="DockPanel.formControlWrap">
+      <Setter Property="Margin" Value="0 5 0 0" />
+    </Style>
+
+    <Style Selector="Border.directory">
+      <Setter Property="Margin" Value="0 5" />
+    </Style>
+
+    <Style Selector="TextBox">
+      <Setter Property="Width" Value="450" />
+    </Style>
+
+    <Style Selector="Button#changeNotesDirectoryButton">
+      <Setter Property="Margin" Value="5 0 0 0" />
+    </Style>
+
+    <Style Selector="Border.checkboxWrap">
+      <Setter Property="Margin" Value="0 5 0 20" />
+    </Style>
+
+    <Style Selector="Border.labelWrap">
+      <Setter Property="Margin" Value="0 7" />
+    </Style>
+
+    <Style Selector="ComboBox">
+      <Setter Property="MinWidth" Value="200" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style Selector="Border.buttonsWrap">
+      <Setter Property="Margin" Value="0 20 0 0" />
+    </Style>
+    <Style Selector="Border.buttonsWrap DockPanel">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style Selector="Button#applyButton">
+      <Setter Property="Margin" Value="0 0 10 0" />
+    </Style>
+  </Window.Styles>
+
+  <Design.DataContext>
+    <vm:PreferencesWindowViewModel/>
+  </Design.DataContext>
+
+  <StackPanel>
+    <TextBlock>Notes directory</TextBlock>
+    <Border Classes="directory">
+      <DockPanel HorizontalAlignment="Right">
+        <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" />
+        <Button Name="changeNotesDirectoryButton" Classes="button">Change</Button>
+      </DockPanel>
+    </Border>
+
+    <Border IsVisible="{Binding MoveNotesCheckBoxVisible}" Classes="checkboxWrap">
+      <CheckBox IsChecked="{Binding MoveNotes}">Move all of my existing notes to this new location</CheckBox>
+    </Border>
+
+    <DockPanel Classes="formControlWrap">
+      <Border Classes="labelWrap">
+        <TextBlock>Auto save interval</TextBlock>
+      </Border>
+      <ComboBox Items="{Binding AutoSaveIntervalLabels}" SelectedIndex="{Binding SelectedAutoSaveInteravalIndex}" />
+    </DockPanel>
+
+    <Border Classes="buttonsWrap">
+      <DockPanel>
+        <Button Name="applyButton" IsEnabled="{Binding SaveEnabled}" Classes="button primary">Apply</Button>
+        <Button Name="closeButton" Classes="button">Close</Button>
+      </DockPanel>
+    </Border>
+  </StackPanel>
+
+</Window>

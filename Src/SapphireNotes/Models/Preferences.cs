@@ -6,8 +6,6 @@
         public const int WindowMinHeight = 180;
 
         public string NotesDirectory { get; set; } = string.Empty;
-        public string FontFamily { get; set; } = Constants.DefaultFontFamily;
-        public short FontSize { get; set; } = 15;
         public short AutoSaveInterval { get; set; } = 10;
         public WindowPreferences Window { get; set; } = new WindowPreferences();
     }

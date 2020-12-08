@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
@@ -23,6 +24,9 @@ namespace SapphireNotes.Views
 
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
+
+            var preferencesButton = this.FindControl<Button>("preferencesButton");
+            preferencesButton.Command = ReactiveCommand.Create(PreferencesButtonClicked);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -61,6 +65,28 @@ namespace SapphireNotes.Views
         {
             var vm = (MainWindowViewModel)DataContext;
             vm.AddNote(e.CreatedNote);
+        }
+
+        private void PreferencesButtonClicked()
+        {
+            var window = new PreferencesWindow
+            {
+                DataContext = new PreferencesViewModel(Locator.Current.GetService<IPreferencesService>(), Locator.Current.GetService<INotesService>()),
+                Owner = this,
+                Topmost = true,
+                CanResize = false
+            };
+            window.Saved += PreferencesSaved;
+            window.Show();
+            window.Activate();
+
+            _windows.Add(window);
+        }
+
+        private void PreferencesSaved(object sender, PreferencesSavedEventArgs e)
+        {
+            var vm = (MainWindowViewModel)DataContext;
+            vm.PreferencesSaved(e.NotesDirectoryChanged);
         }
     }
 }

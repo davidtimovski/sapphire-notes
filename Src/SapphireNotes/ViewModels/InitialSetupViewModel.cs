@@ -19,7 +19,8 @@ namespace SapphireNotes.ViewModels
             {
                 DirectoryTextBoxVisible = true;
 
-                _preferencesService.SetNotesDirectory(directory);
+                _preferencesService.Preferences.NotesDirectory = directory;
+                _preferencesService.SavePreferences();
 
                 NotesDirectory = _preferencesService.Preferences.NotesDirectory;
                 SelectButtonLabel = "Change storage folder";

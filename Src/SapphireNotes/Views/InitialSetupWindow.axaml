@@ -8,13 +8,12 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="450" />
-      <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
-      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
     </Style>
 
     <Style Selector="Border.welcome">
@@ -26,7 +25,7 @@
     </Style>
 
     <Style Selector="Border.directory">
-      <Setter Property="Margin" Value="0 15 0 15" />
+      <Setter Property="Margin" Value="0 15" />
     </Style>
 
     <Style Selector="TextBox">

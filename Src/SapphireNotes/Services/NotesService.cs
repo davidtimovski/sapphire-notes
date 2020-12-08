@@ -16,6 +16,7 @@ namespace SapphireNotes.Services
         void SaveAll(IEnumerable<Note> notes);
         void SaveAllWithMetadata(IEnumerable<Note> notes);
         Note[] GetAll();
+        void MoveAll(string oldDirectory);
     }
 
     public class NotesService : INotesService
@@ -183,6 +184,17 @@ namespace SapphireNotes.Services
 
                 var sampleNotes = CreateSampleNotes();
                 return sampleNotes;
+            }
+        }
+
+        public void MoveAll(string oldDirectory)
+        {
+            string[] textFiles = Directory.GetFiles(oldDirectory, "*.txt");
+
+            foreach (string filePath in textFiles)
+            {
+                var newPath = Path.Combine(_preferences.NotesDirectory, Path.GetFileName(filePath));
+                File.Move(filePath, newPath);
             }
         }
 

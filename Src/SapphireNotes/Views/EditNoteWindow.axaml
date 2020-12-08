@@ -9,6 +9,7 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/ComboBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
@@ -25,13 +26,19 @@
       <Setter Property="Margin" Value="0 7" />
     </Style>
 
-    <Style Selector="TextBlock.label">
-      <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
-      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Style Selector="ComboBox">
+      <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
     <Style Selector="Border.buttonsWrap">
-      <Setter Property="Margin" Value="0 10 0 0" />
+      <Setter Property="Margin" Value="0 20 0 0" />
+    </Style>
+    <Style Selector="Border.buttonsWrap DockPanel">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style Selector="Button#saveButton">
+      <Setter Property="Margin" Value="0 0 10 0" />
     </Style>
   </Window.Styles>
 
@@ -44,24 +51,24 @@
 
     <DockPanel Classes="formControlWrap">
       <Border Classes="labelWrap">
-        <TextBlock Text="Font" Classes="label" />
+        <TextBlock>Font</TextBlock>
       </Border>
 
-      <ComboBox Items="{Binding AvailableFonts}" HorizontalAlignment="Right" SelectedIndex="{Binding SelectedFontIndex}" />
+      <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
     </DockPanel>
 
     <DockPanel Classes="formControlWrap">
       <Border Classes="labelWrap">
-        <TextBlock Text="Font Size" Classes="label" />
+        <TextBlock>Font Size</TextBlock>
       </Border>
 
-      <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" HorizontalAlignment="Right" />
+      <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
     </DockPanel>
     
     <Border Classes="buttonsWrap">
       <DockPanel>
         <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
-        <Button Name="cancelButton" HorizontalAlignment="Right" Classes="button">Cancel</Button>
+        <Button Name="cancelButton" Classes="button">Cancel</Button>
       </DockPanel>
     </Border>
   </StackPanel>

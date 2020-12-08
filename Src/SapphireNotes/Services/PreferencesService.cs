@@ -8,7 +8,6 @@ namespace SapphireNotes.Services
     {
         Preferences Preferences { get; }
         bool Load();
-        void SetNotesDirectory(string directory);
         void SavePreferences();
         void UpdateWindowSizePreferenceIfChanged(int width, int height, int positionX, int positionY);
     }
@@ -46,22 +45,10 @@ namespace SapphireNotes.Services
             return false;
         }
 
-        public void SetNotesDirectory(string directory)
-        {
-            if (new DirectoryInfo(directory).Name != Constants.ApplicationName)
-            {
-                directory = Path.Combine(directory, Constants.ApplicationName);
-            }
-
-            Preferences.NotesDirectory = directory;
-        }
-
         public void SavePreferences()
         {
             using var writer = new BinaryWriter(File.Open(_preferencesFilePath, FileMode.OpenOrCreate));
             writer.Write(Preferences.NotesDirectory);
-            writer.Write(Preferences.FontFamily);
-            writer.Write(Preferences.FontSize);
             writer.Write(Preferences.AutoSaveInterval);
             writer.Write(Preferences.Window.Width);
             writer.Write(Preferences.Window.Height);
@@ -89,8 +76,6 @@ namespace SapphireNotes.Services
 
             using var reader = new BinaryReader(File.Open(_preferencesFilePath, FileMode.Open));
             Preferences.NotesDirectory = reader.ReadString();
-            Preferences.FontFamily = reader.ReadString();
-            Preferences.FontSize = reader.ReadInt16();
             Preferences.AutoSaveInterval = reader.ReadInt16();
             Preferences.Window = new WindowPreferences
             {

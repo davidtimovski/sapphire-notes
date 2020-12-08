@@ -20,7 +20,7 @@
       <Setter Property="Padding" Value="5" />
     </Style>
 
-    <Style Selector="StackPanel.toolbar">
+    <Style Selector="DockPanel.toolbar">
       <Setter Property="Margin" Value="0 0 0 5" />
     </Style>
 
@@ -79,9 +79,13 @@
       <RowDefinition Height="1*" />
     </Grid.RowDefinitions>
 
-    <StackPanel Orientation="Horizontal" Grid.Row="0" Classes="toolbar">
+    <DockPanel Grid.Row="0" Classes="toolbar">
       <Button Name="newNoteButton" Classes="button success">New</Button>
-    </StackPanel>
+      
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Name="preferencesButton" Classes="button">Preferences</Button>
+      </StackPanel>
+    </DockPanel>
 
     <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
       <TabControl.ItemTemplate>
