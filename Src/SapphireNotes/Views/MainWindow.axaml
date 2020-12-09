@@ -14,6 +14,7 @@
     <StyleInclude Source="/Styles/Button.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/ScrollBar.axaml" />
+    <StyleInclude Source="/Styles/ContextMenu.axaml" />
 
     <Style Selector="Window">
       <Setter Property="SizeToContent" Value="Manual" />
@@ -44,28 +45,6 @@
     <Style Selector="TabItem Border.tabHeader TextBlock">
       <Setter Property="Foreground" Value="White" />
       <Setter Property="FontSize" Value="{StaticResource FontSize}" />
-    </Style>
-
-    <Style Selector="ContextMenu">
-      <Setter Property="Background" Value="#2d2d30" />
-      <Setter Property="Foreground" Value="White" />
-      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Border Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}"
-                  Padding="{TemplateBinding Padding}">
-            <ScrollViewer Classes="menuscroller">
-              <ItemsPresenter Name="PART_ItemsPresenter"
-                              Items="{TemplateBinding Items}"
-                              ItemsPanel="{TemplateBinding ItemsPanel}"
-                              ItemTemplate="{TemplateBinding ItemTemplate}"
-                              KeyboardNavigation.TabNavigation="Continue"/>
-            </ScrollViewer>
-          </Border>
-        </ControlTemplate>
-      </Setter>
     </Style>
   </Window.Styles>
 
