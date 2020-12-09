@@ -21,7 +21,7 @@ namespace SapphireNotes.ViewModels
             isNew = true;
             name = string.Empty;
 
-            selectedFontIndex = 3;
+            selectedFontIndex = Array.IndexOf(availableFonts, Constants.DefaultFontFamily);
             SetAvailableFontSizes();
             selectedFontSizeIndex = 5;
         }
