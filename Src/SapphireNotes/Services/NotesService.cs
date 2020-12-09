@@ -14,7 +14,7 @@ namespace SapphireNotes.Services
         void Archive(Note note);
         void Delete(Note note);
         void SaveAll(IEnumerable<Note> notes);
-        void SaveAllWithMetadata(IEnumerable<Note> notes);
+        void SaveDirtyWithMetadata(IEnumerable<Note> notes);
         Note[] GetAll();
         void MoveAll(string oldDirectory);
     }
@@ -128,13 +128,17 @@ namespace SapphireNotes.Services
             }
         }
 
-        public void SaveAllWithMetadata(IEnumerable<Note> notes)
+        public void SaveDirtyWithMetadata(IEnumerable<Note> notes)
         {
             _notesMetadata.Clear();
 
             foreach (var note in notes)
             {
-                File.WriteAllText(note.FilePath, note.Text);
+                if (note.IsDirty)
+                {
+                    File.WriteAllText(note.FilePath, note.Text);
+                }
+                
                 _notesMetadata.Add(note.Name, note.Metadata);
             }
 
