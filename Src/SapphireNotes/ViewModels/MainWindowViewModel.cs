@@ -110,6 +110,7 @@ namespace SapphireNotes.ViewModels
             NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
             if (noteVm != null)
             {
+                noteVm.FilePath = e.UpdatedNote.FilePath;
                 noteVm.Name = e.UpdatedNote.Name;
                 noteVm.FontFamily = FontUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
 
