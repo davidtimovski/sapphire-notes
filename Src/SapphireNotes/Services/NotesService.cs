@@ -79,7 +79,7 @@ namespace SapphireNotes.Services
         {
             newName = newName.Trim();
 
-            if (note.Name == newName)
+            if (note.Name.ToLowerInvariant() == newName.ToLowerInvariant())
             {
                 return note;
             }
@@ -196,6 +196,32 @@ namespace SapphireNotes.Services
                 var newPath = Path.Combine(_preferences.NotesDirectory, Path.GetFileName(filePath));
                 File.Move(filePath, newPath);
             }
+
+            var oldArchivePath = Path.Combine(oldDirectory, ArchiveDirectoryName);
+            if (!Directory.Exists(oldArchivePath))
+            {
+                return;
+            }
+
+            string[] archivedTextFiles = Directory.GetFiles(oldArchivePath, "*.txt");
+            if (archivedTextFiles.Length == 0)
+            {
+                return;
+            }
+
+            var newArchivePath = Path.Combine(_preferences.NotesDirectory, ArchiveDirectoryName);
+            if (!Directory.Exists(newArchivePath))
+            {
+                Directory.CreateDirectory(newArchivePath);
+            }
+
+            foreach (string filePath in archivedTextFiles)
+            {
+                var newPath = Path.Combine(newArchivePath, Path.GetFileName(filePath));
+                File.Move(filePath, newPath);
+            }
+
+            Directory.Delete(oldArchivePath);
         }
 
         private bool Exists(string fileName)
