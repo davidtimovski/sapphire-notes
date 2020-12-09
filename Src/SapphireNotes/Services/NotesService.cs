@@ -79,18 +79,18 @@ namespace SapphireNotes.Services
         {
             newName = newName.Trim();
 
-            if (note.Name.ToLowerInvariant() == newName.ToLowerInvariant())
-            {
-                return note;
-            }
-
             if (newName.Length == 0)
             {
                 throw new InvalidNoteNameException("Name is required.");
             }
 
+            if (note.Name == newName)
+            {
+                return note;
+            }
+
             var fileName = newName + ".txt";
-            if (Exists(fileName))
+            if (note.Name.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
             {
                 throw new InvalidNoteNameException("A note with the same name already exists.");
             }
