@@ -286,7 +286,7 @@ namespace SapphireNotes.Services
                 {
                     FontSize = reader.ReadInt32(),
                     FontFamily = reader.ReadString(),
-                    CursorPosition = reader.ReadInt32()
+                    CaretPosition = reader.ReadInt32()
                 };
 
                 _notesMetadata.Add(noteName, metadata);
@@ -304,7 +304,7 @@ namespace SapphireNotes.Services
                 writer.Write(kvp.Key);
                 writer.Write(kvp.Value.FontSize);
                 writer.Write(kvp.Value.FontFamily);
-                writer.Write(kvp.Value.CursorPosition);
+                writer.Write(kvp.Value.CaretPosition);
             }
         }
     }

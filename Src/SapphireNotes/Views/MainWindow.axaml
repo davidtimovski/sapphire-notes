@@ -94,7 +94,7 @@
                    AcceptsReturn="True" TextWrapping="Wrap" 
                    FontSize="{Binding FontSize}"
                    FontFamily="{Binding FontFamily}"
-                   be:CaretBehavior.CursorPosition="{Binding CursorPosition}" />
+                   be:CaretBehavior.CaretPosition="{Binding CaretPosition}" />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>

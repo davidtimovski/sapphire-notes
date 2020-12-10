@@ -17,7 +17,7 @@ namespace SapphireNotes.ViewModels
             text = note.Text;
             fontFamily = FontUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
-            cursorPosition = note.Metadata.CursorPosition;
+            caretPosition = note.Metadata.CaretPosition;
 
             OnEditCommand = ReactiveCommand.Create(Edit);
             OnArchiveCommand = ReactiveCommand.Create(Archive);
@@ -82,11 +82,11 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref fontFamily, value);
         }
 
-        private int cursorPosition;
-        public int CursorPosition
+        private int caretPosition;
+        public int CaretPosition
         {
-            get => cursorPosition;
-            set => this.RaiseAndSetIfChanged(ref cursorPosition, value);
+            get => caretPosition;
+            set => this.RaiseAndSetIfChanged(ref caretPosition, value);
         }
 
         public Note ToNote()
@@ -101,7 +101,7 @@ namespace SapphireNotes.ViewModels
                 {
                     FontFamily = FontFamily.Name,
                     FontSize = fontSize,
-                    CursorPosition = cursorPosition
+                    CaretPosition = caretPosition
                 }
             };
         }

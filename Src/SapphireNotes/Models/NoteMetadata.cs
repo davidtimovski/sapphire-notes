@@ -14,6 +14,6 @@
 
         public string FontFamily { get; set; }
         public int FontSize { get; set; }
-        public int CursorPosition { get; set; }
+        public int CaretPosition { get; set; }
     }
 }
