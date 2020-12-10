@@ -39,7 +39,10 @@
   </Style>
 
   <Style Selector="CheckBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
+  </Style>
+  <Style Selector="CheckBox:focus /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
   </Style>
 
 </Styles>

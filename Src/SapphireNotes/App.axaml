@@ -19,6 +19,7 @@
     
     <SolidColorBrush x:Key="PrimaryColor">#007acc</SolidColorBrush>
     <SolidColorBrush x:Key="PrimaryColorLight">#1c97ea</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryColorDark">#1b6091</SolidColorBrush>
     <SolidColorBrush x:Key="SuccessColor">#00aa5a</SolidColorBrush>
     <SolidColorBrush x:Key="SuccessColorLight">#1cba6a</SolidColorBrush>
     <SolidColorBrush x:Key="DangerColor">#ff5141</SolidColorBrush>

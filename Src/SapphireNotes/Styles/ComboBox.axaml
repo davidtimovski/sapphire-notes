@@ -61,7 +61,10 @@
     </Setter>
   </Style>
   <Style Selector="ComboBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
+  </Style>
+  <Style Selector="ComboBox:focus /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
   </Style>
 
 
@@ -71,7 +74,7 @@
   </Style>
 
   <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="#686868" />
+    <Setter Property="Background" Value="{StaticResource GreyColor}" />
   </Style>
   
   <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">

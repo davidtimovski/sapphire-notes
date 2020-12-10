@@ -10,10 +10,10 @@
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
   <Style Selector="TextBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
   </Style>
   <Style Selector="TextBox:focus /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
   </Style>
 
 </Styles>

@@ -46,6 +46,13 @@
       <Setter Property="Foreground" Value="White" />
       <Setter Property="FontSize" Value="{StaticResource FontSize}" />
     </Style>
+
+    <Style Selector="TextBox:pointerover /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    </Style>
   </Window.Styles>
 
   <Design.DataContext>
