@@ -66,10 +66,10 @@
     </Grid.RowDefinitions>
 
     <DockPanel Grid.Row="0" Classes="toolbar">
-      <Button Name="newNoteButton" Classes="button success">New</Button>
+      <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
       
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button Name="preferencesButton" Classes="button">Preferences</Button>
+        <Button Name="preferencesButton" HotKey="Ctrl+P" Classes="button">Preferences</Button>
       </StackPanel>
     </DockPanel>
 
