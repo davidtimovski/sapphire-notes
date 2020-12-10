@@ -18,7 +18,7 @@ You can choose where your notes are stored. If you want them to be backed up you
 
 ### Download
 
-See the download details on my website [here](https://www.davidtimovski.com/sapphire-notes).
+See the download details on my website [here](https://www.davidtimovski.com/sapphire-notes#download).
 
 ## License
 
