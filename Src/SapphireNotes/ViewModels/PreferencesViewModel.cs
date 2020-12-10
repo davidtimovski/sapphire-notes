@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using ReactiveUI;
 using SapphireNotes.Services;
+using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels
 {
@@ -10,6 +12,9 @@ namespace SapphireNotes.ViewModels
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
         private readonly string _initialNotesDirectory;
+        private const string CustomLabel = "[Custom]";
+        private readonly int _initialFontIndex;
+        private readonly int _initialFontSizeIndex;
         private readonly short[] _autoSaveIntervalValues = new short[]
         {
             0,
@@ -28,7 +33,30 @@ namespace SapphireNotes.ViewModels
             _initialNotesDirectory = preferencesService.Preferences.NotesDirectory;
             notesDirectory = preferencesService.Preferences.NotesDirectory;
 
-            selectedAutoSaveInteravalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
+            string globalFont = _notesService.GetFontThatAllNotesUse();
+            if (globalFont != null)
+            {
+                availableFonts = Globals.AvailableFonts;
+                _initialFontIndex = selectedFontIndex = Array.IndexOf(availableFonts, globalFont);
+            }
+            else
+            {
+                availableFonts = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFonts, CustomLabel);
+            }
+
+            int? globalFontSize = _notesService.GetFontSizeThatAllNotesUse();
+            if (globalFontSize.HasValue)
+            {
+                availableFontSizes = Globals.GetAvailableFontSizes().Select(x => x.ToString()).ToArray();
+                _initialFontSizeIndex = selectedFontSizeIndex = Array.IndexOf(availableFontSizes, globalFontSize.Value.ToString());
+            }
+            else
+            {
+                var fontSizes = Globals.GetAvailableFontSizes();
+                availableFontSizes = DropdownUtil.GetOptionsWithFirst(fontSizes, CustomLabel);
+            }
+
+            selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
         }
 
         public void SetNotesDirectory(string directory)
@@ -42,7 +70,7 @@ namespace SapphireNotes.ViewModels
         public bool Save()
         {
             _preferencesService.Preferences.NotesDirectory = notesDirectory;
-            _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveInteravalIndex];
+            _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
 
             _preferencesService.SavePreferences();
 
@@ -51,7 +79,21 @@ namespace SapphireNotes.ViewModels
                 _notesService.MoveAll(_initialNotesDirectory);
             }
 
-            return _preferencesService.Preferences.NotesDirectory != _initialNotesDirectory;
+            bool notesAreDirty = _preferencesService.Preferences.NotesDirectory != _initialNotesDirectory;
+
+            if (selectedFontIndex != _initialFontIndex)
+            {
+                _notesService.SetFontForAll(availableFonts[selectedFontIndex]);
+                notesAreDirty = true;
+            }
+
+            if (selectedFontSizeIndex != _initialFontSizeIndex)
+            {
+                _notesService.SetFontSizeForAll(int.Parse(availableFontSizes[selectedFontSizeIndex]));
+                notesAreDirty = true;
+            }
+
+            return notesAreDirty;
         }
 
         private string notesDirectory;
@@ -93,6 +135,48 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref moveNotes, value);
         }
 
+        private string[] availableFonts;
+        private string[] AvailableFonts
+        {
+            get => availableFonts;
+            set => this.RaiseAndSetIfChanged(ref availableFonts, value);
+        }
+
+        private int selectedFontIndex;
+        private int SelectedFontIndex
+        {
+            get
+            {
+                return selectedFontIndex;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedFontIndex, value);
+                SaveEnabled = true;
+            }
+        }
+
+        private string[] availableFontSizes;
+        private string[] AvailableFontSizes
+        {
+            get => availableFontSizes;
+            set => this.RaiseAndSetIfChanged(ref availableFontSizes, value);
+        }
+
+        private int selectedFontSizeIndex;
+        private int SelectedFontSizeIndex
+        {
+            get
+            {
+                return selectedFontSizeIndex;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);
+                SaveEnabled = true;
+            }
+        }
+
         private string[] autoSaveIntervalLabels = new string[]
         {
             "Never",
@@ -108,16 +192,16 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref autoSaveIntervalLabels, value);
         }
 
-        private int selectedAutoSaveInteravalIndex;
-        private int SelectedAutoSaveInteravalIndex
+        private int selectedAutoSaveIntervalIndex;
+        private int SelectedAutoSaveIntervalIndex
         {
             get
             {
-                return selectedAutoSaveInteravalIndex;
+                return selectedAutoSaveIntervalIndex;
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref selectedAutoSaveInteravalIndex, value);
+                this.RaiseAndSetIfChanged(ref selectedAutoSaveIntervalIndex, value);
                 SaveEnabled = true;
             }
         }

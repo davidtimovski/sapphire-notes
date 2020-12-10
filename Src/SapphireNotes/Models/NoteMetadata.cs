@@ -2,7 +2,7 @@
 {
     public class NoteMetadata
     {
-        public NoteMetadata() : this(Constants.DefaultFontFamily, 15)
+        public NoteMetadata() : this(Globals.DefaultFontFamily, Globals.DefaultFontSize)
         {
         }
 

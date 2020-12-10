@@ -17,6 +17,10 @@ namespace SapphireNotes.Services
         void SaveDirtyWithMetadata(IEnumerable<Note> notes);
         Note[] GetAll();
         void MoveAll(string oldDirectory);
+        string GetFontThatAllNotesUse();
+        int? GetFontSizeThatAllNotesUse();
+        void SetFontForAll(string font);
+        void SetFontSizeForAll(int fontSize);
     }
 
     public class NotesService : INotesService
@@ -34,7 +38,7 @@ namespace SapphireNotes.Services
 #if DEBUG
             string appDataDirectory = string.Empty;
 #else
-            string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.ApplicationName);
+            string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
             if (!Directory.Exists(appDataDirectory))
             {
                 Directory.CreateDirectory(appDataDirectory);
@@ -72,7 +76,12 @@ namespace SapphireNotes.Services
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             File.Create(path);
 
-            return new Note(name, path, string.Empty, new NoteMetadata(fontFamily, fontSize));
+            var note = new Note(name, path, string.Empty, new NoteMetadata(fontFamily, fontSize));
+
+            _notesMetadata.Add(note.Name, note.Metadata);
+            SaveMetadata();
+
+            return note;
         }
 
         public Note Update(string newName, Note note)
@@ -84,23 +93,22 @@ namespace SapphireNotes.Services
                 throw new InvalidNoteNameException("Name is required.");
             }
 
-            if (note.Name == newName)
-            {
-                return note;
-            }
-
             var fileName = newName + ".txt";
             if (note.Name.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
             {
                 throw new InvalidNoteNameException("A note with the same name already exists.");
             }
 
+            _notesMetadata.Remove(note.Name);
+            _notesMetadata.Add(newName, note.Metadata);
+            SaveMetadata();
+
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             File.Move(note.FilePath, path);
 
             note.Name = newName;
             note.FilePath = path;
-
+            
             return note;
         }
 
@@ -118,6 +126,9 @@ namespace SapphireNotes.Services
         public void Delete(Note note)
         {
             File.Delete(note.FilePath);
+
+            _notesMetadata.Remove(note.Name);
+            SaveMetadata();
         }
 
         public void SaveAll(IEnumerable<Note> notes)
@@ -139,7 +150,14 @@ namespace SapphireNotes.Services
                     File.WriteAllText(note.FilePath, note.Text);
                 }
                 
-                _notesMetadata.Add(note.Name, note.Metadata);
+                if (_notesMetadata.ContainsKey(note.Name))
+                {
+                    _notesMetadata[note.Name] = note.Metadata;
+                }
+                else
+                {
+                    _notesMetadata.Add(note.Name, note.Metadata);
+                }
             }
 
             SaveMetadata();
@@ -228,6 +246,56 @@ namespace SapphireNotes.Services
             Directory.Delete(oldArchivePath);
         }
 
+        public string GetFontThatAllNotesUse()
+        {
+            var fonts = _notesMetadata.Values.Select(x => x.FontFamily).Distinct().ToArray();
+            if (fonts.Length == 0)
+            {
+                return Globals.DefaultFontFamily;
+            }
+
+            if (fonts.Length == 1)
+            {
+                return fonts[0];
+            }
+
+            return null;
+        }
+
+        public int? GetFontSizeThatAllNotesUse()
+        {
+            var fontSizes = _notesMetadata.Values.Select(x => x.FontSize).Distinct().ToArray();
+            if (fontSizes.Length == 0)
+            {
+                return Globals.DefaultFontSize;
+            }
+
+            if (fontSizes.Length == 1)
+            {
+                return fontSizes[0];
+            }
+
+            return null;
+        }
+
+        public void SetFontForAll(string font)
+        {
+            foreach (var kvp in _notesMetadata)
+            {
+                _notesMetadata[kvp.Key].FontFamily = font;
+            }
+            SaveMetadata();
+        }
+
+        public void SetFontSizeForAll(int fontSize)
+        {
+            foreach (var kvp in _notesMetadata)
+            {
+                _notesMetadata[kvp.Key].FontSize = fontSize;
+            }
+            SaveMetadata();
+        }
+
         private bool Exists(string fileName)
         {
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
@@ -266,10 +334,18 @@ namespace SapphireNotes.Services
                 stream.Write(note2Text);
             }
 
+            var note1 = new Note(note1name, note1path, note1Text, new NoteMetadata());
+            _notesMetadata.Add(note1.Name, note1.Metadata);
+
+            var note2 = new Note(note2name, note2path, note2Text, new NoteMetadata());
+            _notesMetadata.Add(note2.Name, note2.Metadata);
+
+            SaveMetadata();
+
             return new Note[]
             {
-                 new Note(note1name, note1path, note1Text, new NoteMetadata()),
-                 new Note(note2name, note2path, note2Text, new NoteMetadata())
+                 note1,
+                 note2
             };
         }
 

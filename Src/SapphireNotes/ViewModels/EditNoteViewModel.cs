@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using ReactiveUI;
 using SapphireNotes.Models;
@@ -21,9 +20,9 @@ namespace SapphireNotes.ViewModels
             isNew = true;
             name = string.Empty;
 
-            selectedFontIndex = Array.IndexOf(availableFonts, Constants.DefaultFontFamily);
-            SetAvailableFontSizes();
-            selectedFontSizeIndex = 5;
+            selectedFontIndex = Array.IndexOf(availableFonts, Globals.DefaultFontFamily);
+            availableFontSizes = Globals.GetAvailableFontSizes();
+            selectedFontSizeIndex = Array.IndexOf(availableFontSizes, Globals.DefaultFontSize);
         }
 
         public EditNoteViewModel(INotesService notesService, Note note)
@@ -36,7 +35,7 @@ namespace SapphireNotes.ViewModels
             EditNote = note;
 
             selectedFontIndex = Array.IndexOf(availableFonts, note.Metadata.FontFamily);
-            SetAvailableFontSizes();
+            availableFontSizes = Globals.GetAvailableFontSizes();
             selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
         }
 
@@ -58,23 +57,6 @@ namespace SapphireNotes.ViewModels
             Note updatedNote = _notesService.Update(name, EditNote);
 
             return (originalName, updatedNote);
-        }
-
-        private void SetAvailableFontSizes()
-        {
-            var availableFontSizes = new List<int>(37);
-
-            for (var i = 10; i <= 40; i++)
-            {
-                availableFontSizes.Add(i);
-            }
-
-            for (var i = 50; i <= 100; i += 10)
-            {
-                availableFontSizes.Add(i);
-            }
-
-            this.availableFontSizes = availableFontSizes.ToArray();
         }
 
         private string title;
@@ -105,7 +87,7 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        private string[] availableFonts = new string[] { "Arial", "Calibri", "Consolas", "Open Sans", "Roboto", "Verdana" };
+        private string[] availableFonts = Globals.AvailableFonts;
         private string[] AvailableFonts
         {
             get => availableFonts;

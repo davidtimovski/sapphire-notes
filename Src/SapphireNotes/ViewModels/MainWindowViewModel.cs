@@ -40,11 +40,11 @@ namespace SapphireNotes.ViewModels
             Notes.Add(noteVm);
         }
 
-        public void PreferencesSaved(bool notesDirectoryChanged)
+        public void PreferencesSaved(bool notesAreDirty)
         {
             SetAutoSaveTimer();
 
-            if (notesDirectoryChanged)
+            if (notesAreDirty)
             {
                 Notes.Clear();
                 LoadNotes();
@@ -112,7 +112,7 @@ namespace SapphireNotes.ViewModels
             {
                 noteVm.FilePath = e.UpdatedNote.FilePath;
                 noteVm.Name = e.UpdatedNote.Name;
-                noteVm.FontFamily = FontUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
+                noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
 
                 // Hack to invoke update of FontFamily if FontSize wasn't changed
                 // https://github.com/AvaloniaUI/Avalonia/issues/5127

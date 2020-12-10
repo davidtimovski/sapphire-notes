@@ -15,7 +15,7 @@ namespace SapphireNotes.ViewModels
             FilePath = note.FilePath;
             name = note.Name;
             text = note.Text;
-            fontFamily = FontUtil.FontFamilyFromFont(note.Metadata.FontFamily);
+            fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
             caretPosition = note.Metadata.CaretPosition;
 

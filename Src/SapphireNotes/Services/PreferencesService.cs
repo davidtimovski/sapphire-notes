@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using SapphireNotes.Models;
 
 namespace SapphireNotes.Services
@@ -21,10 +22,18 @@ namespace SapphireNotes.Services
 
         public bool Load()
         {
-#if DEBUG
             string appDataDirectory = string.Empty;
-#else
-            string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.ApplicationName);
+
+#if !DEBUG
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                appDataDirectory = Path.Combine("/var/lib", Globals.ApplicationName.ToLowerInvariant());
+            }
+
             if (!Directory.Exists(appDataDirectory))
             {
                 Directory.CreateDirectory(appDataDirectory);

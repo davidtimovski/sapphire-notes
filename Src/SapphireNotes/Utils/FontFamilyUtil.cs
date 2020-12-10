@@ -2,7 +2,7 @@
 
 namespace SapphireNotes.Utils
 {
-    public static class FontUtil
+    public static class FontFamilyUtil
     {
         public static FontFamily FontFamilyFromFont(string font)
         {

@@ -41,11 +41,11 @@ namespace SapphireNotes.Views
         private void ApplyButtonClicked()
         {
             var vm = (PreferencesViewModel)DataContext;
-            bool notesDirectoryChanged = vm.Save();
+            bool notesAreDirty = vm.Save();
 
             Saved.Invoke(this, new PreferencesSavedEventArgs
             {
-                NotesDirectoryChanged = notesDirectoryChanged
+                NotesAreDirty = notesAreDirty
             });
 
             Close();
@@ -64,6 +64,6 @@ namespace SapphireNotes.Views
 
     public class PreferencesSavedEventArgs : EventArgs
     {
-        public bool NotesDirectoryChanged { get; set; }
+        public bool NotesAreDirty { get; set; }
     }
 }

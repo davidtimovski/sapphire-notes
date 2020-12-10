@@ -86,7 +86,7 @@ namespace SapphireNotes.Views
         private void PreferencesSaved(object sender, PreferencesSavedEventArgs e)
         {
             var vm = (MainWindowViewModel)DataContext;
-            vm.PreferencesSaved(e.NotesDirectoryChanged);
+            vm.PreferencesSaved(e.NotesAreDirty);
         }
     }
 }
