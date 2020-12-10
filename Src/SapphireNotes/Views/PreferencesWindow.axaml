@@ -60,7 +60,7 @@
   </Design.DataContext>
 
   <StackPanel>
-    <TextBlock>Notes directory</TextBlock>
+    <TextBlock>Notes Directory</TextBlock>
     <Border Classes="directory">
       <DockPanel HorizontalAlignment="Right">
         <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" />
@@ -81,14 +81,14 @@
 
     <DockPanel Classes="formControlWrap">
       <Border Classes="labelWrap">
-        <TextBlock>Font size</TextBlock>
+        <TextBlock>Font Size</TextBlock>
       </Border>
       <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
     </DockPanel>
 
     <DockPanel Classes="formControlWrap">
       <Border Classes="labelWrap">
-        <TextBlock>Auto save interval</TextBlock>
+        <TextBlock>Auto Save Interval</TextBlock>
       </Border>
       <ComboBox Items="{Binding AutoSaveIntervalLabels}" SelectedIndex="{Binding SelectedAutoSaveIntervalIndex}" />
     </DockPanel>
