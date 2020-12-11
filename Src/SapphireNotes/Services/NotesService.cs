@@ -121,6 +121,9 @@ namespace SapphireNotes.Services
             }
 
             MoveToArchive(note.FilePath);
+
+            _notesMetadata.Remove(note.Name);
+            SaveMetadata();
         }
 
         public void Delete(Note note)
