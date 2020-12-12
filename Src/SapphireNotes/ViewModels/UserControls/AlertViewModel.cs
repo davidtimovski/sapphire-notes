@@ -5,9 +5,9 @@ namespace SapphireNotes.ViewModels.UserControls
 {
     public class AlertViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public AlertViewModel(int width)
+        public AlertViewModel(int maxWidth)
         {
-            this.width = width;
+            this.maxWidth = maxWidth;
         }
 
         public void Show(string message)
@@ -17,11 +17,11 @@ namespace SapphireNotes.ViewModels.UserControls
             Opacity = 1;
         }
 
-        private int width;
-        private int Width
+        private int maxWidth;
+        private int MaxWidth
         {
-            get => width;
-            set => this.RaiseAndSetIfChanged(ref width, value);
+            get => maxWidth;
+            set => this.RaiseAndSetIfChanged(ref maxWidth, value);
         }
 
         private string message;

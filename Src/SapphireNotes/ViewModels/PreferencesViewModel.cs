@@ -2,8 +2,10 @@
 using System.ComponentModel;
 using System.Linq;
 using ReactiveUI;
+using SapphireNotes.Exceptions;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
+using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.ViewModels
 {
@@ -67,33 +69,41 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        public bool Save()
+        public (bool success, bool notesAreDirty) Save()
         {
-            _preferencesService.Preferences.NotesDirectory = notesDirectory;
-            _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
-
-            _preferencesService.SavePreferences();
-
-            if (moveNotes)
+            try
             {
-                _notesService.MoveAll(_initialNotesDirectory);
+                if (moveNotes)
+                {
+                    _notesService.MoveAll(_initialNotesDirectory, notesDirectory);
+                }
+
+                _preferencesService.Preferences.NotesDirectory = notesDirectory;
+                _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
+
+                bool notesAreDirty = _preferencesService.Preferences.NotesDirectory != _initialNotesDirectory;
+
+                if (selectedFontIndex != _initialFontIndex)
+                {
+                    _notesService.SetFontForAll(availableFonts[selectedFontIndex]);
+                    notesAreDirty = true;
+                }
+
+                if (selectedFontSizeIndex != _initialFontSizeIndex)
+                {
+                    _notesService.SetFontSizeForAll(int.Parse(availableFontSizes[selectedFontSizeIndex]));
+                    notesAreDirty = true;
+                }
+
+                _preferencesService.SavePreferences();
+
+                return (true, notesAreDirty);
             }
-
-            bool notesAreDirty = _preferencesService.Preferences.NotesDirectory != _initialNotesDirectory;
-
-            if (selectedFontIndex != _initialFontIndex)
+            catch (MoveNotesException ex)
             {
-                _notesService.SetFontForAll(availableFonts[selectedFontIndex]);
-                notesAreDirty = true;
+                alert.Show(ex.Message);
+                return (false, false);
             }
-
-            if (selectedFontSizeIndex != _initialFontSizeIndex)
-            {
-                _notesService.SetFontSizeForAll(int.Parse(availableFontSizes[selectedFontSizeIndex]));
-                notesAreDirty = true;
-            }
-
-            return notesAreDirty;
         }
 
         private string notesDirectory;
@@ -211,6 +221,13 @@ namespace SapphireNotes.ViewModels
         {
             get => saveEnabled;
             set => this.RaiseAndSetIfChanged(ref saveEnabled, value);
+        }
+
+        private AlertViewModel alert = new AlertViewModel(450);
+        private AlertViewModel Alert
+        {
+            get => alert;
+            set => this.RaiseAndSetIfChanged(ref alert, value);
         }
     }
 }

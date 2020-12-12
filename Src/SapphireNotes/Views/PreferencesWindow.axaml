@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        xmlns:local="clr-namespace:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.PreferencesWindow"
         Title="Preferences">
 
@@ -13,17 +14,13 @@
     <StyleInclude Source="/Styles/Button.axaml" />
     <StyleInclude Source="/Styles/CheckBox.axaml" />
     <StyleInclude Source="/Styles/ComboBox.axaml" />
-    
+
     <Style Selector="DockPanel.formControlWrap">
       <Setter Property="Margin" Value="0 5 0 0" />
     </Style>
 
     <Style Selector="Border.directory">
       <Setter Property="Margin" Value="0 5" />
-    </Style>
-
-    <Style Selector="TextBox">
-      <Setter Property="Width" Value="350" />
     </Style>
 
     <Style Selector="Button#changeNotesDirectoryButton">
@@ -60,12 +57,19 @@
   </Design.DataContext>
 
   <StackPanel>
+    <local:Alert DataContext="{Binding Alert}" />
+    
     <TextBlock>Notes Directory</TextBlock>
     <Border Classes="directory">
-      <DockPanel HorizontalAlignment="Right">
-        <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" />
-        <Button Name="changeNotesDirectoryButton" Classes="button">Change</Button>
-      </DockPanel>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="350" />
+          <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        
+        <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" Grid.Column="0" />
+        <Button Name="changeNotesDirectoryButton" Classes="button" Grid.Column="1">Change</Button>
+      </Grid>
     </Border>
 
     <Border IsVisible="{Binding MoveNotesCheckBoxVisible}" Classes="checkboxWrap">

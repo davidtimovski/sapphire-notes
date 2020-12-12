@@ -41,7 +41,12 @@ namespace SapphireNotes.Views
         private void ApplyButtonClicked()
         {
             var vm = (PreferencesViewModel)DataContext;
-            bool notesAreDirty = vm.Save();
+
+            var (success, notesAreDirty) = vm.Save();
+            if (!success)
+            {
+                return;
+            }
 
             Saved.Invoke(this, new PreferencesSavedEventArgs
             {

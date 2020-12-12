@@ -16,7 +16,7 @@ namespace SapphireNotes.Services
         void SaveAll(IEnumerable<Note> notes);
         void SaveDirtyWithMetadata(IEnumerable<Note> notes);
         Note[] LoadAll();
-        void MoveAll(string oldDirectory);
+        void MoveAll(string oldDirectory, string newDirectory);
         string GetFontThatAllNotesUse();
         int? GetFontSizeThatAllNotesUse();
         void SetFontForAll(string font);
@@ -86,7 +86,7 @@ namespace SapphireNotes.Services
 
             note.Name = newName;
             note.FilePath = path;
-            
+
             return note;
         }
 
@@ -192,41 +192,61 @@ namespace SapphireNotes.Services
             return orderedByLastWrite;
         }
 
-        public void MoveAll(string oldDirectory)
+        public void MoveAll(string oldDirectory, string newDirectory)
         {
             string[] textFiles = Directory.GetFiles(oldDirectory, "*.txt");
 
+            var fromTo = new Dictionary<string, string>();
             foreach (string filePath in textFiles)
             {
-                var newPath = Path.Combine(_preferences.NotesDirectory, Path.GetFileName(filePath));
-                File.Move(filePath, newPath);
+                var newPath = Path.Combine(newDirectory, Path.GetFileName(filePath));
+                if (!File.Exists(newPath))
+                {
+                    fromTo.Add(filePath, newPath);
+                }
+                else
+                {
+                    throw new MoveNotesException("Couldn't move the notes. Make sure there aren't any existing notes with identical names in the chosen directory.");
+                }
             }
-
+            
             var oldArchivePath = Path.Combine(oldDirectory, ArchiveDirectoryName);
-            if (!Directory.Exists(oldArchivePath))
+            bool oldArchiveExists = Directory.Exists(oldArchivePath);
+            if (oldArchiveExists)
             {
-                return;
+                string[] archivedTextFiles = Directory.GetFiles(oldArchivePath, "*.txt");
+                if (archivedTextFiles.Length > 0)
+                {
+                    var newArchivePath = Path.Combine(newDirectory, ArchiveDirectoryName);
+                    if (!Directory.Exists(newArchivePath))
+                    {
+                        Directory.CreateDirectory(newArchivePath);
+                    }
+
+                    foreach (string filePath in archivedTextFiles)
+                    {
+                        var newPath = Path.Combine(newArchivePath, Path.GetFileName(filePath));
+                        if (!File.Exists(newPath))
+                        {
+                            fromTo.Add(filePath, newPath);
+                        }
+                        else
+                        {
+                            throw new MoveNotesException($"Couldn't move the archived notes. Make sure there aren't any existing notes with identical names in the chosen directory's '{ArchiveDirectoryName}' folder.");
+                        }
+                    }
+                }
             }
 
-            string[] archivedTextFiles = Directory.GetFiles(oldArchivePath, "*.txt");
-            if (archivedTextFiles.Length == 0)
+            foreach (var kvp in fromTo)
             {
-                return;
+                File.Move(kvp.Key, kvp.Value);
             }
 
-            var newArchivePath = Path.Combine(_preferences.NotesDirectory, ArchiveDirectoryName);
-            if (!Directory.Exists(newArchivePath))
+            if (oldArchiveExists)
             {
-                Directory.CreateDirectory(newArchivePath);
+                Directory.Delete(oldArchivePath);
             }
-
-            foreach (string filePath in archivedTextFiles)
-            {
-                var newPath = Path.Combine(newArchivePath, Path.GetFileName(filePath));
-                File.Move(filePath, newPath);
-            }
-
-            Directory.Delete(oldArchivePath);
         }
 
         public string GetFontThatAllNotesUse()
