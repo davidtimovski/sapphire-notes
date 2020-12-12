@@ -57,7 +57,7 @@ namespace SapphireNotes.Views
             catch
             {
                 var noteNameTextBox = this.FindControl<TextBox>("noteNameTextBox");
-                noteNameTextBox.BorderBrush = this.FindResource("DangerColor") as SolidColorBrush;
+                noteNameTextBox.BorderBrush = this.FindResource("InvalidBorderColor") as SolidColorBrush;
             }
         }
 

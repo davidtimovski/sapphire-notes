@@ -1,0 +1,33 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SapphireNotes.ViewModels.UserControls;assembly=SapphireNotes"
+             x:Class="SapphireNotes.UserControls.Alert">
+
+  <UserControl.Styles>
+    <Style Selector="Border">
+      <Setter Property="Background" Value="#55ff5141" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="BorderBrush" Value="#ff5141" />
+      <Setter Property="Padding" Value="10 8" />
+      <Setter Property="Margin" Value="0 0 0 15" />
+    </Style>
+
+    <Style Selector="TextBlock">
+      <Setter Property="FontSize" Value="13" />
+    </Style>
+  </UserControl.Styles>
+
+  <Design.DataContext>
+    <vm:AlertViewModel/>
+  </Design.DataContext>
+
+  <Border IsVisible="{Binding IsVisible}" Width="{Binding Width}" Opacity="{Binding Opacity}">
+    <Border.Transitions>
+      <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+    </Border.Transitions>
+    
+    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+  </Border>
+</UserControl>

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SapphireNotes.Exceptions;
 using SapphireNotes.Models;
 using SapphireNotes.Utils;
 
@@ -42,13 +42,13 @@ namespace SapphireNotes.Services
 
             if (name.Length == 0)
             {
-                throw new InvalidNoteNameException("Name is required.");
+                throw new ValidationException("Name is required.");
             }
 
             var fileName = name + ".txt";
             if (Exists(fileName))
             {
-                throw new InvalidNoteNameException("A note with the same name already exists.");
+                throw new ValidationException("A note with the same name already exists.");
             }
 
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
@@ -68,21 +68,21 @@ namespace SapphireNotes.Services
 
             if (newName.Length == 0)
             {
-                throw new InvalidNoteNameException("Name is required.");
+                throw new ValidationException("Name is required.");
             }
 
             var fileName = newName + ".txt";
             if (note.Name.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
             {
-                throw new InvalidNoteNameException("A note with the same name already exists.");
+                throw new ValidationException("A note with the same name already exists.");
             }
+
+            var path = Path.Combine(_preferences.NotesDirectory, fileName);
+            File.Move(note.FilePath, path);
 
             _notesMetadataService.Remove(note.Name);
             _notesMetadataService.Add(newName, note.Metadata);
             _notesMetadataService.Save();
-
-            var path = Path.Combine(_preferences.NotesDirectory, fileName);
-            File.Move(note.FilePath, path);
 
             note.Name = newName;
             note.FilePath = path;
@@ -118,7 +118,7 @@ namespace SapphireNotes.Services
 
         public void SaveAll(IEnumerable<Note> notes)
         {
-            foreach (var note in notes)
+            foreach (Note note in notes)
             {
                 File.WriteAllText(note.FilePath, note.Text);
             }
@@ -128,7 +128,7 @@ namespace SapphireNotes.Services
         {
             _notesMetadataService.Clear();
 
-            foreach (var note in notes)
+            foreach (Note note in notes)
             {
                 if (note.IsDirty)
                 {
@@ -274,12 +274,7 @@ namespace SapphireNotes.Services
         private bool Exists(string fileName)
         {
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
-            if (File.Exists(path))
-            {
-                return true;
-            }
-
-            return false;
+            return File.Exists(path);
         }
 
         private Note[] CreateSampleNotes()
@@ -316,10 +311,5 @@ namespace SapphireNotes.Services
                  note2
             };
         }
-    }
-
-    public class InvalidNoteNameException : Exception
-    {
-        public InvalidNoteNameException(string message) : base(message) { }
     }
 }

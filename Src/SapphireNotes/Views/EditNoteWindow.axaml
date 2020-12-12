@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         xmlns:be="clr-namespace:SapphireNotes.Behaviors"
+        xmlns:local="clr-namespace:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.EditNoteWindow"
         Title="{Binding Title, Mode=OneTime}">
 
@@ -47,6 +48,8 @@
   </Design.DataContext>
 
   <StackPanel>
+    <local:Alert DataContext="{Binding Alert}" />
+    
     <TextBox Name="noteNameTextBox" Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
 
     <DockPanel Classes="formControlWrap">
