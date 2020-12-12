@@ -15,9 +15,12 @@ namespace SapphireNotes.DependencyInjection
         private static void RegisterServices(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)
         {
             services.RegisterLazySingleton<IPreferencesService>(() => new PreferencesService());
+            services.RegisterLazySingleton<INotesMetadataService>(() => new NotesMetadataService());
 
             var preferencesService = resolver.GetService<IPreferencesService>();
-            services.RegisterLazySingleton<INotesService>(() => new NotesService(preferencesService.Preferences));
+            services.RegisterLazySingleton<INotesService>(() => new NotesService(
+                resolver.GetService<INotesMetadataService>(), 
+                preferencesService.Preferences));
         }
 
         private static void RegisterViewModels(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)

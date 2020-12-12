@@ -69,7 +69,7 @@ namespace SapphireNotes.ViewModels
 
         private void LoadNotes()
         {
-            Note[] notes = _notesService.GetAll();
+            Note[] notes = _notesService.LoadAll();
             foreach (var note in notes)
             {
                 AddNote(note);
