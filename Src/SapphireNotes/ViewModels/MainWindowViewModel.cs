@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
@@ -17,7 +16,6 @@ namespace SapphireNotes.ViewModels
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
         private readonly DispatcherTimer autoSaveTimer = new DispatcherTimer();
-        private readonly List<Window> _windows = new List<Window>();
 
         public MainWindowViewModel(IPreferencesService preferencesService, INotesService notesService)
         {
@@ -30,14 +28,53 @@ namespace SapphireNotes.ViewModels
             SetAutoSaveTimer();
         }
 
+        public event EventHandler<EventArgs> NoteEditClicked;
+        public event EventHandler<EventArgs> NoteArchiveClicked;
+        public event EventHandler<EventArgs> NoteDeleteClicked;
+
         public void AddNote(Note note)
         {
             var noteVm = new NoteViewModel(note);
 
-            noteVm.Edited += Note_Edited;
-            noteVm.Archived += Note_Archived;
-            noteVm.Deleted += Note_Deleted;
+            noteVm.Edited += Note_EditClicked;
+            noteVm.Archived += Note_ArchiveClicked;
+            noteVm.Deleted += Note_DeleteClicked;
             Notes.Add(noteVm);
+        }
+
+        public void UpdateNote(UpdatedNoteEventArgs e)
+        {
+            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
+            if (noteVm != null)
+            {
+                noteVm.FilePath = e.UpdatedNote.FilePath;
+                noteVm.Name = e.UpdatedNote.Name;
+                noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
+
+                // Hack to invoke update of FontFamily if FontSize wasn't changed
+                // https://github.com/AvaloniaUI/Avalonia/issues/5127
+                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
+
+                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
+            }
+        }
+
+        public void ArchiveNote(ArchivedNoteEventArgs e)
+        {
+            var noteVm = Notes.FirstOrDefault(x => x.Name == e.Note.Name);
+            if (noteVm != null)
+            {
+                Notes.Remove(noteVm);
+            }
+        }
+
+        public void DeleteNote(DeletedNoteEventArgs e)
+        {
+            var noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+            if (noteVm != null)
+            {
+                Notes.Remove(noteVm);
+            }
         }
 
         public void PreferencesSaved(bool notesAreDirty)
@@ -54,12 +91,6 @@ namespace SapphireNotes.ViewModels
         public void OnClosing(int windowWidth, int windowHeight, int windowPositionX, int windowPositionY)
         {
             autoSaveTimer.Stop();
-
-            // TODO: Not good for MVVM
-            foreach (var window in _windows)
-            {
-                window.Close();
-            }
 
             IEnumerable<Note> notes = Notes.Select(x => x.ToNote());
             _notesService.SaveDirtyWithMetadata(notes);
@@ -87,89 +118,19 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        private void Note_Edited(object sender, EventArgs e)
+        private void Note_EditClicked(object sender, EventArgs e)
         {
-            // TODO: Not good for MVVM
-            var window = new EditNoteWindow
-            {
-                DataContext = new EditNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
-                Width = 300,
-                Height = 98,
-                Topmost = true,
-                CanResize = false
-            };
-            window.Updated += Note_Updated;
-            window.Show();
-            window.Activate();
-
-            _windows.Add(window);
+            NoteEditClicked.Invoke(sender, e);
         }
 
-        private void Note_Updated(object sender, UpdatedNoteEventArgs e)
+        private void Note_ArchiveClicked(object sender, EventArgs e)
         {
-            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
-            if (noteVm != null)
-            {
-                noteVm.FilePath = e.UpdatedNote.FilePath;
-                noteVm.Name = e.UpdatedNote.Name;
-                noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
-
-                // Hack to invoke update of FontFamily if FontSize wasn't changed
-                // https://github.com/AvaloniaUI/Avalonia/issues/5127
-                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
-
-                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
-            }
+            NoteArchiveClicked.Invoke(sender, e);
         }
 
-        private void Note_Archived(object sender, EventArgs e)
+        private void Note_DeleteClicked(object sender, EventArgs e)
         {
-            // TODO: Not good for MVVM
-            var window = new ArchiveNoteWindow
-            {
-                DataContext = new ArchiveNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
-                Topmost = true,
-                CanResize = false
-            };
-            window.Archived += Note_Archive_Confirmed;
-            window.Show();
-            window.Activate();
-
-            _windows.Add(window);
-        }
-
-        private void Note_Archive_Confirmed(object sender, ArchivedNoteEventArgs e)
-        {
-            var noteVm = Notes.FirstOrDefault(x => x.Name == e.Note.Name);
-            if (noteVm != null)
-            {
-                Notes.Remove(noteVm);
-            }
-        }
-
-        private void Note_Deleted(object sender, EventArgs e)
-        {
-            // TODO: Not good for MVVM
-            var window = new DeleteNoteWindow
-            {
-                DataContext = new DeleteNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
-                Topmost = true,
-                CanResize = false
-            };
-            window.Deleted += Note_Delete_Confirmed;
-            window.Show();
-            window.Activate();
-
-            _windows.Add(window);
-        }
-
-        private void Note_Delete_Confirmed(object sender, DeletedNoteEventArgs e)
-        {
-            var noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
-            if (noteVm != null)
-            {
-                Notes.Remove(noteVm);
-            }
+            NoteDeleteClicked.Invoke(sender, e);
         }
 
         private void SaveDirtyNotes(object sender, EventArgs e)
