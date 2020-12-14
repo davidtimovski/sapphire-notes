@@ -32,7 +32,7 @@ namespace SapphireNotes.ViewModels
         public event EventHandler<EventArgs> NoteArchiveClicked;
         public event EventHandler<EventArgs> NoteDeleteClicked;
 
-        public void AddNote(Note note)
+        public NoteViewModel AddNote(Note note)
         {
             var noteVm = new NoteViewModel(note);
 
@@ -40,6 +40,8 @@ namespace SapphireNotes.ViewModels
             noteVm.Archived += Note_ArchiveClicked;
             noteVm.Deleted += Note_DeleteClicked;
             Notes.Add(noteVm);
+
+            return noteVm;
         }
 
         public void UpdateNote(UpdatedNoteEventArgs e)

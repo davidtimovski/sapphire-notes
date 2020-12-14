@@ -136,7 +136,10 @@ namespace SapphireNotes.Views
         private void NoteCreated(object sender, CreatedNoteEventArgs e)
         {
             var vm = (MainWindowViewModel)DataContext;
-            vm.AddNote(e.CreatedNote);
+            NoteViewModel noteVm = vm.AddNote(e.CreatedNote);
+
+            var noteTabControl = this.FindControl<TabControl>("noteTabs");
+            noteTabControl.SelectedItem = noteVm;
         }
 
         private void PreferencesButtonClicked()
