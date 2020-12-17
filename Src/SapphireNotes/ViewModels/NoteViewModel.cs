@@ -20,31 +20,16 @@ namespace SapphireNotes.ViewModels
             fontSize = note.Metadata.FontSize;
             caretPosition = note.Metadata.CaretPosition;
 
-            OnEditCommand = ReactiveCommand.Create(Edit);
-            OnArchiveCommand = ReactiveCommand.Create(Archive);
-            OnDeleteCommand = ReactiveCommand.Create(Delete);
+            OnEditCommand = ReactiveCommand.Create(() => EditClicked.Invoke(this, null));
+            OnArchiveCommand = ReactiveCommand.Create(() => ArchiveClicked.Invoke(this, null));
+            OnDeleteCommand = ReactiveCommand.Create(() => DeleteClicked.Invoke(this, null));
         }
 
         public Note Note { get; set; }
 
-        public event EventHandler<EventArgs> Edited;
-        public event EventHandler<EventArgs> Archived;
-        public event EventHandler<EventArgs> Deleted;
-
-        public void Edit()
-        {
-            Edited.Invoke(this, null);
-        }
-
-        public void Archive()
-        {
-            Archived.Invoke(this, null);
-        }
-
-        public void Delete()
-        {
-            Deleted.Invoke(this, null);
-        }
+        public event EventHandler<EventArgs> EditClicked;
+        public event EventHandler<EventArgs> ArchiveClicked;
+        public event EventHandler<EventArgs> DeleteClicked;
 
         private string name;
         public string Name

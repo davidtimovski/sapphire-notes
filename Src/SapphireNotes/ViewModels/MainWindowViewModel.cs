@@ -36,9 +36,9 @@ namespace SapphireNotes.ViewModels
         {
             var noteVm = new NoteViewModel(note);
 
-            noteVm.Edited += Note_EditClicked;
-            noteVm.Archived += Note_ArchiveClicked;
-            noteVm.Deleted += Note_DeleteClicked;
+            noteVm.EditClicked += Note_EditClicked;
+            noteVm.ArchiveClicked += Note_ArchiveClicked;
+            noteVm.DeleteClicked += Note_DeleteClicked;
             Notes.Add(noteVm);
 
             return noteVm;

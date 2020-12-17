@@ -13,12 +13,8 @@ namespace SapphireNotes.Behaviors
         public static readonly AttachedProperty<int> CaretPositionProperty = AvaloniaProperty.RegisterAttached<CaretBehavior, Interactive, int>(
             "CaretPosition", default, false, BindingMode.OneTime, ValidateCaretPosition);
 
-        private static int _index;
-
         private static int ValidateCaretPosition(Interactive element, int index)
         {
-            _index = index;
-
             var textBox = element as TextBox;
             textBox.AttachedToVisualTree += SetTextBoxCaretIndexThenFocus;
 
@@ -27,18 +23,18 @@ namespace SapphireNotes.Behaviors
 
             return index;
 
+            void SetTextBoxCaretIndexThenFocus(object sender, EventArgs e)
+            {
+                var textBox = sender as TextBox;
+                textBox.CaretIndex = index;
+                textBox.Focus();
+            }
+
             void UpdateViewModelCaretPosition(object s, RoutedEventArgs e)
             {
                 var vm = textBox.DataContext as NoteViewModel;
                 vm.CaretPosition = textBox.CaretIndex;
             }
-        }
-
-        private static void SetTextBoxCaretIndexThenFocus(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            textBox.CaretIndex = _index;
-            textBox.Focus();
         }
 
         public static void SetCaretPosition(AvaloniaObject element, int value)
