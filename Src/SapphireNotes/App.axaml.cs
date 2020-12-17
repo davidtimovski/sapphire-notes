@@ -41,7 +41,7 @@ namespace SapphireNotes
                         Topmost = true,
                         CanResize = false
                     };
-                    window.Saved += InitialSetup_Saved;
+                    window.Started += InitialSetup_Started;
                     window.Show();
                     window.Activate();
                 }
@@ -50,7 +50,7 @@ namespace SapphireNotes
             base.OnFrameworkInitializationCompleted();
         }
 
-        private void InitialSetup_Saved(object sender, EventArgs e)
+        private void InitialSetup_Started(object sender, EventArgs e)
         {
             var preferencesService = Locator.Current.GetRequiredService<IPreferencesService>();
             preferencesService.SavePreferences();

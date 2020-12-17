@@ -49,7 +49,6 @@ namespace SapphireNotes.ViewModels
             NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
             if (noteVm != null)
             {
-                noteVm.FilePath = e.UpdatedNote.FilePath;
                 noteVm.Name = e.UpdatedNote.Name;
                 noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
 
@@ -63,7 +62,7 @@ namespace SapphireNotes.ViewModels
 
         public void ArchiveNote(ArchivedNoteEventArgs e)
         {
-            var noteVm = Notes.FirstOrDefault(x => x.Name == e.Note.Name);
+            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.Note.Name);
             if (noteVm != null)
             {
                 Notes.Remove(noteVm);
@@ -72,7 +71,7 @@ namespace SapphireNotes.ViewModels
 
         public void DeleteNote(DeletedNoteEventArgs e)
         {
-            var noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
             if (noteVm != null)
             {
                 Notes.Remove(noteVm);
@@ -102,7 +101,7 @@ namespace SapphireNotes.ViewModels
 
         private void LoadNotes()
         {
-            Note[] notes = _notesService.LoadAll();
+            Note[] notes = _notesService.Load();
             foreach (var note in notes)
             {
                 AddNote(note);
@@ -137,14 +136,14 @@ namespace SapphireNotes.ViewModels
 
         private void SaveDirtyNotes(object sender, EventArgs e)
         {
-            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty);
+            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.Note.IsDirty);
             if (dirtyNotesVMs.Any())
             {
                 _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
 
                 foreach (var note in dirtyNotesVMs)
                 {
-                    note.IsDirty = false;
+                    note.Note.IsDirty = false;
                 }
             }
         }

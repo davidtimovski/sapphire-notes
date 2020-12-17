@@ -39,4 +39,14 @@
     <Setter Property="Background" Value="{StaticResource SuccessColorLight}" />
   </Style>
 
+  <Style Selector="Button.button.danger">
+    <Setter Property="Background" Value="{StaticResource DangerColor}" />
+  </Style>
+  <Style Selector="Button.button.danger:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource DangerColorLight}" />
+  </Style>
+  <Style Selector="Button.button.danger:pressed /template/ ContentPresenter">
+    <Setter Property="Background" Value="{StaticResource DangerColorLight}" />
+  </Style>
+
 </Styles>

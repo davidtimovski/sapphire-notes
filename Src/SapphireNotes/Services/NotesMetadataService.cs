@@ -8,18 +8,17 @@ namespace SapphireNotes.Services
 {
     public interface INotesMetadataService
     {
-        int Count { get; }
         void Add(string name, NoteMetadata metadata);
+        void AddOrUpdate(string name, NoteMetadata metadata);
         bool Contains(string name);
         NoteMetadata Get(string name);
         void Remove(string name);
         void Clear();
-        void RemoveMissing(IEnumerable<string> noteNames);
         string[] GetDistinctFonts();
         int[] GetDistinctFontSizes();
         void SetFontForAll(string font);
         void SetFontSizeForAll(int fontSize);
-        void LoadOrCreate();
+        void Initialize(IEnumerable<string> notesOnFilesystem);
         void Save();
     }
 
@@ -44,11 +43,21 @@ namespace SapphireNotes.Services
             _metadataFilePath = Path.Combine(appDataDirectory, MetadataFileName);
         }
 
-        public int Count { get { return _notesMetadata.Count; } }
-
         public void Add(string name, NoteMetadata metadata)
         {
             _notesMetadata.Add(name, metadata);
+        }
+
+        public void AddOrUpdate(string name, NoteMetadata metadata)
+        {
+            if (_notesMetadata.ContainsKey(name))
+            {
+                _notesMetadata[name] = metadata;
+            }
+            else
+            {
+                _notesMetadata.Add(name, metadata);
+            }
         }
 
         public bool Contains(string name)
@@ -69,16 +78,6 @@ namespace SapphireNotes.Services
         public void Clear()
         {
             _notesMetadata.Clear();
-        }
-
-        public void RemoveMissing(IEnumerable<string> noteNames)
-        {
-            var missingNoteNames = _notesMetadata.Keys.Where(k => !noteNames.Contains(k));
-
-            foreach (string noteName in missingNoteNames)
-            {
-                _notesMetadata.Remove(noteName);
-            }
         }
 
         public string[] GetDistinctFonts()
@@ -109,7 +108,7 @@ namespace SapphireNotes.Services
             Save();
         }
 
-        public void LoadOrCreate()
+        public void Initialize(IEnumerable<string> notesOnFilesystem)
         {
             if (File.Exists(_metadataFilePath))
             {
@@ -121,18 +120,39 @@ namespace SapphireNotes.Services
                 {
                     var noteName = reader.ReadString();
                     var metadata = new NoteMetadata
+                    (
+                        fontFamily: reader.ReadString(),
+                        fontSize: reader.ReadInt32(),
+                        caretPosition: reader.ReadInt32()
+                    );
+
+                    long archivedTicks = reader.ReadInt64();
+                    if (archivedTicks != 0)
                     {
-                        FontSize = reader.ReadInt32(),
-                        FontFamily = reader.ReadString(),
-                        CaretPosition = reader.ReadInt32()
-                    };
+                        metadata.Archived = new DateTime(archivedTicks);
+                    }
 
                     _notesMetadata.Add(noteName, metadata);
                 }
+
+                SynchronizeWithFileSystem(notesOnFilesystem);
             }
             else
             {
-                _notesMetadata = new Dictionary<string, NoteMetadata>();
+                _notesMetadata = new Dictionary<string, NoteMetadata>(notesOnFilesystem.Count());
+
+                foreach (string noteName in notesOnFilesystem)
+                {
+                    if (noteName.Contains(Globals.ArchiveDirectoryName + "/"))
+                    {
+                        _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
+                    }
+                    else
+                    {
+                        _notesMetadata.Add(noteName, new NoteMetadata());
+                    }
+                }
+
                 Save();
             }
         }
@@ -146,9 +166,32 @@ namespace SapphireNotes.Services
             foreach (var kvp in _notesMetadata)
             {
                 writer.Write(kvp.Key);
-                writer.Write(kvp.Value.FontSize);
                 writer.Write(kvp.Value.FontFamily);
+                writer.Write(kvp.Value.FontSize);
                 writer.Write(kvp.Value.CaretPosition);
+                writer.Write(kvp.Value.Archived.HasValue ? kvp.Value.Archived.Value.Ticks : 0);
+            }
+        }
+
+        private void SynchronizeWithFileSystem(IEnumerable<string> notesOnFilesystem)
+        {
+            IEnumerable<string> deletedNotes = _notesMetadata.Keys.Where(k => !notesOnFilesystem.Contains(k));
+            foreach (string noteName in deletedNotes)
+            {
+                _notesMetadata.Remove(noteName);
+            }
+
+            IEnumerable<string> addedNotes = notesOnFilesystem.Where(k => !_notesMetadata.Keys.Contains(k));
+            foreach (string noteName in addedNotes)
+            {
+                if (noteName.Contains(Globals.ArchiveDirectoryName + "/"))
+                {
+                    _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
+                }
+                else
+                {
+                    _notesMetadata.Add(noteName, new NoteMetadata());
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ namespace SapphireNotes
     public static class Globals
     {
         public const string ApplicationName = "Sapphire Notes";
+        public const string ArchiveDirectoryName = "archive";
         public const string DefaultFontFamily = "Arial";
         public const int DefaultFontSize = 15;
         public static string[] AvailableFonts = new string[] { "Arial", "Calibri", "Consolas", "Open Sans", "Roboto", "Verdana" };

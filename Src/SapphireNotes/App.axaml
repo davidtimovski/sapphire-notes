@@ -22,6 +22,8 @@
     <SolidColorBrush x:Key="PrimaryColorDark">#1b6091</SolidColorBrush>
     <SolidColorBrush x:Key="SuccessColor">#00aa5a</SolidColorBrush>
     <SolidColorBrush x:Key="SuccessColorLight">#1cba6a</SolidColorBrush>
+    <SolidColorBrush x:Key="DangerColor">#cc3322</SolidColorBrush>
+    <SolidColorBrush x:Key="DangerColorLight">#dd4433</SolidColorBrush>
     <SolidColorBrush x:Key="InvalidBorderColor">#bd655c</SolidColorBrush>
     <SolidColorBrush x:Key="BackgroundColor">#1e1e1e</SolidColorBrush>
     <SolidColorBrush x:Key="WhiteColor">#e3e3e3</SolidColorBrush>

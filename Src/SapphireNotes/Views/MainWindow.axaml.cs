@@ -25,6 +25,9 @@ namespace SapphireNotes.Views
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
 
+            var archivedButton = this.FindControl<Button>("archivedButton");
+            archivedButton.Command = ReactiveCommand.Create(ArchivedButtonClicked);
+
             var preferencesButton = this.FindControl<Button>("preferencesButton");
             preferencesButton.Command = ReactiveCommand.Create(PreferencesButtonClicked);
 
@@ -137,6 +140,32 @@ namespace SapphireNotes.Views
         {
             var vm = (MainWindowViewModel)DataContext;
             NoteViewModel noteVm = vm.AddNote(e.CreatedNote);
+
+            var noteTabControl = this.FindControl<TabControl>("noteTabs");
+            noteTabControl.SelectedItem = noteVm;
+        }
+
+        private void ArchivedButtonClicked()
+        {
+            var vm = new ArchivedNotesViewModel(Locator.Current.GetService<INotesService>());
+            vm.NoteRestored += NoteRestored;
+
+            var window = new ArchivedNotesWindow
+            {
+                DataContext = vm,
+                Owner = this,
+                Topmost = true
+            };
+            window.Show();
+            window.Activate();
+
+            _windows.Add(window);
+        }
+
+        private void NoteRestored(object sender, ArchivedNoteRestoredEventArgs e)
+        {
+            var vm = (MainWindowViewModel)DataContext;
+            NoteViewModel noteVm = vm.AddNote(e.RestoredNote);
 
             var noteTabControl = this.FindControl<TabControl>("noteTabs");
             noteTabControl.SelectedItem = noteVm;

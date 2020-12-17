@@ -24,6 +24,13 @@
     <Style Selector="DockPanel.toolbar">
       <Setter Property="Margin" Value="0 0 0 5" />
     </Style>
+    <Style Selector="StackPanel.rightHandButtons">
+      <Setter Property="Orientation" Value="Horizontal" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style Selector="Button#archivedButton">
+      <Setter Property="Margin" Value="0 0 5 0" />
+    </Style>
 
     <Style Selector="TabControl[TabStripPlacement=Top]">
       <Setter Property="Padding" Value="0 0 0 0"/>
@@ -68,7 +75,8 @@
     <DockPanel Grid.Row="0" Classes="toolbar">
       <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
       
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <StackPanel Classes="rightHandButtons">
+        <Button Name="archivedButton" HotKey="Ctrl+R" Classes="button">Archived</Button>
         <Button Name="preferencesButton" HotKey="Ctrl+P" Classes="button">Preferences</Button>
       </StackPanel>
     </DockPanel>

@@ -21,11 +21,11 @@ namespace SapphireNotes.Views
             var selectButton = this.FindControl<Button>("selectButton");
             selectButton.Command = ReactiveCommand.Create(SelectButtonClicked);
 
-            var saveButton = this.FindControl<Button>("saveButton");
-            saveButton.Command = ReactiveCommand.Create(SaveButtonClicked);
+            var startButton = this.FindControl<Button>("startButton");
+            startButton.Command = ReactiveCommand.Create(StartButtonClicked);
         }
 
-        public event EventHandler<EventArgs> Saved;
+        public event EventHandler<EventArgs> Started;
 
         public async Task SelectButtonClicked()
         {
@@ -35,9 +35,9 @@ namespace SapphireNotes.Views
             vm.SetNotesDirectory(directory);
         }
 
-        private void SaveButtonClicked()
+        private void StartButtonClicked()
         {
-            Saved.Invoke(this, null);
+            Started.Invoke(this, null);
             Close();
         }
 

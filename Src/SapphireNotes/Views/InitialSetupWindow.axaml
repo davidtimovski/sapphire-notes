@@ -54,7 +54,7 @@
 
     <DockPanel HorizontalAlignment="Right">
       <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
-      <Button Name="saveButton" IsVisible="{Binding SaveButtonVisible}" Classes="button primary">Save</Button>
+      <Button Name="startButton" IsVisible="{Binding StartButtonVisible}" Classes="button primary">Start</Button>
     </DockPanel>
   </StackPanel>
 

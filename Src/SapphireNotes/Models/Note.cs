@@ -2,9 +2,8 @@
 {
     public class Note
     {
-        public Note()
+        public Note(string name, string filePath, string fileContents) : this(name, filePath, fileContents, null)
         {
-            Name = string.Empty;
         }
 
         public Note(string name, string filePath, string fileContents, NoteMetadata metadata)

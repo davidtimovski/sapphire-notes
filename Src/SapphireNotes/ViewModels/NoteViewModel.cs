@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reactive;
-using SapphireNotes.Models;
-using ReactiveUI;
-using SapphireNotes.Utils;
 using Avalonia.Media;
+using ReactiveUI;
+using SapphireNotes.Models;
+using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels
 {
@@ -12,7 +12,8 @@ namespace SapphireNotes.ViewModels
     {
         public NoteViewModel(Note note)
         {
-            FilePath = note.FilePath;
+            Note = note;
+
             name = note.Name;
             text = note.Text;
             fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
@@ -24,11 +25,11 @@ namespace SapphireNotes.ViewModels
             OnDeleteCommand = ReactiveCommand.Create(Delete);
         }
 
+        public Note Note { get; set; }
+
         public event EventHandler<EventArgs> Edited;
         public event EventHandler<EventArgs> Archived;
         public event EventHandler<EventArgs> Deleted;
-
-        public string FilePath { get; set; }
 
         public void Edit()
         {
@@ -44,8 +45,6 @@ namespace SapphireNotes.ViewModels
         {
             Deleted.Invoke(this, null);
         }
-
-        public bool IsDirty { get; set; }
 
         private string name;
         public string Name
@@ -64,15 +63,8 @@ namespace SapphireNotes.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref text, value);
-                IsDirty = true;
+                Note.IsDirty = true;
             }
-        }
-
-        private int fontSize;
-        public int FontSize
-        {
-            get => fontSize;
-            set => this.RaiseAndSetIfChanged(ref fontSize, value);
         }
 
         private FontFamily fontFamily;
@@ -80,6 +72,13 @@ namespace SapphireNotes.ViewModels
         {
             get => fontFamily;
             set => this.RaiseAndSetIfChanged(ref fontFamily, value);
+        }
+
+        private int fontSize;
+        public int FontSize
+        {
+            get => fontSize;
+            set => this.RaiseAndSetIfChanged(ref fontSize, value);
         }
 
         private int caretPosition;
@@ -91,19 +90,13 @@ namespace SapphireNotes.ViewModels
 
         public Note ToNote()
         {
-            return new Note
-            {
-                FilePath = FilePath,
-                IsDirty = IsDirty,
-                Name = Name,
-                Text = Text,
-                Metadata = new NoteMetadata
-                {
-                    FontFamily = FontFamily.Name,
-                    FontSize = fontSize,
-                    CaretPosition = caretPosition
-                }
-            };
+            Note.Name = name;
+            Note.Text = text;
+            Note.Metadata.FontFamily = fontFamily.Name;
+            Note.Metadata.FontSize = fontSize;
+            Note.Metadata.CaretPosition = caretPosition;
+
+            return Note;
         }
 
         private ReactiveCommand<Unit, Unit> OnEditCommand { get; }
