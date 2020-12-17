@@ -38,7 +38,6 @@ namespace SapphireNotes.Views
         {
             var vm = (MainWindowViewModel)DataContext;
             vm.NoteEditClicked += Note_Edit;
-            vm.NoteArchiveClicked += Note_Archive;
             vm.NoteDeleteClicked += Note_Delete;
         }
 
@@ -62,26 +61,6 @@ namespace SapphireNotes.Views
         {
             var vm = (MainWindowViewModel)DataContext;
             vm.UpdateNote(e);
-        }
-
-        private void Note_Archive(object sender, EventArgs e)
-        {
-            var window = new ArchiveNoteWindow
-            {
-                DataContext = new ArchiveNoteViewModel(Locator.Current.GetService<INotesService>(), (sender as NoteViewModel).ToNote()),
-                Topmost = true,
-                CanResize = false
-            };
-            window.Archived += Note_ArchiveConfirmed;
-            window.Show();
-            window.Activate();
-
-            _windows.Add(window);
-        }
-        private void Note_ArchiveConfirmed(object sender, ArchivedNoteEventArgs e)
-        {
-            var vm = (MainWindowViewModel)DataContext;
-            vm.ArchiveNote(e);
         }
 
         private void Note_Delete(object sender, EventArgs e)

@@ -13,9 +13,6 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ArchiveNoteWindow.axaml.cs">
-      <DependentUpon>ArchiveNoteWindow.axaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\ArchivedNotesWindow.axaml.cs">
       <DependentUpon>ArchivedNotesWindow.axaml</DependentUpon>
     </Compile>

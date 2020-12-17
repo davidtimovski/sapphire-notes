@@ -29,7 +29,6 @@ namespace SapphireNotes.ViewModels
         }
 
         public event EventHandler<EventArgs> NoteEditClicked;
-        public event EventHandler<EventArgs> NoteArchiveClicked;
         public event EventHandler<EventArgs> NoteDeleteClicked;
 
         public NoteViewModel AddNote(Note note)
@@ -59,15 +58,6 @@ namespace SapphireNotes.ViewModels
                 noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
 
                 noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
-            }
-        }
-
-        public void ArchiveNote(ArchivedNoteEventArgs e)
-        {
-            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.Note.Name);
-            if (noteVm != null)
-            {
-                Notes.Remove(noteVm);
             }
         }
 
@@ -128,7 +118,7 @@ namespace SapphireNotes.ViewModels
 
         private void Note_ArchiveClicked(object sender, EventArgs e)
         {
-            NoteArchiveClicked.Invoke(sender, e);
+            ArchiveNote(sender as NoteViewModel);
         }
 
         private void Note_DeleteClicked(object sender, EventArgs e)
@@ -138,7 +128,11 @@ namespace SapphireNotes.ViewModels
 
         private void Note_MiddleMouseClicked(object sender, EventArgs e)
         {
-            var noteVm = sender as NoteViewModel;
+            ArchiveNote(sender as NoteViewModel);
+        }
+
+        private void ArchiveNote(NoteViewModel noteVm)
+        {
             _notesService.Archive(noteVm.Note);
             Notes.Remove(noteVm);
         }
