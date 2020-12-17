@@ -39,6 +39,8 @@ namespace SapphireNotes.ViewModels
             noteVm.EditClicked += Note_EditClicked;
             noteVm.ArchiveClicked += Note_ArchiveClicked;
             noteVm.DeleteClicked += Note_DeleteClicked;
+            noteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
+
             Notes.Add(noteVm);
 
             return noteVm;
@@ -132,6 +134,13 @@ namespace SapphireNotes.ViewModels
         private void Note_DeleteClicked(object sender, EventArgs e)
         {
             NoteDeleteClicked.Invoke(sender, e);
+        }
+
+        private void Note_MiddleMouseClicked(object sender, EventArgs e)
+        {
+            var noteVm = sender as NoteViewModel;
+            _notesService.Archive(noteVm.Note);
+            Notes.Remove(noteVm);
         }
 
         private void SaveDirtyNotes(object sender, EventArgs e)

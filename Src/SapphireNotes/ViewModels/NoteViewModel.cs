@@ -30,6 +30,7 @@ namespace SapphireNotes.ViewModels
         public event EventHandler<EventArgs> EditClicked;
         public event EventHandler<EventArgs> ArchiveClicked;
         public event EventHandler<EventArgs> DeleteClicked;
+        public event EventHandler<EventArgs> MiddleMouseClicked;
 
         private string name;
         public string Name
@@ -82,6 +83,11 @@ namespace SapphireNotes.ViewModels
             Note.Metadata.CaretPosition = caretPosition;
 
             return Note;
+        }
+
+        public void InvokeMiddleMouseClick()
+        {
+            MiddleMouseClicked.Invoke(this, null);
         }
 
         private ReactiveCommand<Unit, Unit> OnEditCommand { get; }

@@ -84,7 +84,7 @@
     <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate DataType="vm:NoteViewModel">
-          <Border Classes="tabHeader">
+          <Border be:ClickBehavior.MiddleMouseArchive="True" Classes="tabHeader">
             <TextBlock Text="{Binding Name}" />
             <Border.ContextMenu>
               <ContextMenu>
