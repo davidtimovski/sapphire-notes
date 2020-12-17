@@ -25,9 +25,6 @@
     <Compile Update="Views\DeleteNoteWindow.axaml.cs">
       <DependentUpon>DeleteNoteWindow.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ErrorWindow.axaml.cs">
-      <DependentUpon>ErrorWindow.axaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\EditNoteWindow.axaml.cs">
       <DependentUpon>EditNoteWindow.axaml</DependentUpon>
     </Compile>
