@@ -34,7 +34,7 @@
     <Border Classes="buttonsWrap">
       <DockPanel HorizontalAlignment="Right">
         <Button Name="yesButton" Classes="button primary">Yes</Button>
-        <Button Name="noButton" HotKey="Enter" Classes="button">No</Button>
+        <Button Name="noButton" HotKey="Escape" Classes="button">No</Button>
       </DockPanel>
     </Border>
   </StackPanel>

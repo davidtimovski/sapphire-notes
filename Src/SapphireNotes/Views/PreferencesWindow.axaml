@@ -100,7 +100,7 @@
     <Border Classes="buttonsWrap">
       <DockPanel>
         <Button Name="applyButton" IsEnabled="{Binding SaveEnabled}" Classes="button primary">Apply</Button>
-        <Button Name="closeButton" Classes="button">Close</Button>
+        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </DockPanel>
     </Border>
   </StackPanel>

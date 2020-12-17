@@ -177,7 +177,7 @@
     </Border>
 
     <Border Classes="buttonsWrap">
-      <Button Name="closeButton" HorizontalAlignment="Right" Classes="button">Close</Button>
+      <Button Name="closeButton" HorizontalAlignment="Right" HotKey="Escape" Classes="button">Close</Button>
     </Border>
   </StackPanel>
 
