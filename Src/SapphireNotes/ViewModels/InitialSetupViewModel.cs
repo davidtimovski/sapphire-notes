@@ -24,7 +24,7 @@ namespace SapphireNotes.ViewModels
 
                 NotesDirectory = _preferencesService.Preferences.NotesDirectory;
                 SelectButtonLabel = "Change storage folder";
-                SaveButtonVisible = true;
+                StartButtonVisible = true;
             }
         }
 
@@ -35,11 +35,11 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref directoryTextBoxVisible, value);
         }
 
-        private bool saveButtonVisible;
-        private bool SaveButtonVisible
+        private bool startButtonVisible;
+        private bool StartButtonVisible
         {
-            get => saveButtonVisible;
-            set => this.RaiseAndSetIfChanged(ref saveButtonVisible, value);
+            get => startButtonVisible;
+            set => this.RaiseAndSetIfChanged(ref startButtonVisible, value);
         }
 
         private string notesDirectory;
