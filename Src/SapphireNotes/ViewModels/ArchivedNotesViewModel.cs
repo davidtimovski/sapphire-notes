@@ -27,8 +27,8 @@ namespace SapphireNotes.ViewModels
 
             Restore = ReactiveCommand.Create(RestoreSelectedNote);
             Delete = ReactiveCommand.Create(DeleteSelectedNote);
-            Confirm = ReactiveCommand.Create(ConfirmAction);
-            Cancel = ReactiveCommand.Create(HideConfirmPrompt);
+            Confirm = ReactiveCommand.Create(ConfirmDelete);
+            Cancel = ReactiveCommand.Create(CancelDelete);
         }
 
         public event EventHandler<ArchivedNoteRestoredEventArgs> NoteRestored;
@@ -38,56 +38,52 @@ namespace SapphireNotes.ViewModels
         private ReactiveCommand<Unit, Unit> Confirm { get; }
         private ReactiveCommand<Unit, Unit> Cancel { get; }
 
-        private string action;
+        private void RestoreSelectedNote()
+        {
+            _notesService.Restore(selected.Note);
 
-        void RestoreSelectedNote()
+            NoteRestored.Invoke(this, new ArchivedNoteRestoredEventArgs
+            {
+                RestoredNote = selected.Note
+            });
+
+            ArchivedNotes.Remove(selected);
+            ArchivedNotesExist = ArchivedNotes.Any();
+
+            Selected = null;
+        }
+
+        private void DeleteSelectedNote()
         {
             if (selected == null)
             {
                 return;
             }
 
-            ShowConfirmPrompt("restore", "Are you sure you wish to restore the selected note?");
+            ShowConfirmPrompt("Are you sure you wish to delete the selected note?");
         }
 
-        void DeleteSelectedNote()
+        private void ConfirmDelete()
         {
-            if (selected == null)
-            {
-                return;
-            }
-
-            ShowConfirmPrompt("delete", "Are you sure you wish to delete the selected note?");
-        }
-
-        void ConfirmAction()
-        {
-            if (action == "restore")
-            {
-                _notesService.Restore(selected.Note);
-
-                NoteRestored.Invoke(this, new ArchivedNoteRestoredEventArgs
-                {
-                    RestoredNote = selected.Note
-                });
-            }
-            else if (action == "delete")
-            {
-                _notesService.Delete(selected.Note);
-            }
+            _notesService.Delete(selected.Note);
 
             ArchivedNotes.Remove(selected);
             ArchivedNotesExist = ArchivedNotes.Any();
             HideConfirmPrompt();
+            Selected = null;
         }
 
-        void HideConfirmPrompt()
+        private void CancelDelete()
+        {
+            HideConfirmPrompt();
+            ActionButtonsEnabled = true;
+        }
+
+        private void HideConfirmPrompt()
         {
             ConfirmPromptOpacity = 0;
             ConfirmPromptVisible = false;
-            ActionButtonsEnabled = true;
             ConfirmPromptText = null;
-            action = null;
         }
 
         private bool archivedNotesExist;
@@ -142,9 +138,8 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref confirmPromptOpacity, value);
         }
 
-        private void ShowConfirmPrompt(string action, string text)
+        private void ShowConfirmPrompt(string text)
         {
-            this.action = action;
             ActionButtonsEnabled = false;
             ConfirmPromptText = text;
             ConfirmPromptVisible = true;
