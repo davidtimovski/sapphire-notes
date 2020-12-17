@@ -2,8 +2,8 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
 using ReactiveUI;
+using SapphireNotes.Exceptions;
 using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
 
@@ -54,10 +54,9 @@ namespace SapphireNotes.Views
 
                 Close();
             }
-            catch
+            catch (ValidationException)
             {
-                var noteNameTextBox = this.FindControl<TextBox>("noteNameTextBox");
-                noteNameTextBox.BorderBrush = this.FindResource("InvalidBorderColor") as SolidColorBrush;
+                // Do nothing. Handled in view model.
             }
         }
 

@@ -100,8 +100,15 @@ namespace SapphireNotes.ViewModels
         private string name;
         private string Name
         {
-            get => name;
-            set => this.RaiseAndSetIfChanged(ref name, value);
+            get
+            {
+                return name;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref name, value);
+                alert.Hide();
+            }
         }
 
         private string[] availableFonts = Globals.AvailableFonts;

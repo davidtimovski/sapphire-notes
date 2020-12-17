@@ -17,6 +17,16 @@ namespace SapphireNotes.ViewModels.UserControls
             Opacity = 1;
         }
 
+        public void Hide()
+        {
+            if (isVisible)
+            {
+                Opacity = 0;
+                IsVisible = false;
+                Message = null;
+            }
+        }
+
         private int maxWidth;
         private int MaxWidth
         {
