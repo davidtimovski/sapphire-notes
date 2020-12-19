@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        xmlns:be="clr-namespace:SapphireNotes.Behaviors"
         xmlns:local="clr-namespace:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.ArchivedNotesWindow"
         Title="Archived notes">
@@ -59,7 +60,7 @@
     </Style>
 
     <Style Selector="ListBoxItem">
-      <Setter Property="Padding" Value="10 5" />
+      <Setter Property="Padding" Value="0" />
     </Style>
     <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{StaticResource GreyColor}" />
@@ -75,6 +76,11 @@
     </Style>
     <Style Selector="ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
+    </Style>
+    <Style Selector="ListBoxItem Border">
+      <!-- Somehow makes Border fully clickable -->
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Padding" Value="10 5" />
     </Style>
 
     <Style Selector="TextBox">
@@ -126,15 +132,15 @@
               <TextBlock Text="{Binding ConfirmPromptText}" />
             </Border>
             <StackPanel Classes="promptButtons">
-              <Button Command="{Binding Confirm}" Classes="button primary leftButton">Yes</Button>
-              <Button Command="{Binding Cancel}" Classes="button">No</Button>
+              <Button Command="{Binding OnConfirmCommand}" Classes="button primary leftButton">Yes</Button>
+              <Button Command="{Binding OnCancelCommand}" Classes="button">No</Button>
             </StackPanel>
           </DockPanel>
         </Border>
 
         <StackPanel Classes="actionButtons">
-          <Button Command="{Binding Restore}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button success leftButton">Restore</Button>
-          <Button Command="{Binding Delete}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button danger">Delete</Button>
+          <Button Command="{Binding OnRestoreCommand}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button success leftButton">Restore</Button>
+          <Button Command="{Binding OnDeleteCommand}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button danger">Delete</Button>
         </StackPanel>
       </StackPanel>
 
@@ -149,15 +155,13 @@
 
       <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
         <ListBox.ItemTemplate>
-          <DataTemplate>
-            <DockPanel>
-              <Border>
-                <TextBlock Text="{Binding Name}"/>
-              </Border>
-              <Border HorizontalAlignment="Right">
-                <TextBlock Text="{Binding ArchivedDate}"/>
-              </Border>
-            </DockPanel>
+          <DataTemplate DataType="vm:ArchivedNoteViewModel">
+            <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">
+              <DockPanel>
+                <TextBlock Text="{Binding Name}" />
+                <TextBlock Text="{Binding ArchivedDate}" TextAlignment="Right" />
+              </DockPanel>
+            </Border>
           </DataTemplate>
         </ListBox.ItemTemplate>
       </ListBox>

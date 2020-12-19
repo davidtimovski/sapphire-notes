@@ -22,35 +22,47 @@ namespace SapphireNotes.ViewModels
 
             foreach (Note note in archived)
             {
-                ArchivedNotes.Add(new ArchivedNoteViewModel(note));
+                var archivedNoteVm = new ArchivedNoteViewModel(note);
+                archivedNoteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
+
+                ArchivedNotes.Add(archivedNoteVm);
             }
 
-            Restore = ReactiveCommand.Create(RestoreSelectedNote);
-            Delete = ReactiveCommand.Create(DeleteSelectedNote);
-            Confirm = ReactiveCommand.Create(ConfirmDelete);
-            Cancel = ReactiveCommand.Create(CancelDelete);
+            OnRestoreCommand = ReactiveCommand.Create(RestoreSelectedNote);
+            OnDeleteCommand = ReactiveCommand.Create(DeleteSelectedNote);
+            OnConfirmCommand = ReactiveCommand.Create(ConfirmDelete);
+            OnCancelCommand = ReactiveCommand.Create(CancelDelete);
         }
 
         public event EventHandler<ArchivedNoteRestoredEventArgs> NoteRestored;
 
-        private ReactiveCommand<Unit, Unit> Restore { get; }
-        private ReactiveCommand<Unit, Unit> Delete { get; }
-        private ReactiveCommand<Unit, Unit> Confirm { get; }
-        private ReactiveCommand<Unit, Unit> Cancel { get; }
+        private ReactiveCommand<Unit, Unit> OnRestoreCommand { get; }
+        private ReactiveCommand<Unit, Unit> OnDeleteCommand { get; }
+        private ReactiveCommand<Unit, Unit> OnConfirmCommand { get; }
+        private ReactiveCommand<Unit, Unit> OnCancelCommand { get; }
 
         private void RestoreSelectedNote()
         {
-            _notesService.Restore(selected.Note);
+            Restore(selected);
+            Selected = null;
+        }
+
+        private void Note_MiddleMouseClicked(object sender, EventArgs e)
+        {
+            Restore(sender as ArchivedNoteViewModel);
+        }
+
+        private void Restore(ArchivedNoteViewModel archivedNoteVm)
+        {
+            _notesService.Restore(archivedNoteVm.Note);
 
             NoteRestored.Invoke(this, new ArchivedNoteRestoredEventArgs
             {
-                RestoredNote = selected.Note
+                RestoredNote = archivedNoteVm.Note
             });
 
-            ArchivedNotes.Remove(selected);
+            ArchivedNotes.Remove(archivedNoteVm);
             ArchivedNotesExist = ArchivedNotes.Any();
-
-            Selected = null;
         }
 
         private void DeleteSelectedNote()
