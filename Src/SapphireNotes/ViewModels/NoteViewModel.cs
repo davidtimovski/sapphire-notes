@@ -14,15 +14,16 @@ namespace SapphireNotes.ViewModels
         {
             Note = note;
 
+            OnEditCommand = ReactiveCommand.Create(() => EditClicked.Invoke(this, null));
+            OnArchiveCommand = ReactiveCommand.Create(() => ArchiveClicked.Invoke(this, null));
+            OnDeleteCommand = ReactiveCommand.Create(() => DeleteClicked.Invoke(this, null));
+            OnMiddleClickCommand = ReactiveCommand.Create(() => MiddleMouseClicked.Invoke(this, null));
+
             name = note.Name;
             text = note.Text;
             fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
             caretPosition = note.Metadata.CaretPosition;
-
-            OnEditCommand = ReactiveCommand.Create(() => EditClicked.Invoke(this, null));
-            OnArchiveCommand = ReactiveCommand.Create(() => ArchiveClicked.Invoke(this, null));
-            OnDeleteCommand = ReactiveCommand.Create(() => DeleteClicked.Invoke(this, null));
         }
 
         public Note Note { get; set; }
@@ -85,13 +86,9 @@ namespace SapphireNotes.ViewModels
             return Note;
         }
 
-        public void InvokeMiddleMouseClick()
-        {
-            MiddleMouseClicked.Invoke(this, null);
-        }
-
         private ReactiveCommand<Unit, Unit> OnEditCommand { get; }
         private ReactiveCommand<Unit, Unit> OnArchiveCommand { get; }
         private ReactiveCommand<Unit, Unit> OnDeleteCommand { get; }
+        private ReactiveCommand<Unit, Unit> OnMiddleClickCommand { get; }
     }
 }

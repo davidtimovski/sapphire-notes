@@ -84,8 +84,7 @@
     <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate DataType="vm:NoteViewModel">
-          <Border be:ClickBehavior.MiddleMouseArchive="True" Classes="tabHeader">
-            <TextBlock Text="{Binding Name}" />
+          <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}" Classes="tabHeader">
             <Border.ContextMenu>
               <ContextMenu>
                 <MenuItem
@@ -99,6 +98,8 @@
                   Command="{Binding OnDeleteCommand}" />
               </ContextMenu>
             </Border.ContextMenu>
+
+            <TextBlock Text="{Binding Name}" />
           </Border>
         </DataTemplate>
       </TabControl.ItemTemplate>
