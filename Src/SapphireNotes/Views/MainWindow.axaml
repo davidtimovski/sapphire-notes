@@ -74,6 +74,7 @@
 
     <DockPanel Grid.Row="0" Classes="toolbar">
       <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
+      <Button Name="quickNoteButton" HotKey="Ctrl+Q" IsVisible="False"></Button>
       
       <StackPanel Classes="rightHandButtons">
         <Button Name="archivedButton" HotKey="Ctrl+R" Classes="button">Archived</Button>

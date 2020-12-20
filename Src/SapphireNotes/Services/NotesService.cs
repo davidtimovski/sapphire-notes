@@ -11,6 +11,7 @@ namespace SapphireNotes.Services
     public interface INotesService
     {
         void Create(string name, string fontFamily, int fontSize);
+        void CreateQuick(string text);
         void Update(string newName, Note note);
         void Archive(Note note);
         void Restore(Note note);
@@ -68,6 +69,28 @@ namespace SapphireNotes.Services
             File.Create(path);
 
             var note = new Note(name, path, string.Empty, new NoteMetadata(fontFamily, fontSize));
+
+            _notesMetadataService.Add(note.Name, note.Metadata);
+            _notesMetadataService.Save();
+
+            Created.Invoke(this, new CreatedNoteEventArgs
+            {
+                CreatedNote = note
+            });
+        }
+
+        public void CreateQuick(string text)
+        {
+            var path = Path.Combine(_preferences.NotesDirectory, "Quick note.txt");
+            path = FileUtil.NextAvailableFileName(path);
+
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.Write(text);
+            }
+
+            string name = Path.GetFileNameWithoutExtension(path);
+            var note = new Note(name, path, text, new NoteMetadata(text.Length));
 
             _notesMetadataService.Add(note.Name, note.Metadata);
             _notesMetadataService.Save();
@@ -244,7 +267,7 @@ namespace SapphireNotes.Services
                 note.Metadata = _notesMetadataService.Get(note.Name);
             }
 
-            var orderedByLastWrite = notes.OrderByDescending(x => File.GetLastWriteTime(x.FilePath)).ToArray();
+            var orderedByLastWrite = notes.OrderBy(x => File.GetLastWriteTime(x.FilePath)).ToArray();
             return orderedByLastWrite;
         }
 

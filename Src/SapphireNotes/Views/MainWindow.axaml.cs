@@ -30,6 +30,9 @@ namespace SapphireNotes.Views
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
 
+            var quickNoteButton = this.FindControl<Button>("quickNoteButton");
+            quickNoteButton.Command = ReactiveCommand.Create(QuickNoteButtonClicked);
+
             var archivedButton = this.FindControl<Button>("archivedButton");
             archivedButton.Command = ReactiveCommand.Create(ArchivedButtonClicked);
 
@@ -97,6 +100,21 @@ namespace SapphireNotes.Views
             var window = new EditNoteWindow
             {
                 DataContext = new EditNoteViewModel(_notesService),
+                Owner = this,
+                Topmost = true,
+                CanResize = false
+            };
+            window.Show();
+            window.Activate();
+
+            _windows.Add(window);
+        }
+
+        private void QuickNoteButtonClicked()
+        {
+            var window = new QuickNoteWindow
+            {
+                DataContext = new QuickNoteViewModel(_notesService),
                 Owner = this,
                 Topmost = true,
                 CanResize = false

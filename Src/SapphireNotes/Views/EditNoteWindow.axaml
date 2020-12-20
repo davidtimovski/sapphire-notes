@@ -15,7 +15,7 @@
     <StyleInclude Source="/Styles/ComboBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
-    <Style Selector="TextBox#noteNameTextBox">
+    <Style Selector="TextBox">
       <Setter Property="Width" Value="250" />
     </Style>
 
@@ -50,7 +50,7 @@
   <StackPanel>
     <local:Alert DataContext="{Binding Alert}" />
     
-    <TextBox Name="noteNameTextBox" Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
+    <TextBox Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
 
     <DockPanel Classes="formControlWrap">
       <Border Classes="labelWrap">
