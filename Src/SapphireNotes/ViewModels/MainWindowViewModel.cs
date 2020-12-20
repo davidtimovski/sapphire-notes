@@ -40,7 +40,7 @@ namespace SapphireNotes.ViewModels
             noteVm.DeleteClicked += Note_DeleteClicked;
             noteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
 
-            Notes.Add(noteVm);
+            Notes.Insert(0, noteVm);
 
             return noteVm;
         }
