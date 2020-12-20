@@ -27,6 +27,7 @@ namespace SapphireNotes.Services
 
         event EventHandler<CreatedNoteEventArgs> Created;
         event EventHandler<UpdatedNoteEventArgs> Updated;
+        event EventHandler<ArchivedNoteEventArgs> Archived;
         event EventHandler<DeletedNoteEventArgs> Deleted;
         event EventHandler<RestoredNoteEventArgs> Restored;
     }
@@ -38,6 +39,7 @@ namespace SapphireNotes.Services
 
         public event EventHandler<CreatedNoteEventArgs> Created;
         public event EventHandler<UpdatedNoteEventArgs> Updated;
+        public event EventHandler<ArchivedNoteEventArgs> Archived;
         public event EventHandler<DeletedNoteEventArgs> Deleted;
         public event EventHandler<RestoredNoteEventArgs> Restored;
 
@@ -136,6 +138,11 @@ namespace SapphireNotes.Services
             _notesMetadataService.Save();
 
             note.FilePath = archivePath;
+
+            Archived?.Invoke(this, new ArchivedNoteEventArgs
+            {
+                ArchivedNote = note
+            });
         }
 
         public void Restore(Note note)
@@ -392,13 +399,18 @@ namespace SapphireNotes.Services
         public Note UpdatedNote { get; set; }
     }
 
-    public class RestoredNoteEventArgs : EventArgs
-    {
-        public Note RestoredNote { get; set; }
-    }
-
     public class DeletedNoteEventArgs : EventArgs
     {
         public Note DeletedNote { get; set; }
+    }
+
+    public class ArchivedNoteEventArgs : EventArgs
+    {
+        public Note ArchivedNote { get; set; }
+    }
+
+    public class RestoredNoteEventArgs : EventArgs
+    {
+        public Note RestoredNote { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
+using DynamicData;
 using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
@@ -16,6 +17,7 @@ namespace SapphireNotes.ViewModels
         public ArchivedNotesViewModel(INotesService notesService)
         {
             _notesService = notesService;
+            _notesService.Archived += NoteArchived;
 
             var archived = _notesService.LoadArchived();
             archivedNotesExist = archived.Length > 0;
@@ -39,6 +41,16 @@ namespace SapphireNotes.ViewModels
         private ReactiveCommand<Unit, Unit> OnConfirmCommand { get; }
         private ReactiveCommand<Unit, Unit> OnCancelCommand { get; }
 
+        private void NoteArchived(object sender, ArchivedNoteEventArgs e)
+        {
+            var archivedNoteVm = new ArchivedNoteViewModel(e.ArchivedNote);
+            archivedNoteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
+
+            ArchivedNotes.Insert(0, archivedNoteVm);
+
+            ArchivedNotesExist = true;
+        }
+
         private void RestoreSelectedNote()
         {
             Restore(selected);
@@ -54,7 +66,8 @@ namespace SapphireNotes.ViewModels
         {
             _notesService.Restore(archivedNoteVm.Note);
 
-            ArchivedNotes.Remove(archivedNoteVm);
+            RemoveNote(archivedNoteVm);
+
             ArchivedNotesExist = ArchivedNotes.Any();
         }
 
@@ -72,7 +85,8 @@ namespace SapphireNotes.ViewModels
         {
             _notesService.Delete(selected.Note);
 
-            ArchivedNotes.Remove(selected);
+            RemoveNote(selected);
+
             ArchivedNotesExist = ArchivedNotes.Any();
             HideConfirmPrompt();
             Selected = null;
@@ -89,6 +103,14 @@ namespace SapphireNotes.ViewModels
             ConfirmPromptOpacity = 0;
             ConfirmPromptVisible = false;
             ConfirmPromptText = null;
+        }
+
+        private void RemoveNote(ArchivedNoteViewModel archivedNoteVm)
+        {
+            // Necessary approach because collection does not refresh internally with Remove() when restoring with middle-mouse click
+            ArchivedNoteViewModel[] updatedNotes = ArchivedNotes.Where(x => !x.Equals(archivedNoteVm)).ToArray();
+            ArchivedNotes.Clear();
+            ArchivedNotes.AddRange(updatedNotes);
         }
 
         private bool archivedNotesExist;
