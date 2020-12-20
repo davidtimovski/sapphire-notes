@@ -18,10 +18,9 @@ namespace SapphireNotes.ViewModels
             Note = note;
         }
 
-        public Note Delete()
+        public void Delete()
         {
             _notesService.Delete(Note);
-            return Note;
         }
 
         private string text;

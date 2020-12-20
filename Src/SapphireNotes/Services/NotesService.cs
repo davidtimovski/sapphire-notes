@@ -10,8 +10,8 @@ namespace SapphireNotes.Services
 {
     public interface INotesService
     {
-        Note Create(string name, string fontFamily, int fontSize);
-        Note Update(string newName, Note note);
+        void Create(string name, string fontFamily, int fontSize);
+        void Update(string newName, Note note);
         void Archive(Note note);
         void Restore(Note note);
         void Delete(Note note);
@@ -24,6 +24,11 @@ namespace SapphireNotes.Services
         int? GetFontSizeThatAllNotesUse();
         void SetFontForAll(string font);
         void SetFontSizeForAll(int fontSize);
+
+        event EventHandler<CreatedNoteEventArgs> Created;
+        event EventHandler<UpdatedNoteEventArgs> Updated;
+        event EventHandler<DeletedNoteEventArgs> Deleted;
+        event EventHandler<RestoredNoteEventArgs> Restored;
     }
 
     public class NotesService : INotesService
@@ -31,13 +36,18 @@ namespace SapphireNotes.Services
         private readonly INotesMetadataService _notesMetadataService;
         private readonly Preferences _preferences;
 
+        public event EventHandler<CreatedNoteEventArgs> Created;
+        public event EventHandler<UpdatedNoteEventArgs> Updated;
+        public event EventHandler<DeletedNoteEventArgs> Deleted;
+        public event EventHandler<RestoredNoteEventArgs> Restored;
+
         public NotesService(INotesMetadataService notesMetadataService, Preferences preferences)
         {
             _notesMetadataService = notesMetadataService;
             _preferences = preferences;
         }
 
-        public Note Create(string name, string fontFamily, int fontSize)
+        public void Create(string name, string fontFamily, int fontSize)
         {
             name = name.Trim();
 
@@ -60,11 +70,15 @@ namespace SapphireNotes.Services
             _notesMetadataService.Add(note.Name, note.Metadata);
             _notesMetadataService.Save();
 
-            return note;
+            Created.Invoke(this, new CreatedNoteEventArgs
+            {
+                CreatedNote = note
+            });
         }
 
-        public Note Update(string newName, Note note)
+        public void Update(string newName, Note note)
         {
+            string originalName = note.Name;
             newName = newName.Trim();
 
             if (newName.Length == 0)
@@ -73,7 +87,7 @@ namespace SapphireNotes.Services
             }
 
             var fileName = newName + ".txt";
-            if (note.Name.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
+            if (originalName.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
             {
                 throw new ValidationException("A note with the same name already exists.");
             }
@@ -81,14 +95,18 @@ namespace SapphireNotes.Services
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             File.Move(note.FilePath, path);
 
-            _notesMetadataService.Remove(note.Name);
+            _notesMetadataService.Remove(originalName);
             _notesMetadataService.Add(newName, note.Metadata);
             _notesMetadataService.Save();
 
             note.Name = newName;
             note.FilePath = path;
 
-            return note;
+            Updated.Invoke(this, new UpdatedNoteEventArgs
+            {
+                OriginalName = originalName,
+                UpdatedNote = note
+            });
         }
 
         public void Archive(Note note)
@@ -140,6 +158,11 @@ namespace SapphireNotes.Services
 
             note.FilePath = notesPath;
             note.Name = newName;
+
+            Restored.Invoke(this, new RestoredNoteEventArgs
+            {
+                RestoredNote = note
+            });
         }
 
         public void Delete(Note note)
@@ -148,6 +171,11 @@ namespace SapphireNotes.Services
 
             _notesMetadataService.Remove(note.Name);
             _notesMetadataService.Save();
+
+            Deleted.Invoke(this, new DeletedNoteEventArgs
+            {
+                DeletedNote = note
+            });
         }
 
         public void SaveAll(IEnumerable<Note> notes)
@@ -351,5 +379,26 @@ namespace SapphireNotes.Services
             var path = Path.Combine(_preferences.NotesDirectory, fileName);
             return File.Exists(path);
         }
+    }
+
+    public class CreatedNoteEventArgs : EventArgs
+    {
+        public Note CreatedNote { get; set; }
+    }
+
+    public class UpdatedNoteEventArgs : EventArgs
+    {
+        public string OriginalName { get; set; }
+        public Note UpdatedNote { get; set; }
+    }
+
+    public class RestoredNoteEventArgs : EventArgs
+    {
+        public Note RestoredNote { get; set; }
+    }
+
+    public class DeletedNoteEventArgs : EventArgs
+    {
+        public Note DeletedNote { get; set; }
     }
 }

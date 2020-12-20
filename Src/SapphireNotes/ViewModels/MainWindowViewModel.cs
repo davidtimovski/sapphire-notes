@@ -7,7 +7,6 @@ using Avalonia.Threading;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
-using SapphireNotes.Views;
 
 namespace SapphireNotes.ViewModels
 {
@@ -21,6 +20,9 @@ namespace SapphireNotes.ViewModels
         {
             _preferencesService = preferencesService;
             _notesService = notesService;
+
+            _notesService.Updated += NoteUpdated;
+            _notesService.Deleted += NoteDeleted;
 
             LoadNotes();
 
@@ -45,31 +47,6 @@ namespace SapphireNotes.ViewModels
             return noteVm;
         }
 
-        public void UpdateNote(UpdatedNoteEventArgs e)
-        {
-            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
-            if (noteVm != null)
-            {
-                noteVm.Name = e.UpdatedNote.Name;
-                noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
-
-                // Hack to invoke update of FontFamily if FontSize wasn't changed
-                // https://github.com/AvaloniaUI/Avalonia/issues/5127
-                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
-
-                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
-            }
-        }
-
-        public void DeleteNote(DeletedNoteEventArgs e)
-        {
-            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
-            if (noteVm != null)
-            {
-                Notes.Remove(noteVm);
-            }
-        }
-
         public void PreferencesSaved(bool notesAreDirty)
         {
             SetAutoSaveTimer();
@@ -89,6 +66,31 @@ namespace SapphireNotes.ViewModels
             _notesService.SaveDirtyWithMetadata(notes);
 
             _preferencesService.UpdateWindowSizePreferenceIfChanged(windowWidth, windowHeight, windowPositionX, windowPositionY);
+        }
+
+        private void NoteUpdated(object sender, UpdatedNoteEventArgs e)
+        {
+            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
+            if (noteVm != null)
+            {
+                noteVm.Name = e.UpdatedNote.Name;
+                noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
+
+                // Hack to invoke update of FontFamily if FontSize wasn't changed
+                // https://github.com/AvaloniaUI/Avalonia/issues/5127
+                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
+
+                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
+            }
+        }
+
+        private void NoteDeleted(object sender, DeletedNoteEventArgs e)
+        {
+            NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+            if (noteVm != null)
+            {
+                Notes.Remove(noteVm);
+            }
         }
 
         private void LoadNotes()

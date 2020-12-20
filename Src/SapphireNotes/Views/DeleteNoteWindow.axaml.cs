@@ -1,9 +1,7 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
-using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Views
@@ -25,17 +23,10 @@ namespace SapphireNotes.Views
             noButton.Command = ReactiveCommand.Create(NoButtonClicked);
         }
 
-        public event EventHandler<DeletedNoteEventArgs> Deleted;
-
         private void YesButtonClicked()
         {
             var vm = (DeleteNoteViewModel)DataContext;
-
-            Note note = vm.Delete();
-            Deleted.Invoke(this, new DeletedNoteEventArgs
-            {
-                DeletedNote = note
-            });
+            vm.Delete();
 
             Close();
         }
@@ -49,10 +40,5 @@ namespace SapphireNotes.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
-    }
-
-    public class DeletedNoteEventArgs : EventArgs
-    {
-        public Note DeletedNote { get; set; }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.Exceptions;
-using SapphireNotes.Models;
 using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Views
@@ -25,9 +23,6 @@ namespace SapphireNotes.Views
             cancelButton.Command = ReactiveCommand.Create(CancelButtonClicked);
         }
 
-        public event EventHandler<CreatedNoteEventArgs> Created;
-        public event EventHandler<UpdatedNoteEventArgs> Updated;
-
         private void SaveButtonClicked()
         {
             var vm = (EditNoteViewModel)DataContext;
@@ -36,20 +31,11 @@ namespace SapphireNotes.Views
             {
                 if (vm.IsNew)
                 {
-                    Note note = vm.Create();
-                    Created.Invoke(this, new CreatedNoteEventArgs
-                    {
-                        CreatedNote = note
-                    });
+                    vm.Create();
                 }
                 else
                 {
-                    var (originalName, updatedNote) = vm.Update();
-                    Updated.Invoke(this, new UpdatedNoteEventArgs
-                    {
-                        OriginalName = originalName,
-                        UpdatedNote = updatedNote
-                    });
+                    vm.Update();
                 }
 
                 Close();
@@ -69,16 +55,5 @@ namespace SapphireNotes.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
-    }
-
-    public class CreatedNoteEventArgs : EventArgs
-    {
-        public Note CreatedNote { get; set; }
-    }
-
-    public class UpdatedNoteEventArgs : EventArgs
-    {
-        public string OriginalName { get; set; }
-        public Note UpdatedNote { get; set; }
     }
 }

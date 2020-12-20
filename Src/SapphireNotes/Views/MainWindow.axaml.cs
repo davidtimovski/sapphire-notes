@@ -13,6 +13,7 @@ namespace SapphireNotes.Views
 {
     public class MainWindow : Window
     {
+        private readonly INotesService _notesService;
         private readonly List<Window> _windows = new List<Window>();
 
         public MainWindow()
@@ -21,6 +22,10 @@ namespace SapphireNotes.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+            _notesService = Locator.Current.GetService<INotesService>();
+            _notesService.Created += NoteCreated;
+            _notesService.Restored += NoteRestored;
 
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
@@ -45,42 +50,30 @@ namespace SapphireNotes.Views
         {
             var window = new EditNoteWindow
             {
-                DataContext = new EditNoteViewModel(Locator.Current.GetService<INotesService>(), (sender as NoteViewModel).ToNote()),
+                DataContext = new EditNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
                 Width = 300,
                 Height = 98,
                 Topmost = true,
                 CanResize = false
             };
-            window.Updated += Note_Updated;
             window.Show();
             window.Activate();
 
             _windows.Add(window);
-        }
-        private void Note_Updated(object sender, UpdatedNoteEventArgs e)
-        {
-            var vm = (MainWindowViewModel)DataContext;
-            vm.UpdateNote(e);
         }
 
         private void Note_Delete(object sender, EventArgs e)
         {
             var window = new DeleteNoteWindow
             {
-                DataContext = new DeleteNoteViewModel(Locator.Current.GetService<INotesService>(), (sender as NoteViewModel).ToNote()),
+                DataContext = new DeleteNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
                 Topmost = true,
                 CanResize = false
             };
-            window.Deleted += Note_DeleteConfirmed;
             window.Show();
             window.Activate();
 
             _windows.Add(window);
-        }
-        private void Note_DeleteConfirmed(object sender, DeletedNoteEventArgs e)
-        {
-            var vm = (MainWindowViewModel)DataContext;
-            vm.DeleteNote(e);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -103,12 +96,11 @@ namespace SapphireNotes.Views
         {
             var window = new EditNoteWindow
             {
-                DataContext = new EditNoteViewModel(Locator.Current.GetService<INotesService>()),
+                DataContext = new EditNoteViewModel(_notesService),
                 Owner = this,
                 Topmost = true,
                 CanResize = false
             };
-            window.Created += NoteCreated;
             window.Show();
             window.Activate();
 
@@ -126,12 +118,9 @@ namespace SapphireNotes.Views
 
         private void ArchivedButtonClicked()
         {
-            var vm = new ArchivedNotesViewModel(Locator.Current.GetService<INotesService>());
-            vm.NoteRestored += NoteRestored;
-
             var window = new ArchivedNotesWindow
             {
-                DataContext = vm,
+                DataContext = new ArchivedNotesViewModel(_notesService),
                 Owner = this,
                 Topmost = true
             };
@@ -141,7 +130,7 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void NoteRestored(object sender, ArchivedNoteRestoredEventArgs e)
+        private void NoteRestored(object sender, RestoredNoteEventArgs e)
         {
             var vm = (MainWindowViewModel)DataContext;
             NoteViewModel noteVm = vm.AddNote(e.RestoredNote);
@@ -154,7 +143,7 @@ namespace SapphireNotes.Views
         {
             var window = new PreferencesWindow
             {
-                DataContext = new PreferencesViewModel(Locator.Current.GetService<IPreferencesService>(), Locator.Current.GetService<INotesService>()),
+                DataContext = new PreferencesViewModel(Locator.Current.GetService<IPreferencesService>(), _notesService),
                 Owner = this,
                 Topmost = true,
                 CanResize = false

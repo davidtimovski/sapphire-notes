@@ -41,14 +41,14 @@ namespace SapphireNotes.ViewModels
             selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
         }
 
-        public Note Create()
+        public void Create()
         {
             string fontFamily = availableFonts[selectedFontIndex];
             int fontSize = availableFontSizes[selectedFontSizeIndex];
 
             try
             {
-                return _notesService.Create(name, fontFamily, fontSize);
+                _notesService.Create(name, fontFamily, fontSize);
             }
             catch (ValidationException ex)
             {
@@ -57,17 +57,14 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        public (string originalName, Note updatedNote) Update()
+        public void Update()
         {
-            string originalName = EditNote.Name;
-
             EditNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
             EditNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
 
             try
             {
-                Note updatedNote = _notesService.Update(name, EditNote);
-                return (originalName, updatedNote);
+                _notesService.Update(name, EditNote);
             }
             catch (ValidationException ex)
             {

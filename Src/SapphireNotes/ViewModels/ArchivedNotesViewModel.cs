@@ -34,8 +34,6 @@ namespace SapphireNotes.ViewModels
             OnCancelCommand = ReactiveCommand.Create(CancelDelete);
         }
 
-        public event EventHandler<ArchivedNoteRestoredEventArgs> NoteRestored;
-
         private ReactiveCommand<Unit, Unit> OnRestoreCommand { get; }
         private ReactiveCommand<Unit, Unit> OnDeleteCommand { get; }
         private ReactiveCommand<Unit, Unit> OnConfirmCommand { get; }
@@ -55,11 +53,6 @@ namespace SapphireNotes.ViewModels
         private void Restore(ArchivedNoteViewModel archivedNoteVm)
         {
             _notesService.Restore(archivedNoteVm.Note);
-
-            NoteRestored.Invoke(this, new ArchivedNoteRestoredEventArgs
-            {
-                RestoredNote = archivedNoteVm.Note
-            });
 
             ArchivedNotes.Remove(archivedNoteVm);
             ArchivedNotesExist = ArchivedNotes.Any();
@@ -157,10 +150,5 @@ namespace SapphireNotes.ViewModels
             ConfirmPromptVisible = true;
             ConfirmPromptOpacity = 1;
         }
-    }
-
-    public class ArchivedNoteRestoredEventArgs : EventArgs
-    {
-        public Note RestoredNote { get; set; }
     }
 }
