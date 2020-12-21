@@ -15,8 +15,10 @@
     <StyleInclude Source="/Styles/Button.axaml" />
 
     <Style Selector="Window">
-      <Setter Property="MinWidth" Value="550" />
+      <Setter Property="Width" Value="600" />
+      <Setter Property="MinWidth" Value="600" />
       <Setter Property="MinHeight" Value="127" />
+      <Setter Property="SizeToContent" Value="Height" />
     </Style>
 
     <Style Selector="Border.actionConfirmPrompt">
@@ -85,6 +87,7 @@
 
     <Style Selector="TextBox">
       <Setter Property="MinHeight" Value="150" />
+      <Setter Property="MaxHeight" Value="350" />
     </Style>
     <Style Selector="TextBox:pointerover /template/ Border#border">
       <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
@@ -115,10 +118,10 @@
   <StackPanel>
     <Grid IsVisible="{Binding ArchivedNotesExist}">
       <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" MaxHeight="300" />
-        <RowDefinition Height="Auto" />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition MaxHeight="300" />
+        <RowDefinition />
       </Grid.RowDefinitions>
 
       <StackPanel Grid.Row="0">
@@ -168,11 +171,12 @@
 
       <Border Grid.Row="3">
         <TextBox DataContext="{Binding Selected}"
-                 Text="{Binding Text}"
-                 IsReadOnly="True"
-                 FontSize="{Binding FontSize}"
-                 FontFamily="{Binding FontFamily}"
-                 TextWrapping="Wrap" />
+                Text="{Binding Text}"
+                IsReadOnly="True"
+                FontSize="{Binding FontSize}"
+                FontFamily="{Binding FontFamily}"
+                AcceptsReturn="True"
+                TextWrapping="Wrap" />
       </Border>
     </Grid>
 

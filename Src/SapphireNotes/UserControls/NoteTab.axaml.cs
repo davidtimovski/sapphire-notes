@@ -37,9 +37,11 @@ namespace SapphireNotes.UserControls
 
         private void NoteTab_DataContextChanged(object sender, EventArgs e)
         {
-            var vm = DataContext as NoteViewModel;
-            vm.Selected -= SetCaretPositionAndFocus;
-            vm.Selected += SetCaretPositionAndFocus;
+            if (DataContext is NoteViewModel vm)
+            {
+                vm.Selected -= SetCaretPositionAndFocus;
+                vm.Selected += SetCaretPositionAndFocus;
+            }
 
             void SetCaretPositionAndFocus(object sender, EventArgs e)
             {
