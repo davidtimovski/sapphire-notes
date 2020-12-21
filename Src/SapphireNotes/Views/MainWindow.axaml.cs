@@ -7,6 +7,7 @@ using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.Services;
 using SapphireNotes.ViewModels;
+using SapphireNotes.ViewModels.UserControls;
 using Splat;
 
 namespace SapphireNotes.Views
@@ -15,6 +16,7 @@ namespace SapphireNotes.Views
     {
         private readonly INotesService _notesService;
         private readonly List<Window> _windows = new List<Window>();
+        private readonly TabControl _notesTabControl;
 
         public MainWindow()
         {
@@ -26,6 +28,9 @@ namespace SapphireNotes.Views
             _notesService = Locator.Current.GetService<INotesService>();
             _notesService.Created += NoteCreated;
             _notesService.Restored += NoteRestored;
+
+            _notesTabControl = this.FindControl<TabControl>("noteTabs");
+            _notesTabControl.SelectionChanged += NoteSelectionChanged;
 
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
@@ -42,11 +47,10 @@ namespace SapphireNotes.Views
             DataContextChanged += MainWindow_DataContextChanged;
         }
 
-        private void MainWindow_DataContextChanged(object sender, EventArgs e)
+        private void NoteSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var vm = (MainWindowViewModel)DataContext;
-            vm.NoteEditClicked += Note_Edit;
-            vm.NoteDeleteClicked += Note_Delete;
+            var selectedVm = e.AddedItems[0] as NoteViewModel;
+            selectedVm.Select();
         }
 
         private void Note_Edit(object sender, EventArgs e)
@@ -86,7 +90,7 @@ namespace SapphireNotes.Views
                 window.Close();
             }
 
-            var vm = (MainWindowViewModel)DataContext;
+            var vm = DataContext as MainWindowViewModel;
             vm.OnClosing((int)Width, (int)Height, Position.X, Position.Y);
         }
 
@@ -127,11 +131,10 @@ namespace SapphireNotes.Views
 
         private void NoteCreated(object sender, CreatedNoteEventArgs e)
         {
-            var vm = (MainWindowViewModel)DataContext;
+            var vm = DataContext as MainWindowViewModel;
             NoteViewModel noteVm = vm.AddNote(e.CreatedNote);
 
-            var noteTabControl = this.FindControl<TabControl>("noteTabs");
-            noteTabControl.SelectedItem = noteVm;
+            _notesTabControl.SelectedItem = noteVm;
         }
 
         private void ArchivedButtonClicked()
@@ -150,11 +153,10 @@ namespace SapphireNotes.Views
 
         private void NoteRestored(object sender, RestoredNoteEventArgs e)
         {
-            var vm = (MainWindowViewModel)DataContext;
+            var vm = DataContext as MainWindowViewModel;
             NoteViewModel noteVm = vm.AddNote(e.RestoredNote);
 
-            var noteTabControl = this.FindControl<TabControl>("noteTabs");
-            noteTabControl.SelectedItem = noteVm;
+            _notesTabControl.SelectedItem = noteVm;
         }
 
         private void PreferencesButtonClicked()
@@ -175,8 +177,15 @@ namespace SapphireNotes.Views
 
         private void PreferencesSaved(object sender, PreferencesSavedEventArgs e)
         {
-            var vm = (MainWindowViewModel)DataContext;
+            var vm = DataContext as MainWindowViewModel;
             vm.PreferencesSaved(e.NotesAreDirty);
+        }
+
+        private void MainWindow_DataContextChanged(object sender, EventArgs e)
+        {
+            var vm = DataContext as MainWindowViewModel;
+            vm.NoteEditClicked += Note_Edit;
+            vm.NoteDeleteClicked += Note_Delete;
         }
     }
 }

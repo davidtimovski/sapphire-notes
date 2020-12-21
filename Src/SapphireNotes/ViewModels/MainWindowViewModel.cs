@@ -7,6 +7,7 @@ using Avalonia.Threading;
 using SapphireNotes.Models;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
+using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.ViewModels
 {

@@ -6,7 +6,7 @@ using ReactiveUI;
 using SapphireNotes.Models;
 using SapphireNotes.Utils;
 
-namespace SapphireNotes.ViewModels
+namespace SapphireNotes.ViewModels.UserControls
 {
     public class NoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
@@ -32,6 +32,12 @@ namespace SapphireNotes.ViewModels
         public event EventHandler<EventArgs> ArchiveClicked;
         public event EventHandler<EventArgs> DeleteClicked;
         public event EventHandler<EventArgs> MiddleMouseClicked;
+        public event EventHandler<EventArgs> Selected;
+
+        public void Select()
+        {
+            Selected?.Invoke(this, null);
+        }
 
         private string name;
         public string Name

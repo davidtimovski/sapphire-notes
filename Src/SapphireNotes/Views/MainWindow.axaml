@@ -5,6 +5,7 @@
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         xmlns:m="clr-namespace:SapphireNotes.Models;assembly=SapphireNotes"
         xmlns:be="clr-namespace:SapphireNotes.Behaviors"
+        xmlns:local="clr-namespace:SapphireNotes.UserControls"
         mc:Ignorable="d"
         x:Class="SapphireNotes.Views.MainWindow"
         Title="Sapphire Notes">
@@ -84,7 +85,7 @@
 
     <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
       <TabControl.ItemTemplate>
-        <DataTemplate DataType="vm:NoteViewModel">
+        <DataTemplate>
           <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}" Classes="tabHeader">
             <Border.ContextMenu>
               <ContextMenu>
@@ -106,12 +107,8 @@
       </TabControl.ItemTemplate>
       
       <TabControl.ContentTemplate>
-        <DataTemplate DataType="vm:NoteViewModel">
-          <TextBox Name="textEditor" Text="{Binding Text}" 
-                   AcceptsReturn="True" TextWrapping="Wrap" 
-                   FontSize="{Binding FontSize}"
-                   FontFamily="{Binding FontFamily}"
-                   be:CaretBehavior.CaretPosition="{Binding CaretPosition}" />
+        <DataTemplate>
+          <local:NoteTab DataContext="{Binding}" />
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>
