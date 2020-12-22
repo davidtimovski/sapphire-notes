@@ -77,9 +77,11 @@
     </Grid.RowDefinitions>
 
     <DockPanel Grid.Row="0" Classes="toolbar">
-      <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
+      <Button Name="escapeButton" HotKey="Escape" IsVisible="False"></Button>
       <Button Name="quickNoteButton" HotKey="Ctrl+Q" IsVisible="False"></Button>
       
+      <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
+
       <StackPanel Classes="rightHandButtons">
         <Button Name="archivedButton" HotKey="Ctrl+R" Classes="button">Archived</Button>
         <Button Name="preferencesButton" HotKey="Ctrl+P" Classes="button">Preferences</Button>
@@ -109,7 +111,7 @@
           </Border>
         </DataTemplate>
       </TabControl.ItemTemplate>
-      
+
       <TabControl.ContentTemplate>
         <DataTemplate>
           <local:NoteTab DataContext="{Binding}" />
@@ -117,5 +119,5 @@
       </TabControl.ContentTemplate>
     </TabControl>
   </Grid>
-  
+
 </Window>

@@ -29,14 +29,17 @@ namespace SapphireNotes.Views
             _notesService.Created += NoteCreated;
             _notesService.Restored += NoteRestored;
 
+            var escapeButton = this.FindControl<Button>("escapeButton");
+            escapeButton.Command = ReactiveCommand.Create(ExcapeButtonClicked);
+
+            var quickNoteButton = this.FindControl<Button>("quickNoteButton");
+            quickNoteButton.Command = ReactiveCommand.Create(QuickNoteButtonClicked);
+
             _notesTabControl = this.FindControl<TabControl>("noteTabs");
             _notesTabControl.SelectionChanged += NoteSelectionChanged;
 
             var newNoteButton = this.FindControl<Button>("newNoteButton");
             newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
-
-            var quickNoteButton = this.FindControl<Button>("quickNoteButton");
-            quickNoteButton.Command = ReactiveCommand.Create(QuickNoteButtonClicked);
 
             var archivedButton = this.FindControl<Button>("archivedButton");
             archivedButton.Command = ReactiveCommand.Create(ArchivedButtonClicked);
@@ -102,11 +105,16 @@ namespace SapphireNotes.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        private void NewNoteButtonClicked()
+        private void ExcapeButtonClicked()
         {
-            var window = new EditNoteWindow
+            Close();
+        }
+
+        private void QuickNoteButtonClicked()
+        {
+            var window = new QuickNoteWindow
             {
-                DataContext = new EditNoteViewModel(_notesService),
+                DataContext = new QuickNoteViewModel(_notesService),
                 Owner = this,
                 Topmost = true,
                 CanResize = false
@@ -117,11 +125,11 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void QuickNoteButtonClicked()
+        private void NewNoteButtonClicked()
         {
-            var window = new QuickNoteWindow
+            var window = new EditNoteWindow
             {
-                DataContext = new QuickNoteViewModel(_notesService),
+                DataContext = new EditNoteViewModel(_notesService),
                 Owner = this,
                 Topmost = true,
                 CanResize = false
