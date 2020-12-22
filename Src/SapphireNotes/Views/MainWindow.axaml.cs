@@ -44,6 +44,9 @@ namespace SapphireNotes.Views
             var preferencesButton = this.FindControl<Button>("preferencesButton");
             preferencesButton.Command = ReactiveCommand.Create(PreferencesButtonClicked);
 
+            var tipsButton = this.FindControl<Button>("tipsButton");
+            tipsButton.Command = ReactiveCommand.Create(TipsButtonClicked);
+
             DataContextChanged += MainWindow_DataContextChanged;
         }
 
@@ -169,6 +172,20 @@ namespace SapphireNotes.Views
                 CanResize = false
             };
             window.Saved += PreferencesSaved;
+            window.Show();
+            window.Activate();
+
+            _windows.Add(window);
+        }
+
+        private void TipsButtonClicked()
+        {
+            var window = new TipsWindow
+            {
+                Owner = this,
+                Topmost = true,
+                CanResize = false
+            };
             window.Show();
             window.Activate();
 

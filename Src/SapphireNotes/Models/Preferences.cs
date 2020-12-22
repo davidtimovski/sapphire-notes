@@ -2,7 +2,7 @@
 {
     public class Preferences
     {
-        public const int WindowMinWidth = 320;
+        public const int WindowMinWidth = 380;
         public const int WindowMinHeight = 180;
 
         public string NotesDirectory { get; set; } = string.Empty;
