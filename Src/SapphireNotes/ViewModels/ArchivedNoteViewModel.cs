@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Reactive;
 using Avalonia.Media;
 using ReactiveUI;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels
@@ -16,7 +16,7 @@ namespace SapphireNotes.ViewModels
             OnMiddleClickCommand = ReactiveCommand.Create(() => MiddleMouseClicked.Invoke(this, null));
 
             name = note.Name;
-            text = note.Text;
+            content = note.Content;
             fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
             archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
@@ -33,11 +33,11 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        private string text;
-        private string Text
+        private string content;
+        private string Content
         {
-            get => text;
-            set => this.RaiseAndSetIfChanged(ref text, value);
+            get => content;
+            set => this.RaiseAndSetIfChanged(ref content, value);
         }
 
         private FontFamily fontFamily;

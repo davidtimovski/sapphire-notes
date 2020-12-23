@@ -2,8 +2,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.DependencyInjection;
-using SapphireNotes.Models;
 using SapphireNotes.Services;
 using SapphireNotes.ViewModels;
 using SapphireNotes.Views;

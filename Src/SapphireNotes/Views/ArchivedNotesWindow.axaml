@@ -171,7 +171,7 @@
 
       <Border Grid.Row="3">
         <TextBox DataContext="{Binding Selected}"
-                Text="{Binding Text}"
+                Text="{Binding Content}"
                 IsReadOnly="True"
                 FontSize="{Binding FontSize}"
                 FontFamily="{Binding FontFamily}"

@@ -34,7 +34,7 @@
   </Design.DataContext>
 
   <StackPanel>
-    <TextBox Text="{Binding Text}" AcceptsReturn="True" TextWrapping="Wrap" be:FocusBehavior.InitialFocus="True" />
+    <TextBox Text="{Binding Content}" AcceptsReturn="True" TextWrapping="Wrap" be:FocusBehavior.InitialFocus="True" />
 
     <Border Classes="buttonsWrap">
       <DockPanel>

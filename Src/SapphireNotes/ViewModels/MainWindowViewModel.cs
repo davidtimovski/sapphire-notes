@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Avalonia.Threading;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
 using SapphireNotes.ViewModels.UserControls;

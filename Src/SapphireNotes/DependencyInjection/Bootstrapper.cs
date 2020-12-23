@@ -1,4 +1,6 @@
-﻿using SapphireNotes.Services;
+﻿using SapphireNotes.Contracts;
+using SapphireNotes.Repositories;
+using SapphireNotes.Services;
 using SapphireNotes.ViewModels;
 using Splat;
 
@@ -18,9 +20,11 @@ namespace SapphireNotes.DependencyInjection
             services.RegisterLazySingleton<INotesMetadataService>(() => new NotesMetadataService());
 
             var preferencesService = resolver.GetService<IPreferencesService>();
+            services.RegisterLazySingleton<INotesRepository>(() => new FileSystemRepository(preferencesService.Preferences.NotesDirectory));
+
             services.RegisterLazySingleton<INotesService>(() => new NotesService(
-                resolver.GetService<INotesMetadataService>(), 
-                preferencesService.Preferences));
+                resolver.GetService<INotesMetadataService>(),
+                resolver.GetService<INotesRepository>()));
         }
 
         private static void RegisterViewModels(IMutableDependencyResolver services, IReadonlyDependencyResolver resolver)

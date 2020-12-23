@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="SapphireNotes.UserControls.NoteTab">
   
-  <TextBox Name="editor" Text="{Binding Text}"
+  <TextBox Name="editor" Text="{Binding Content}"
                  AcceptsReturn="True" TextWrapping="Wrap"
                  FontSize="{Binding FontSize}"
                  FontFamily="{Binding FontFamily}" />

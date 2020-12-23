@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using SapphireNotes.Contracts;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Exceptions;
-using SapphireNotes.Models;
-using SapphireNotes.Utils;
+using SapphireNotes.Repositories;
 
 namespace SapphireNotes.Services
 {
     public interface INotesService
     {
         void Create(string name, string fontFamily, int fontSize);
-        void CreateQuick(string text);
+        void CreateQuick(string content);
         void Update(string newName, Note note);
         void Archive(Note note);
         void Restore(Note note);
@@ -36,7 +36,7 @@ namespace SapphireNotes.Services
     public class NotesService : INotesService
     {
         private readonly INotesMetadataService _notesMetadataService;
-        private readonly Preferences _preferences;
+        private readonly INotesRepository _notesRepository;
 
         public event EventHandler<CreatedNoteEventArgs> Created;
         public event EventHandler<UpdatedNoteEventArgs> Updated;
@@ -44,10 +44,10 @@ namespace SapphireNotes.Services
         public event EventHandler<DeletedNoteEventArgs> Deleted;
         public event EventHandler<RestoredNoteEventArgs> Restored;
 
-        public NotesService(INotesMetadataService notesMetadataService, Preferences preferences)
+        public NotesService(INotesMetadataService notesMetadataService, INotesRepository notesRepository)
         {
             _notesMetadataService = notesMetadataService;
-            _preferences = preferences;
+            _notesRepository = notesRepository;
         }
 
         public void Create(string name, string fontFamily, int fontSize)
@@ -59,16 +59,14 @@ namespace SapphireNotes.Services
                 throw new ValidationException("Name is required.");
             }
 
-            var fileName = name + ".txt";
-            if (Exists(fileName))
+            if (_notesRepository.Exists(name))
             {
                 throw new ValidationException("A note with the same name already exists.");
             }
 
-            var path = Path.Combine(_preferences.NotesDirectory, fileName);
-            File.Create(path);
+            _notesRepository.Create(name);
 
-            var note = new Note(name, path, string.Empty, new NoteMetadata(fontFamily, fontSize));
+            var note = new Note(name, string.Empty, DateTime.Now, new NoteMetadata(fontFamily, fontSize));
 
             _notesMetadataService.Add(note.Name, note.Metadata);
             _notesMetadataService.Save();
@@ -79,18 +77,11 @@ namespace SapphireNotes.Services
             });
         }
 
-        public void CreateQuick(string text)
+        public void CreateQuick(string content)
         {
-            var path = Path.Combine(_preferences.NotesDirectory, "Quick note.txt");
-            path = FileUtil.NextAvailableFileName(path);
+            string name = _notesRepository.Create("Quick note", content);
 
-            using (StreamWriter sw = File.CreateText(path))
-            {
-                sw.Write(text);
-            }
-
-            string name = Path.GetFileNameWithoutExtension(path);
-            var note = new Note(name, path, text, new NoteMetadata(text.Length));
+            var note = new Note(name, content, DateTime.Now, new NoteMetadata(content.Length));
 
             _notesMetadataService.Add(note.Name, note.Metadata);
             _notesMetadataService.Save();
@@ -112,20 +103,18 @@ namespace SapphireNotes.Services
             }
 
             var fileName = newName + ".txt";
-            if (originalName.ToLowerInvariant() != newName.ToLowerInvariant() && Exists(fileName))
+            if (originalName.ToLowerInvariant() != newName.ToLowerInvariant() && _notesRepository.Exists(newName))
             {
                 throw new ValidationException("A note with the same name already exists.");
             }
 
-            var path = Path.Combine(_preferences.NotesDirectory, fileName);
-            File.Move(note.FilePath, path);
+            _notesRepository.Update(originalName, newName);
 
             _notesMetadataService.Remove(originalName);
             _notesMetadataService.Add(newName, note.Metadata);
             _notesMetadataService.Save();
 
             note.Name = newName;
-            note.FilePath = path;
 
             Updated.Invoke(this, new UpdatedNoteEventArgs
             {
@@ -136,31 +125,17 @@ namespace SapphireNotes.Services
 
         public void Archive(Note note)
         {
-            Save(note);
+            _notesRepository.Save(note.Name, note.Content);
 
-            var archiveDirectory = Path.Combine(_preferences.NotesDirectory, Globals.ArchiveDirectoryName);
-            if (!Directory.Exists(archiveDirectory))
-            {
-                Directory.CreateDirectory(archiveDirectory);
-            }
-
-            var fileName = Path.GetFileName(note.FilePath);
-            var archivePath = Path.Combine(_preferences.NotesDirectory, Globals.ArchiveDirectoryName, fileName);
-
-            archivePath = FileUtil.NextAvailableFileName(archivePath);
-            File.Move(note.FilePath, archivePath);
-
-            var newName = Path.GetFileNameWithoutExtension(archivePath);
+            var newName = _notesRepository.Archive(note.Name);
 
             NoteMetadata metadata = _notesMetadataService.Get(note.Name);
             metadata.Archived = DateTime.Now;
 
             _notesMetadataService.Remove(note.Name);
-            _notesMetadataService.Add(Globals.ArchiveDirectoryName + "/" + newName, metadata);
+            _notesMetadataService.Add(Globals.ArchivePrefix + "/" + newName, metadata);
 
             _notesMetadataService.Save();
-
-            note.FilePath = archivePath;
 
             Archived?.Invoke(this, new ArchivedNoteEventArgs
             {
@@ -170,23 +145,16 @@ namespace SapphireNotes.Services
 
         public void Restore(Note note)
         {
-            var fileName = Path.GetFileName(note.FilePath);
-            var notesPath = Path.Combine(_preferences.NotesDirectory, fileName);
+            var newName = _notesRepository.Restore(note.Name);
 
-            notesPath = FileUtil.NextAvailableFileName(notesPath);
-            File.Move(note.FilePath, notesPath);
-
-            var newName = Path.GetFileNameWithoutExtension(notesPath);
-
-            NoteMetadata metadata = _notesMetadataService.Get(Globals.ArchiveDirectoryName + "/" + note.Name);
+            NoteMetadata metadata = _notesMetadataService.Get(Globals.ArchivePrefix + "/" + note.Name);
             metadata.Archived = null;
 
-            _notesMetadataService.Remove(Globals.ArchiveDirectoryName + "/" + note.Name);
+            _notesMetadataService.Remove(Globals.ArchivePrefix + "/" + note.Name);
             _notesMetadataService.Add(newName, metadata);
 
             _notesMetadataService.Save();
 
-            note.FilePath = notesPath;
             note.Name = newName;
 
             Restored.Invoke(this, new RestoredNoteEventArgs
@@ -197,7 +165,14 @@ namespace SapphireNotes.Services
 
         public void Delete(Note note)
         {
-            File.Delete(note.FilePath);
+            if (note.Metadata.Archived.HasValue)
+            {
+                _notesRepository.DeleteArchived(note.Name);
+            }
+            else
+            {
+                _notesRepository.Delete(note.Name);
+            }            
 
             _notesMetadataService.Remove(note.Name);
             _notesMetadataService.Save();
@@ -212,7 +187,7 @@ namespace SapphireNotes.Services
         {
             foreach (Note note in notes)
             {
-                Save(note);
+                _notesRepository.Save(note.Name, note.Content);
             }
         }
 
@@ -222,7 +197,7 @@ namespace SapphireNotes.Services
             {
                 if (note.IsDirty)
                 {
-                    Save(note);
+                    _notesRepository.Save(note.Name, note.Content);
                 }
 
                 _notesMetadataService.AddOrUpdate(note.Name, note.Metadata);
@@ -233,128 +208,35 @@ namespace SapphireNotes.Services
 
         public Note[] Load()
         {
-            if (!Directory.Exists(_preferences.NotesDirectory))
-            {
-                return new Note[0];
-            }
+            IEnumerable<Note> notes = _notesRepository.GetAll();
 
-            string[] textFiles = Directory.GetFiles(_preferences.NotesDirectory, "*.txt");
-            var notes = new List<Note>(textFiles.Length);
-            foreach (string filePath in textFiles)
-            {
-                string name = Path.GetFileNameWithoutExtension(filePath);
-                string contents = File.ReadAllText(filePath);
+            _notesMetadataService.Initialize(notes.Select(x => x.Name));
 
-                notes.Add(new Note(name, filePath, contents));
-            }
-
-            var notesOnFileSystem = notes.Select(x => x.Name).ToList();
-
-            var archivePath = Path.Combine(_preferences.NotesDirectory, Globals.ArchiveDirectoryName);
-            if (Directory.Exists(archivePath))
-            {
-                string[] archivedTextFiles = Directory.GetFiles(archivePath, "*.txt");
-                if (archivedTextFiles.Length > 0)
-                {
-                    notesOnFileSystem.AddRange(archivedTextFiles.Select(x => Globals.ArchiveDirectoryName + "/" + Path.GetFileNameWithoutExtension(x)));
-                }
-            }
-
-            _notesMetadataService.Initialize(notesOnFileSystem);
-
+            notes = notes.Where(x => !x.Name.StartsWith(Globals.ArchivePrefix + "/"));
             foreach (Note note in notes)
             {
                 note.Metadata = _notesMetadataService.Get(note.Name);
             }
 
-            var orderedByLastWrite = notes.OrderBy(x => File.GetLastWriteTime(x.FilePath)).ToArray();
-            return orderedByLastWrite;
+            return notes.OrderByDescending(x => x.LastWriteTime).ToArray();
         }
 
         public Note[] LoadArchived()
         {
-            var archivePath = Path.Combine(_preferences.NotesDirectory, Globals.ArchiveDirectoryName);
-            if (!Directory.Exists(archivePath))
+            IEnumerable<Note> notes = _notesRepository.GetAllArchived();
+
+            foreach (Note note in notes)
             {
-                return new Note[0];
+                note.Metadata = _notesMetadataService.Get(Globals.ArchivePrefix + "/" + note.Name);
             }
 
-            string[] textFiles = Directory.GetFiles(archivePath, "*.txt");
-            if (textFiles.Length == 0)
-            {
-                return new Note[0];
-            }
-
-            var notes = new List<Note>(textFiles.Length);
-            foreach (string filePath in textFiles)
-            {
-                string name = Path.GetFileNameWithoutExtension(filePath);
-                string contents = File.ReadAllText(filePath);
-
-                NoteMetadata metadata = _notesMetadataService.Get(Globals.ArchiveDirectoryName + "/" + name);
-
-                notes.Add(new Note(name, filePath, contents, metadata));
-            }
-
-            var orderedByLastWrite = notes.OrderByDescending(x => x.Metadata.Archived).ToArray();
-            return orderedByLastWrite;
+            return notes.OrderByDescending(x => x.Metadata.Archived).ToArray();
         }
 
         public void MoveAll(string oldDirectory, string newDirectory)
         {
-            string[] textFiles = Directory.GetFiles(oldDirectory, "*.txt");
-
-            var fromTo = new Dictionary<string, string>();
-            foreach (string filePath in textFiles)
-            {
-                var newPath = Path.Combine(newDirectory, Path.GetFileName(filePath));
-                if (!File.Exists(newPath))
-                {
-                    fromTo.Add(filePath, newPath);
-                }
-                else
-                {
-                    throw new MoveNotesException("Couldn't move the notes. Make sure there aren't any existing notes with identical names in the chosen directory.");
-                }
-            }
-            
-            var oldArchivePath = Path.Combine(oldDirectory, Globals.ArchiveDirectoryName);
-            bool oldArchiveExists = Directory.Exists(oldArchivePath);
-            if (oldArchiveExists)
-            {
-                string[] archivedTextFiles = Directory.GetFiles(oldArchivePath, "*.txt");
-                if (archivedTextFiles.Length > 0)
-                {
-                    var newArchivePath = Path.Combine(newDirectory, Globals.ArchiveDirectoryName);
-                    if (!Directory.Exists(newArchivePath))
-                    {
-                        Directory.CreateDirectory(newArchivePath);
-                    }
-
-                    foreach (string filePath in archivedTextFiles)
-                    {
-                        var newPath = Path.Combine(newArchivePath, Path.GetFileName(filePath));
-                        if (!File.Exists(newPath))
-                        {
-                            fromTo.Add(filePath, newPath);
-                        }
-                        else
-                        {
-                            throw new MoveNotesException($"Couldn't move the archived notes. Make sure there aren't any existing notes with identical names in the chosen directory's '{Globals.ArchiveDirectoryName}' folder.");
-                        }
-                    }
-                }
-            }
-
-            foreach (var kvp in fromTo)
-            {
-                File.Move(kvp.Key, kvp.Value);
-            }
-
-            if (oldArchiveExists)
-            {
-                Directory.Delete(oldArchivePath);
-            }
+            var fileSystemRepository = (IFileSystemRepository)_notesRepository;
+            fileSystemRepository.MoveAll(oldDirectory, newDirectory);
         }
 
         public string GetFontThatAllNotesUse()
@@ -397,17 +279,6 @@ namespace SapphireNotes.Services
         public void SetFontSizeForAll(int fontSize)
         {
             _notesMetadataService.SetFontSizeForAll(fontSize);
-        }
-
-        private void Save(Note note)
-        {
-            File.WriteAllText(note.FilePath, note.Text);
-        }
-
-        private bool Exists(string fileName)
-        {
-            var path = Path.Combine(_preferences.NotesDirectory, fileName);
-            return File.Exists(path);
         }
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 
 namespace SapphireNotes.Services
 {
@@ -143,7 +143,7 @@ namespace SapphireNotes.Services
 
                 foreach (string noteName in notesOnFilesystem)
                 {
-                    if (noteName.Contains(Globals.ArchiveDirectoryName + "/"))
+                    if (noteName.Contains(Globals.ArchivePrefix + "/"))
                     {
                         _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
                     }
@@ -184,7 +184,7 @@ namespace SapphireNotes.Services
             IEnumerable<string> addedNotes = notesOnFilesystem.Where(k => !_notesMetadata.Keys.Contains(k));
             foreach (string noteName in addedNotes)
             {
-                if (noteName.Contains(Globals.ArchiveDirectoryName + "/"))
+                if (noteName.Contains(Globals.ArchivePrefix + "/"))
                 {
                     _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
                 }

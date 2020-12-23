@@ -55,8 +55,11 @@ namespace SapphireNotes.Views
 
         private void NoteSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedVm = e.AddedItems[0] as NoteViewModel;
-            selectedVm.Select();
+            if (e.AddedItems.Count > 0)
+            {
+                var selectedVm = e.AddedItems[0] as NoteViewModel;
+                selectedVm.Select();
+            }
         }
 
         private void Note_Edit(object sender, EventArgs e)

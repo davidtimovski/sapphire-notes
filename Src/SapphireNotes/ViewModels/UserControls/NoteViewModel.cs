@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Reactive;
 using Avalonia.Media;
 using ReactiveUI;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels.UserControls
@@ -20,7 +20,7 @@ namespace SapphireNotes.ViewModels.UserControls
             OnMiddleClickCommand = ReactiveCommand.Create(() => MiddleMouseClicked.Invoke(this, null));
 
             name = note.Name;
-            text = note.Text;
+            content = note.Content;
             fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
             caretPosition = note.Metadata.CaretPosition;
@@ -46,16 +46,16 @@ namespace SapphireNotes.ViewModels.UserControls
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        private string text;
-        public string Text
+        private string content;
+        public string Content
         {
             get
             {
-                return text;
+                return content;
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref text, value);
+                this.RaiseAndSetIfChanged(ref content, value);
                 Note.IsDirty = true;
             }
         }
@@ -84,7 +84,7 @@ namespace SapphireNotes.ViewModels.UserControls
         public Note ToNote()
         {
             Note.Name = name;
-            Note.Text = text;
+            Note.Content = content;
             Note.Metadata.FontFamily = fontFamily.Name;
             Note.Metadata.FontSize = fontSize;
             Note.Metadata.CaretPosition = caretPosition;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive;
 using DynamicData;
 using ReactiveUI;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 
 namespace SapphireNotes.Services
 {

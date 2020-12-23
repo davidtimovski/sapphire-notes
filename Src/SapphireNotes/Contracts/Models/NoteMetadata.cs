@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SapphireNotes.Models
+namespace SapphireNotes.Contracts.Models
 {
     public class NoteMetadata
     {

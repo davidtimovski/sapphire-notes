@@ -1,4 +1,4 @@
-﻿namespace SapphireNotes.Models
+﻿namespace SapphireNotes.Contracts.Models
 {
     public class Preferences
     {

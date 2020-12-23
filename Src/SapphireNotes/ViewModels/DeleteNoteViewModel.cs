@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using ReactiveUI;
-using SapphireNotes.Models;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using ReactiveUI;
+using SapphireNotes.Contracts.Models;
 using SapphireNotes.Exceptions;
-using SapphireNotes.Models;
 using SapphireNotes.Services;
 using SapphireNotes.ViewModels.UserControls;
 

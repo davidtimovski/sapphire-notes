@@ -15,19 +15,19 @@ namespace SapphireNotes.ViewModels
 
         public void Create()
         {
-            _notesService.CreateQuick(text);
+            _notesService.CreateQuick(content);
         }
 
-        private string text = string.Empty;
-        private string Text
+        private string content = string.Empty;
+        private string Content
         {
             get
             {
-                return text;
+                return content;
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref text, value);
+                this.RaiseAndSetIfChanged(ref content, value);
             }
         }
     }
