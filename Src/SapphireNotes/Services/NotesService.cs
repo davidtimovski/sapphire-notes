@@ -17,7 +17,6 @@ namespace SapphireNotes.Services
         void Restore(Note note);
         void Delete(Note note);
         void SaveAll(IEnumerable<Note> notes);
-        void SaveDirtyWithMetadata(IEnumerable<Note> notes);
         Note[] Load();
         Note[] LoadArchived();
         void MoveAll(string oldDirectory, string newDirectory);
@@ -189,21 +188,6 @@ namespace SapphireNotes.Services
             {
                 _notesRepository.Save(note.Name, note.Content);
             }
-        }
-
-        public void SaveDirtyWithMetadata(IEnumerable<Note> notes)
-        {
-            foreach (Note note in notes)
-            {
-                if (note.IsDirty)
-                {
-                    _notesRepository.Save(note.Name, note.Content);
-                }
-
-                _notesMetadataService.AddOrUpdate(note.Name, note.Metadata);
-            }
-
-            _notesMetadataService.Save();
         }
 
         public Note[] Load()

@@ -63,8 +63,7 @@ namespace SapphireNotes.ViewModels
         {
             autoSaveTimer.Stop();
 
-            IEnumerable<Note> notes = Notes.Select(x => x.ToNote());
-            _notesService.SaveDirtyWithMetadata(notes);
+            SaveDirtyNotes(null, null);
 
             _preferencesService.UpdateWindowSizePreferenceIfChanged(windowWidth, windowHeight, windowPositionX, windowPositionY);
         }
