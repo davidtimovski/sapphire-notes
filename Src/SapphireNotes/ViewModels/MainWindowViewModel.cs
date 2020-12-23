@@ -136,20 +136,20 @@ namespace SapphireNotes.ViewModels
 
         private void ArchiveNote(NoteViewModel noteVm)
         {
-            _notesService.Archive(noteVm.Note);
+            _notesService.Archive(noteVm.ToNote());
             Notes.Remove(noteVm);
         }
 
         private void SaveDirtyNotes(object sender, EventArgs e)
         {
-            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.Note.IsDirty);
+            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty);
             if (dirtyNotesVMs.Any())
             {
                 _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
 
                 foreach (var note in dirtyNotesVMs)
                 {
-                    note.Note.IsDirty = false;
+                    note.SetPristine();
                 }
             }
         }

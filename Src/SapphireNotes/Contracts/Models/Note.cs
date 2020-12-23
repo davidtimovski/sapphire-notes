@@ -8,18 +8,18 @@ namespace SapphireNotes.Contracts.Models
         {
         }
 
-        public Note(string name, string fileContents) : this(name, fileContents, null, null)
+        public Note(string name, string content) : this(name, content, null, null)
         {
         }
 
-        public Note(string name, string fileContents, DateTime? lastWriteTime) : this(name, fileContents, lastWriteTime, null)
+        public Note(string name, string content, DateTime? lastWriteTime) : this(name, content, lastWriteTime, null)
         {
         }
 
-        public Note(string name, string fileContents, DateTime? lastWriteTime, NoteMetadata metadata)
+        public Note(string name, string content, DateTime? lastWriteTime, NoteMetadata metadata)
         {
             Name = name;
-            Content = fileContents;
+            Content = content;
             LastWriteTime = lastWriteTime;
             Metadata = metadata;
         }

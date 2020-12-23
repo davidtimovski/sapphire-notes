@@ -10,9 +10,11 @@ namespace SapphireNotes.ViewModels.UserControls
 {
     public class NoteViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private readonly Note _model;
+
         public NoteViewModel(Note note)
         {
-            Note = note;
+            _model = note;
 
             OnEditCommand = ReactiveCommand.Create(() => EditClicked.Invoke(this, null));
             OnArchiveCommand = ReactiveCommand.Create(() => ArchiveClicked.Invoke(this, null));
@@ -26,8 +28,6 @@ namespace SapphireNotes.ViewModels.UserControls
             caretPosition = note.Metadata.CaretPosition;
         }
 
-        public Note Note { get; set; }
-
         public event EventHandler<EventArgs> EditClicked;
         public event EventHandler<EventArgs> ArchiveClicked;
         public event EventHandler<EventArgs> DeleteClicked;
@@ -37,6 +37,13 @@ namespace SapphireNotes.ViewModels.UserControls
         public void Select()
         {
             Selected?.Invoke(this, null);
+        }
+
+        public bool IsDirty { get; private set; }
+
+        public void SetPristine()
+        {
+            IsDirty = false;
         }
 
         private string name;
@@ -56,7 +63,7 @@ namespace SapphireNotes.ViewModels.UserControls
             set
             {
                 this.RaiseAndSetIfChanged(ref content, value);
-                Note.IsDirty = true;
+                IsDirty = true;
             }
         }
 
@@ -83,13 +90,11 @@ namespace SapphireNotes.ViewModels.UserControls
 
         public Note ToNote()
         {
-            Note.Name = name;
-            Note.Content = content;
-            Note.Metadata.FontFamily = fontFamily.Name;
-            Note.Metadata.FontSize = fontSize;
-            Note.Metadata.CaretPosition = caretPosition;
+            _model.Name = name;
+            _model.Content = content;
+            _model.Metadata.CaretPosition = caretPosition;
 
-            return Note;
+            return _model;
         }
 
         private ReactiveCommand<Unit, Unit> OnEditCommand { get; }
