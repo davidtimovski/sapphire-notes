@@ -10,7 +10,7 @@ namespace SapphireNotes.Services
         Preferences Preferences { get; }
         bool Load();
         void SavePreferences();
-        void UpdateWindowSizePreferenceIfChanged(int width, int height, int positionX, int positionY);
+        void SaveWindowPreferences(int width, int height, int positionX, int positionY);
     }
 
     public class PreferencesService : IPreferencesService
@@ -65,7 +65,7 @@ namespace SapphireNotes.Services
             writer.Write(Preferences.Window.PositionY);
         }
 
-        public void UpdateWindowSizePreferenceIfChanged(int width, int height, int positionX, int positionY)
+        public void SaveWindowPreferences(int width, int height, int positionX, int positionY)
         {
             if (width != Preferences.Window.Width || height != Preferences.Window.Height)
             {
