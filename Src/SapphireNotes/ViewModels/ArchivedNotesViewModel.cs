@@ -18,6 +18,8 @@ namespace SapphireNotes.ViewModels
         {
             _notesService = notesService;
             _notesService.Archived += NoteArchived;
+            _notesService.Restored += NoteRestored;
+            _notesService.Deleted += NoteDeleted;
 
             var archived = _notesService.LoadArchived();
             archivedNotesExist = archived.Length > 0;
@@ -51,24 +53,28 @@ namespace SapphireNotes.ViewModels
             ArchivedNotesExist = true;
         }
 
+        private void NoteRestored(object sender, RestoredNoteEventArgs e)
+        {
+            var restoredVm = ArchivedNotes.First(x => x.Name == e.RestoredNote.Name);
+            RemoveNote(restoredVm);
+        }
+
+        private void NoteDeleted(object sender, DeletedNoteEventArgs e)
+        {
+            var deletedVm = ArchivedNotes.First(x => x.Name == e.DeletedNote.Name);
+            RemoveNote(deletedVm);
+        }
+
         private void RestoreSelectedNote()
         {
-            Restore(selected);
+            _notesService.Restore(selected.Note);
             Selected = null;
         }
 
         private void Note_MiddleMouseClicked(object sender, EventArgs e)
         {
-            Restore(sender as ArchivedNoteViewModel);
-        }
-
-        private void Restore(ArchivedNoteViewModel archivedNoteVm)
-        {
+            var archivedNoteVm = sender as ArchivedNoteViewModel;
             _notesService.Restore(archivedNoteVm.Note);
-
-            RemoveNote(archivedNoteVm);
-
-            ArchivedNotesExist = ArchivedNotes.Any();
         }
 
         private void DeleteSelectedNote()
@@ -85,9 +91,6 @@ namespace SapphireNotes.ViewModels
         {
             _notesService.Delete(selected.Note);
 
-            RemoveNote(selected);
-
-            ArchivedNotesExist = ArchivedNotes.Any();
             HideConfirmPrompt();
             Selected = null;
         }
@@ -111,6 +114,8 @@ namespace SapphireNotes.ViewModels
             ArchivedNoteViewModel[] updatedNotes = ArchivedNotes.Where(x => !x.Equals(archivedNoteVm)).ToArray();
             ArchivedNotes.Clear();
             ArchivedNotes.AddRange(updatedNotes);
+
+            ArchivedNotesExist = ArchivedNotes.Any();
         }
 
         private bool archivedNotesExist;
