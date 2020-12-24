@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SapphireNotes", "Src\SapphireNotes\SapphireNotes.csproj", "{4FCBF106-2F9A-4227-897F-2A38886EE52E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SapphireNotes", "Src\SapphireNotes\SapphireNotes.csproj", "{4FCBF106-2F9A-4227-897F-2A38886EE52E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Test\UnitTests\UnitTests.csproj", "{81D6795E-0F42-4FEF-9A82-C00F43670713}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4FCBF106-2F9A-4227-897F-2A38886EE52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FCBF106-2F9A-4227-897F-2A38886EE52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FCBF106-2F9A-4227-897F-2A38886EE52E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81D6795E-0F42-4FEF-9A82-C00F43670713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D6795E-0F42-4FEF-9A82-C00F43670713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D6795E-0F42-4FEF-9A82-C00F43670713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D6795E-0F42-4FEF-9A82-C00F43670713}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
