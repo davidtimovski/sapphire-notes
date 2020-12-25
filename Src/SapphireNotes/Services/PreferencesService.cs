@@ -31,7 +31,7 @@ namespace SapphireNotes.Services
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                appDataDirectory = Path.Combine("/var/lib", Globals.ApplicationName.ToLowerInvariant());
+                appDataDirectory = $"/home/{Environment.UserName}/Documents/{Globals.ApplicationName}";
             }
 
             if (!Directory.Exists(appDataDirectory))
