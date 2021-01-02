@@ -7,15 +7,13 @@
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
   
-  <Style Selector="MenuItem">
+  <Style Selector="ContextMenu MenuItem">
     <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
-    <Setter Property="BorderThickness" Value="0 1" />
-    <Setter Property="Padding" Value="6 2" />
+    <Setter Property="Padding" Value="6 3" />
   </Style>
 
-  <Style Selector="MenuItem:selected /template/ Border#root">
-    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
-    <Setter Property="BorderBrush" Value="{StaticResource BackgroundColor}" />
+  <Style Selector="ContextMenu MenuItem:selected /template/ Border#root">
+    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
   </Style>
 
 </Styles>
