@@ -32,23 +32,23 @@ namespace SapphireNotes.Views
             var escapeButton = this.FindControl<Button>("escapeButton");
             escapeButton.Command = ReactiveCommand.Create(ExcapeButtonClicked);
 
-            var quickNoteButton = this.FindControl<Button>("quickNoteButton");
-            quickNoteButton.Command = ReactiveCommand.Create(QuickNoteButtonClicked);
+            var newNoteMenuItem = this.FindControl<MenuItem>("newNoteMenuItem");
+            newNoteMenuItem.Command = ReactiveCommand.Create(NewNoteMenuItemClicked);
+
+            var quickNoteMenuItem = this.FindControl<MenuItem>("quickNoteMenuItem");
+            quickNoteMenuItem.Command = ReactiveCommand.Create(QuickNoteMenuItemClicked);
+
+            var archivedMenuItem = this.FindControl<MenuItem>("archivedMenuItem");
+            archivedMenuItem.Command = ReactiveCommand.Create(ArchivedMenuItemClicked);
+
+            var preferencesMenuItem = this.FindControl<MenuItem>("preferencesMenuItem");
+            preferencesMenuItem.Command = ReactiveCommand.Create(PreferencesMenuItemClicked);
+
+            var tipsMenuItem = this.FindControl<MenuItem>("tipsMenuItem");
+            tipsMenuItem.Command = ReactiveCommand.Create(TipsMenuItemClicked);
 
             _notesTabControl = this.FindControl<TabControl>("noteTabs");
             _notesTabControl.SelectionChanged += NoteSelectionChanged;
-
-            var newNoteButton = this.FindControl<Button>("newNoteButton");
-            newNoteButton.Command = ReactiveCommand.Create(NewNoteButtonClicked);
-
-            var archivedButton = this.FindControl<Button>("archivedButton");
-            archivedButton.Command = ReactiveCommand.Create(ArchivedButtonClicked);
-
-            var preferencesButton = this.FindControl<Button>("preferencesButton");
-            preferencesButton.Command = ReactiveCommand.Create(PreferencesButtonClicked);
-
-            var tipsButton = this.FindControl<Button>("tipsButton");
-            tipsButton.Command = ReactiveCommand.Create(TipsButtonClicked);
 
             DataContextChanged += MainWindow_DataContextChanged;
         }
@@ -113,7 +113,7 @@ namespace SapphireNotes.Views
             Close();
         }
 
-        private void QuickNoteButtonClicked()
+        private void QuickNoteMenuItemClicked()
         {
             var window = new QuickNoteWindow
             {
@@ -128,7 +128,7 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void NewNoteButtonClicked()
+        private void NewNoteMenuItemClicked()
         {
             var window = new EditNoteWindow
             {
@@ -151,7 +151,7 @@ namespace SapphireNotes.Views
             _notesTabControl.SelectedItem = noteVm;
         }
 
-        private void ArchivedButtonClicked()
+        private void ArchivedMenuItemClicked()
         {
             var window = new ArchivedNotesWindow
             {
@@ -173,7 +173,7 @@ namespace SapphireNotes.Views
             _notesTabControl.SelectedItem = noteVm;
         }
 
-        private void PreferencesButtonClicked()
+        private void PreferencesMenuItemClicked()
         {
             var window = new PreferencesWindow
             {
@@ -189,7 +189,7 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void TipsButtonClicked()
+        private void TipsMenuItemClicked()
         {
             var window = new TipsWindow
             {

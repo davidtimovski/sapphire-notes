@@ -12,6 +12,7 @@
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Menu.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/ScrollBar.axaml" />
@@ -25,15 +26,11 @@
     <Style Selector="DockPanel.toolbar">
       <Setter Property="Margin" Value="0 0 0 5" />
     </Style>
-    <Style Selector="StackPanel.rightHandButtons">
-      <Setter Property="Orientation" Value="Horizontal" />
-      <Setter Property="HorizontalAlignment" Value="Right" />
-    </Style>
-    <Style Selector="Button#archivedButton">
-      <Setter Property="Margin" Value="0 0 5 0" />
-    </Style>
-    <Style Selector="Button#preferencesButton">
-      <Setter Property="Margin" Value="0 0 5 0" />
+    <Style Selector="DockPanel.toolbar Menu">
+      <Setter Property="Padding" Value="0 0 0 5" />
+      <Setter Property="BorderThickness" Value="0 0 0 1" />
+      <Setter Property="BorderBrush" Value="{StaticResource LightGreyColor}" />
+      <Setter Property="DockPanel.Dock" Value="Top" />
     </Style>
 
     <Style Selector="TabControl[TabStripPlacement=Top]">
@@ -78,15 +75,20 @@
 
     <DockPanel Grid.Row="0" Classes="toolbar">
       <Button Name="escapeButton" HotKey="Escape" IsVisible="False"></Button>
-      <Button Name="quickNoteButton" HotKey="Ctrl+Q" IsVisible="False"></Button>
       
-      <Button Name="newNoteButton" HotKey="Ctrl+N" Classes="button success">New</Button>
-
-      <StackPanel Classes="rightHandButtons">
-        <Button Name="archivedButton" HotKey="Ctrl+R" Classes="button">Archived</Button>
-        <Button Name="preferencesButton" HotKey="Ctrl+P" Classes="button">Preferences</Button>
-        <Button Name="tipsButton" HotKey="Ctrl+T" Classes="button">Tips</Button>
-      </StackPanel>
+      <Menu>
+        <MenuItem Header="Notes">
+          <MenuItem Name="newNoteMenuItem" Header="New                     (Ctrl+N)" HotKey="Ctrl+N" />
+          <MenuItem Name="quickNoteMenuItem" Header="Quick                   (Ctrl+Q)" HotKey="Ctrl+Q" />
+          <Separator/>
+          <MenuItem Name="archivedMenuItem" Header="Archived              (Ctrl+R)" HotKey="Ctrl+R" />
+          <Separator />
+          <MenuItem Name="preferencesMenuItem" Header="Preferences        (Ctrl+P)" HotKey="Ctrl+P" />
+        </MenuItem>
+        <MenuItem Header="Help">
+          <MenuItem Name="tipsMenuItem" Header="Tips          (Ctrl+T)" HotKey="Ctrl+T" />
+        </MenuItem>
+      </Menu>
     </DockPanel>
 
     <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
