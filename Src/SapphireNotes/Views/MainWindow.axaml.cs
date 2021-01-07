@@ -47,6 +47,9 @@ namespace SapphireNotes.Views
             var tipsMenuItem = this.FindControl<MenuItem>("tipsMenuItem");
             tipsMenuItem.Command = ReactiveCommand.Create(TipsMenuItemClicked);
 
+            var aboutMenuItem = this.FindControl<MenuItem>("aboutMenuItem");
+            aboutMenuItem.Command = ReactiveCommand.Create(AboutMenuItemClicked);
+
             _notesTabControl = this.FindControl<TabControl>("noteTabs");
             _notesTabControl.SelectionChanged += NoteSelectionChanged;
 
@@ -192,6 +195,20 @@ namespace SapphireNotes.Views
         private void TipsMenuItemClicked()
         {
             var window = new TipsWindow
+            {
+                Owner = this,
+                Topmost = true,
+                CanResize = false
+            };
+            window.Show();
+            window.Activate();
+
+            _windows.Add(window);
+        }
+
+        private void AboutMenuItemClicked()
+        {
+            var window = new AboutWindow
             {
                 Owner = this,
                 Topmost = true,

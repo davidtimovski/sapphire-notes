@@ -67,9 +67,6 @@
           <TextBlock Grid.Row="3" Grid.Column="0">Ctrl+P</TextBlock>
           <TextBlock Grid.Row="3" Grid.Column="1">Open Preferences window</TextBlock>
 
-          <TextBlock Grid.Row="4" Grid.Column="0">Ctrl+T</TextBlock>
-          <TextBlock Grid.Row="4" Grid.Column="1">Open this Tips window</TextBlock>
-
           <TextBlock Grid.Row="5" Grid.Column="0">Escape</TextBlock>
           <TextBlock Grid.Row="5" Grid.Column="1">Close currently active window</TextBlock>
         </Grid>
