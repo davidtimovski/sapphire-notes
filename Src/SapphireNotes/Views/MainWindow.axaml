@@ -86,7 +86,9 @@
           <MenuItem Name="preferencesMenuItem" Header="Preferences        (Ctrl+P)" HotKey="Ctrl+P" />
         </MenuItem>
         <MenuItem Header="Help">
-          <MenuItem Name="tipsMenuItem" Header="Tips          (Ctrl+T)" HotKey="Ctrl+T" />
+          <MenuItem Name="tipsMenuItem" Header="Tips" />
+          <Separator />
+          <MenuItem Name="aboutMenuItem" Header="About" />
         </MenuItem>
       </Menu>
     </DockPanel>

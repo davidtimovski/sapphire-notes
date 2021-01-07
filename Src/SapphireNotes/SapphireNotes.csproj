@@ -16,6 +16,9 @@
     <Compile Update="Views\ArchivedNotesWindow.axaml.cs">
       <DependentUpon>ArchivedNotesWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\AboutWindow.axaml.cs">
+      <DependentUpon>AboutWindow.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TipsWindow.axaml.cs">
       <DependentUpon>TipsWindow.axaml</DependentUpon>
     </Compile>
