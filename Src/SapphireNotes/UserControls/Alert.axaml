@@ -23,11 +23,7 @@
     <vm:AlertViewModel/>
   </Design.DataContext>
 
-  <Border IsVisible="{Binding IsVisible}" MaxWidth="{Binding MaxWidth}" Opacity="{Binding Opacity}">
-    <Border.Transitions>
-      <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
-    </Border.Transitions>
-    
+  <Border IsVisible="{Binding IsVisible}" MaxWidth="{Binding MaxWidth}">
     <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
   </Border>
 </UserControl>

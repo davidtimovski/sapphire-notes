@@ -93,7 +93,7 @@
       </Menu>
     </DockPanel>
 
-    <TabControl Name="noteTabs" Items="{Binding Notes}" Grid.Row="1">
+    <TabControl Items="{Binding Notes}" SelectedItem="{Binding Selected}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate>
           <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}" Classes="tabHeader">

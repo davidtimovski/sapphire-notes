@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.UserControls
@@ -39,14 +40,15 @@ namespace SapphireNotes.UserControls
         {
             if (DataContext is NoteViewModel vm)
             {
-                vm.Selected -= SetCaretPositionAndFocus;
-                vm.Selected += SetCaretPositionAndFocus;
+                Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    SetCaretPositionAndFocus(vm);
+                });
             }
 
-            void SetCaretPositionAndFocus(object sender, EventArgs e)
+            void SetCaretPositionAndFocus(NoteViewModel vm)
             {
                 var editor = this.FindControl<TextBox>("editor");
-                var vm = sender as NoteViewModel;
                 editor.CaretIndex = vm.CaretPosition;
                 editor.Focus();
             }

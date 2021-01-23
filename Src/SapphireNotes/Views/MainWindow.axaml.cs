@@ -16,18 +16,12 @@ namespace SapphireNotes.Views
     {
         private readonly INotesService _notesService;
         private readonly List<Window> _windows = new List<Window>();
-        private readonly TabControl _notesTabControl;
 
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             _notesService = Locator.Current.GetService<INotesService>();
-            _notesService.Created += NoteCreated;
-            _notesService.Restored += NoteRestored;
 
             var escapeButton = this.FindControl<Button>("escapeButton");
             escapeButton.Command = ReactiveCommand.Create(ExcapeButtonClicked);
@@ -50,19 +44,7 @@ namespace SapphireNotes.Views
             var aboutMenuItem = this.FindControl<MenuItem>("aboutMenuItem");
             aboutMenuItem.Command = ReactiveCommand.Create(AboutMenuItemClicked);
 
-            _notesTabControl = this.FindControl<TabControl>("noteTabs");
-            _notesTabControl.SelectionChanged += NoteSelectionChanged;
-
             DataContextChanged += MainWindow_DataContextChanged;
-        }
-
-        private void NoteSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                var selectedVm = e.AddedItems[0] as NoteViewModel;
-                selectedVm.Select();
-            }
         }
 
         private void Note_Edit(object sender, EventArgs e)
@@ -116,27 +98,11 @@ namespace SapphireNotes.Views
             Close();
         }
 
-        private void QuickNoteMenuItemClicked()
-        {
-            var window = new QuickNoteWindow
-            {
-                DataContext = new QuickNoteViewModel(_notesService),
-                Owner = this,
-                Topmost = true,
-                CanResize = false
-            };
-            window.Show();
-            window.Activate();
-
-            _windows.Add(window);
-        }
-
         private void NewNoteMenuItemClicked()
         {
             var window = new EditNoteWindow
             {
                 DataContext = new EditNoteViewModel(_notesService),
-                Owner = this,
                 Topmost = true,
                 CanResize = false
             };
@@ -146,12 +112,18 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void NoteCreated(object sender, CreatedNoteEventArgs e)
+        private void QuickNoteMenuItemClicked()
         {
-            var vm = DataContext as MainWindowViewModel;
-            NoteViewModel noteVm = vm.AddNote(e.CreatedNote);
+            var window = new QuickNoteWindow
+            {
+                DataContext = new QuickNoteViewModel(_notesService),
+                Topmost = true,
+                CanResize = false
+            };
+            window.Show();
+            window.Activate();
 
-            _notesTabControl.SelectedItem = noteVm;
+            _windows.Add(window);
         }
 
         private void ArchivedMenuItemClicked()
@@ -159,7 +131,6 @@ namespace SapphireNotes.Views
             var window = new ArchivedNotesWindow
             {
                 DataContext = new ArchivedNotesViewModel(_notesService),
-                Owner = this,
                 Topmost = true
             };
             window.Show();
@@ -168,20 +139,14 @@ namespace SapphireNotes.Views
             _windows.Add(window);
         }
 
-        private void NoteRestored(object sender, RestoredNoteEventArgs e)
-        {
-            var vm = DataContext as MainWindowViewModel;
-            NoteViewModel noteVm = vm.AddNote(e.RestoredNote);
-
-            _notesTabControl.SelectedItem = noteVm;
-        }
-
         private void PreferencesMenuItemClicked()
         {
+            var vm = DataContext as MainWindowViewModel;
+            vm.SaveDirty();
+
             var window = new PreferencesWindow
             {
                 DataContext = new PreferencesViewModel(Locator.Current.GetService<IPreferencesService>(), _notesService),
-                Owner = this,
                 Topmost = true,
                 CanResize = false
             };
@@ -196,7 +161,6 @@ namespace SapphireNotes.Views
         {
             var window = new TipsWindow
             {
-                Owner = this,
                 Topmost = true,
                 CanResize = false
             };
@@ -210,7 +174,6 @@ namespace SapphireNotes.Views
         {
             var window = new AboutWindow
             {
-                Owner = this,
                 Topmost = true,
                 CanResize = false
             };
@@ -223,7 +186,7 @@ namespace SapphireNotes.Views
         private void PreferencesSaved(object sender, PreferencesSavedEventArgs e)
         {
             var vm = DataContext as MainWindowViewModel;
-            vm.PreferencesSaved(e.NotesAreDirty);
+            vm.PreferencesSaved(e);
         }
 
         private void MainWindow_DataContextChanged(object sender, EventArgs e)

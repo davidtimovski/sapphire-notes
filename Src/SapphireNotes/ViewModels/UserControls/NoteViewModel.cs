@@ -32,12 +32,6 @@ namespace SapphireNotes.ViewModels.UserControls
         public event EventHandler<EventArgs> ArchiveClicked;
         public event EventHandler<EventArgs> DeleteClicked;
         public event EventHandler<EventArgs> MiddleMouseClicked;
-        public event EventHandler<EventArgs> Selected;
-
-        public void Select()
-        {
-            Selected?.Invoke(this, null);
-        }
 
         public bool IsDirty { get; private set; }
 

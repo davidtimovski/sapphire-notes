@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
@@ -11,10 +10,6 @@ namespace SapphireNotes.Views
         public DeleteNoteWindow()
         {
             InitializeComponent();
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var yesButton = this.FindControl<Button>("yesButton");
             yesButton.Command = ReactiveCommand.Create(YesButtonClicked);

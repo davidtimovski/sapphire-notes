@@ -19,8 +19,9 @@ namespace SapphireNotes.DependencyInjection
             services.RegisterLazySingleton<IPreferencesService>(() => new PreferencesService());
             services.RegisterLazySingleton<INotesMetadataService>(() => new NotesMetadataService());
 
-            var preferencesService = resolver.GetService<IPreferencesService>();
-            services.RegisterLazySingleton<INotesRepository>(() => new FileSystemRepository(preferencesService.Preferences.NotesDirectory));
+            services.RegisterLazySingleton<INotesRepository>(() => new FileSystemRepository(
+                resolver.GetService<IPreferencesService>()
+            ));
 
             services.RegisterLazySingleton<INotesService>(() => new NotesService(
                 resolver.GetService<INotesMetadataService>(),

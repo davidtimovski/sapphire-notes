@@ -126,10 +126,6 @@
 
       <StackPanel Grid.Row="0">
         <Border IsVisible="{Binding ConfirmPromptVisible}" Opacity="{Binding ConfirmPromptOpacity}" Classes="actionConfirmPrompt">
-          <Border.Transitions>
-            <DoubleTransition Property="Opacity" Duration="0:0:0.15" />
-          </Border.Transitions>
-
           <DockPanel>
             <Border Classes="promptText">
               <TextBlock Text="{Binding ConfirmPromptText}" />

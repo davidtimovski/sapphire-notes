@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 
@@ -10,10 +9,6 @@ namespace SapphireNotes.Views
         public TipsWindow()
         {
             InitializeComponent();
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var closeButton = this.FindControl<Button>("closeButton");
             closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);

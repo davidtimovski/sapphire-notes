@@ -20,7 +20,7 @@ namespace SapphireNotes.Services
         void SaveAllWithMetadata(IEnumerable<Note> notes);
         Note[] Load();
         Note[] LoadArchived();
-        void MoveAll(string oldDirectory, string newDirectory);
+        void MoveAll(string newDirectory);
         string GetFontThatAllNotesUse();
         int? GetFontSizeThatAllNotesUse();
         void SetFontForAll(string font);
@@ -229,10 +229,10 @@ namespace SapphireNotes.Services
             return notes.OrderByDescending(x => x.Metadata.Archived).ToArray();
         }
 
-        public void MoveAll(string oldDirectory, string newDirectory)
+        public void MoveAll(string newDirectory)
         {
             var fileSystemRepository = (IFileSystemRepository)_notesRepository;
-            fileSystemRepository.MoveAll(oldDirectory, newDirectory);
+            fileSystemRepository.MoveAll(newDirectory);
         }
 
         public string GetFontThatAllNotesUse()

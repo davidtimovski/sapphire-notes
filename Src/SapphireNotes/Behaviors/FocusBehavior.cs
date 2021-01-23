@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Reactive;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Interactivity;
@@ -8,17 +9,14 @@ namespace SapphireNotes.Behaviors
     public class FocusBehavior : AvaloniaObject
     {
         public static readonly AttachedProperty<bool> InitialFocusProperty = AvaloniaProperty.RegisterAttached<FocusBehavior, Interactive, bool>(
-            "InitialFocus", default, false, BindingMode.OneTime, ValidateInitialFocus);
+            "InitialFocus", default, false, BindingMode.OneTime);
 
-        private static bool ValidateInitialFocus(Interactive element, bool initialFocus)
+        static FocusBehavior()
         {
-            if (initialFocus)
-            {
-                var textBox = element as TextBox;
+            InitialFocusProperty.Changed.Subscribe(Observer.Create<AvaloniaPropertyChangedEventArgs>(e => {
+                var textBox = e.Sender as TextBox;
                 textBox.AttachedToVisualTree += TextBox_AttachedToVisualTree;
-            }
-            
-            return initialFocus;
+            }));
         }
 
         private static void TextBox_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)

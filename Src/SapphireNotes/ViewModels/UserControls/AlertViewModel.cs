@@ -14,14 +14,12 @@ namespace SapphireNotes.ViewModels.UserControls
         {
             Message = message;
             IsVisible = true;
-            Opacity = 1;
         }
 
         public void Hide()
         {
             if (isVisible)
             {
-                Opacity = 0;
                 IsVisible = false;
                 Message = null;
             }
@@ -46,13 +44,6 @@ namespace SapphireNotes.ViewModels.UserControls
         {
             get => isVisible;
             set => this.RaiseAndSetIfChanged(ref isVisible, value);
-        }
-
-        private double opacity;
-        private double Opacity
-        {
-            get => opacity;
-            set => this.RaiseAndSetIfChanged(ref opacity, value);
         }
     }
 }

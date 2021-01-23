@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using System;
+using Avalonia.Media;
 
 namespace SapphireNotes.Utils
 {
@@ -6,7 +7,7 @@ namespace SapphireNotes.Utils
     {
         public static FontFamily FontFamilyFromFont(string font)
         {
-            return new FontFamily("resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#" + font);
+            return FontFamily.Parse(font, new Uri("resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes"));
         }
     }
 }

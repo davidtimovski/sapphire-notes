@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
@@ -11,9 +10,6 @@ namespace SapphireNotes.Views
         public QuickNoteWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var createButton = this.FindControl<Button>("createButton");
             createButton.Command = ReactiveCommand.Create(CreateButtonClicked);

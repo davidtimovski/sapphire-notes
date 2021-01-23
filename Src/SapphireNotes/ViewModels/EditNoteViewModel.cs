@@ -23,7 +23,7 @@ namespace SapphireNotes.ViewModels
             name = string.Empty;
 
             selectedFontIndex = Array.IndexOf(availableFonts, Globals.DefaultFontFamily);
-            availableFontSizes = Globals.GetAvailableFontSizes();
+            availableFontSizes = Globals.AvailableFontSizes;
             selectedFontSizeIndex = Array.IndexOf(availableFontSizes, Globals.DefaultFontSize);
         }
 
@@ -37,7 +37,7 @@ namespace SapphireNotes.ViewModels
             EditNote = note;
 
             selectedFontIndex = Array.IndexOf(availableFonts, note.Metadata.FontFamily);
-            availableFontSizes = Globals.GetAvailableFontSizes();
+            availableFontSizes = Globals.AvailableFontSizes;
             selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
         }
 
@@ -78,6 +78,13 @@ namespace SapphireNotes.ViewModels
         {
             get => title;
             set => this.RaiseAndSetIfChanged(ref title, value);
+        }
+
+        private AlertViewModel alert = new AlertViewModel(250);
+        private AlertViewModel Alert
+        {
+            get => alert;
+            set => this.RaiseAndSetIfChanged(ref alert, value);
         }
 
         private string saveButtonLabel;
@@ -134,13 +141,6 @@ namespace SapphireNotes.ViewModels
         {
             get => selectedFontSizeIndex;
             set => this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);
-        }
-
-        private AlertViewModel alert = new AlertViewModel(250);
-        private AlertViewModel Alert
-        {
-            get => alert;
-            set => this.RaiseAndSetIfChanged(ref alert, value);
         }
     }
 }
