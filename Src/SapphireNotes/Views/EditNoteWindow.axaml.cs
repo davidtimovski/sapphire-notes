@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.Exceptions;
@@ -12,9 +11,6 @@ namespace SapphireNotes.Views
         public EditNoteWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var saveButton = this.FindControl<Button>("saveButton");
             saveButton.Command = ReactiveCommand.Create(SaveButtonClicked);

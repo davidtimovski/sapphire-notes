@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Avalonia.Threading;
+using ReactiveUI;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 using SapphireNotes.Utils;
@@ -22,8 +23,10 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
             _notesService = notesService;
 
+            _notesService.Created += NoteCreated;
             _notesService.Updated += NoteUpdated;
             _notesService.Deleted += NoteDeleted;
+            _notesService.Restored += NoteRestored;
 
             LoadNotes();
 
@@ -34,28 +37,37 @@ namespace SapphireNotes.ViewModels
         public event EventHandler<EventArgs> NoteEditClicked;
         public event EventHandler<EventArgs> NoteDeleteClicked;
 
-        public NoteViewModel AddNote(Note note)
+        public void SaveDirty()
         {
-            var noteVm = new NoteViewModel(note);
-
-            noteVm.EditClicked += Note_EditClicked;
-            noteVm.ArchiveClicked += Note_ArchiveClicked;
-            noteVm.DeleteClicked += Note_DeleteClicked;
-            noteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
-
-            Notes.Insert(0, noteVm);
-
-            return noteVm;
+            SaveDirtyNotes(null, null);
         }
 
-        public void PreferencesSaved(bool notesAreDirty)
+        public void PreferencesSaved(PreferencesSavedEventArgs preferences)
         {
             SetAutoSaveTimer();
 
-            if (notesAreDirty)
+            if (preferences.NotesDirectoryChanged)
             {
                 Notes.Clear();
                 LoadNotes();
+            }
+            else
+            {
+                if (preferences.NewFontFamily != null)
+                {
+                    foreach (NoteViewModel noteVm in Notes)
+                    {
+                        noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(preferences.NewFontFamily);
+                    }
+                }
+
+                if (preferences.NewFontSize.HasValue)
+                {
+                    foreach (NoteViewModel noteVm in Notes)
+                    {
+                        noteVm.FontSize = preferences.NewFontSize.Value;
+                    }
+                }
             }
         }
 
@@ -68,6 +80,28 @@ namespace SapphireNotes.ViewModels
             _preferencesService.SaveWindowPreferences(windowWidth, windowHeight, windowPositionX, windowPositionY);
         }
 
+        private void AddNote(Note note, bool select = false)
+        {
+            var noteVm = new NoteViewModel(note);
+
+            noteVm.EditClicked += Note_EditClicked;
+            noteVm.ArchiveClicked += Note_ArchiveClicked;
+            noteVm.DeleteClicked += Note_DeleteClicked;
+            noteVm.MiddleMouseClicked += Note_MiddleMouseClicked;
+
+            Notes.Insert(0, noteVm);
+
+            if (select)
+            {
+                Selected = noteVm;
+            }
+        }
+
+        private void NoteCreated(object sender, CreatedNoteEventArgs e)
+        {
+            AddNote(e.CreatedNote, true);
+        }
+
         private void NoteUpdated(object sender, UpdatedNoteEventArgs e)
         {
             NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
@@ -75,11 +109,6 @@ namespace SapphireNotes.ViewModels
             {
                 noteVm.Name = e.UpdatedNote.Name;
                 noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.UpdatedNote.Metadata.FontFamily);
-
-                // Hack to invoke update of FontFamily if FontSize wasn't changed
-                // https://github.com/AvaloniaUI/Avalonia/issues/5127
-                noteVm.FontSize = e.UpdatedNote.Metadata.FontSize + 1;
-
                 noteVm.FontSize = e.UpdatedNote.Metadata.FontSize;
             }
         }
@@ -91,6 +120,11 @@ namespace SapphireNotes.ViewModels
             {
                 Notes.Remove(noteVm);
             }
+        }
+
+        private void NoteRestored(object sender, RestoredNoteEventArgs e)
+        {
+            AddNote(e.RestoredNote, true);
         }
 
         private void LoadNotes()
@@ -154,5 +188,11 @@ namespace SapphireNotes.ViewModels
         }
 
         private ObservableCollection<NoteViewModel> Notes { get; set; } = new ObservableCollection<NoteViewModel>();
+        private NoteViewModel selected;
+        public NoteViewModel Selected
+        {
+            get => selected;
+            set => this.RaiseAndSetIfChanged(ref selected, value);
+        }
     }
 }

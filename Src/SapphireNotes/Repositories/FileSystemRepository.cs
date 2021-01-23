@@ -4,36 +4,35 @@ using System.IO;
 using SapphireNotes.Contracts;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Exceptions;
+using SapphireNotes.Services;
 using SapphireNotes.Utils;
 
 namespace SapphireNotes.Repositories
 {
     public interface IFileSystemRepository : INotesRepository
     {
-        void MoveAll(string oldDirectory, string newDirectory);
+        void MoveAll(string oldDirectory);
     }
 
     public class FileSystemRepository : IFileSystemRepository
     {
         private const string Extension = ".txt";
-        private string _storageDirectory;
-        private string _archiveDirectory;
+        private readonly IPreferencesService _preferencesService;
 
-        public FileSystemRepository(string storageDirectory)
+        public FileSystemRepository(IPreferencesService preferencesService)
         {
-            _storageDirectory = storageDirectory;
-            _archiveDirectory = Path.Combine(_storageDirectory, Globals.ArchivePrefix);
+            _preferencesService = preferencesService;
         }
 
         public void Create(string name)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             File.Create(path);
         }
 
         public string Create(string name, string content)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             path = FileUtil.NextAvailableFileName(path);
 
             using StreamWriter sw = File.CreateText(path);
@@ -44,46 +43,48 @@ namespace SapphireNotes.Repositories
 
         public void Update(string name, string newName)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
-            var newPath = Path.Combine(_storageDirectory, newName + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
+            var newPath = Path.Combine(_preferencesService.Preferences.NotesDirectory, newName + Extension);
             File.Move(path, newPath);
         }
 
         public void Delete(string name)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             File.Delete(path);
         }
 
         public void DeleteArchived(string name)
         {
-            var path = Path.Combine(_archiveDirectory, name + Extension);
+            var path = Path.Combine(GetArchiveDirectory(), name + Extension);
             File.Delete(path);
         }
 
         public void Save(string name, string content)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             File.WriteAllText(path, content);
         }
 
         public bool Exists(string name)
         {
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             return File.Exists(path);
         }
 
         public string Archive(string name)
         {
-            if (!Directory.Exists(_archiveDirectory))
+            string archiveDirectory = GetArchiveDirectory();
+
+            if (!Directory.Exists(archiveDirectory))
             {
-                Directory.CreateDirectory(_archiveDirectory);
+                Directory.CreateDirectory(archiveDirectory);
             }
 
-            var path = Path.Combine(_storageDirectory, name + Extension);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
             var fileName = Path.GetFileName(path);
 
-            var archivePath = Path.Combine(_archiveDirectory, fileName);
+            var archivePath = Path.Combine(archiveDirectory, fileName);
             archivePath = FileUtil.NextAvailableFileName(archivePath);
 
             File.Move(path, archivePath);
@@ -93,9 +94,9 @@ namespace SapphireNotes.Repositories
 
         public string Restore(string name)
         {
-            var archivePath = Path.Combine(_archiveDirectory, name + Extension);
+            var archivePath = Path.Combine(GetArchiveDirectory(), name + Extension);
             var fileName = Path.GetFileName(archivePath);
-            var path = Path.Combine(_storageDirectory, fileName);
+            var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, fileName);
 
             path = FileUtil.NextAvailableFileName(path);
             File.Move(archivePath, path);
@@ -105,12 +106,12 @@ namespace SapphireNotes.Repositories
 
         public IEnumerable<Note> GetAll()
         {
-            if (!Directory.Exists(_storageDirectory))
+            if (!Directory.Exists(_preferencesService.Preferences.NotesDirectory))
             {
                 return new Note[0];
             }
 
-            string[] textFiles = Directory.GetFiles(_storageDirectory, "*" + Extension);
+            string[] textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
             var notes = new List<Note>(textFiles.Length);
             foreach (string filePath in textFiles)
             {
@@ -121,9 +122,10 @@ namespace SapphireNotes.Repositories
                 notes.Add(new Note(name, contents, lastWriteTime));
             }
 
-            if (Directory.Exists(_archiveDirectory))
+            string archiveDirectory = GetArchiveDirectory();
+            if (Directory.Exists(archiveDirectory))
             {
-                string[] archivedTextFiles = Directory.GetFiles(_archiveDirectory, "*" + Extension);
+                string[] archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
                 foreach (string filePath in archivedTextFiles)
                 {
                     string name = Path.GetFileNameWithoutExtension(filePath);
@@ -136,12 +138,13 @@ namespace SapphireNotes.Repositories
 
         public IEnumerable<Note> GetAllArchived()
         {
-            if (!Directory.Exists(_archiveDirectory))
+            string archiveDirectory = GetArchiveDirectory();
+            if (!Directory.Exists(archiveDirectory))
             {
                 return new Note[0];
             }
 
-            string[] textFiles = Directory.GetFiles(_archiveDirectory, "*" + Extension);
+            string[] textFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
             if (textFiles.Length == 0)
             {
                 return new Note[0];
@@ -159,9 +162,9 @@ namespace SapphireNotes.Repositories
             return notes.ToArray();
         }
 
-        public void MoveAll(string oldDirectory, string newDirectory)
+        public void MoveAll(string newDirectory)
         {
-            string[] textFiles = Directory.GetFiles(oldDirectory, "*" + Extension);
+            string[] textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
 
             var fromTo = new Dictionary<string, string>();
             foreach (string filePath in textFiles)
@@ -177,10 +180,11 @@ namespace SapphireNotes.Repositories
                 }
             }
 
-            bool oldArchiveExists = Directory.Exists(_archiveDirectory);
+            string archiveDirectory = GetArchiveDirectory();
+            bool oldArchiveExists = Directory.Exists(archiveDirectory);
             if (oldArchiveExists)
             {
-                string[] archivedTextFiles = Directory.GetFiles(_archiveDirectory, "*" + Extension);
+                string[] archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
                 if (archivedTextFiles.Length > 0)
                 {
                     var newArchivePath = Path.Combine(newDirectory, Globals.ArchivePrefix);
@@ -211,11 +215,13 @@ namespace SapphireNotes.Repositories
 
             if (oldArchiveExists)
             {
-                Directory.Delete(_archiveDirectory);
+                Directory.Delete(GetArchiveDirectory());
             }
+        }
 
-            _storageDirectory = newDirectory;
-            _archiveDirectory = Path.Combine(newDirectory, Globals.ArchivePrefix);
+        private string GetArchiveDirectory()
+        {
+            return Path.Combine(_preferencesService.Preferences.NotesDirectory, Globals.ArchivePrefix);
         }
     }
 }

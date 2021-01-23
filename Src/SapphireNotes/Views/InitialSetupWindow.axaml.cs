@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
@@ -13,10 +12,6 @@ namespace SapphireNotes.Views
         public InitialSetupWindow()
         {
             InitializeComponent();
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var selectButton = this.FindControl<Button>("selectButton");
             selectButton.Command = ReactiveCommand.Create(SelectButtonClicked);

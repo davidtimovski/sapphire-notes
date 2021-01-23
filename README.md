@@ -16,7 +16,7 @@ Easily archive notes you're currently not using.
 
 Where the notes are stored is your choice. If you want them to be backed up you can simply choose your OneDrive or DropBox folder as the storage location and voilà, cloud backup! 🌐
 
-There are many hotkeys and actions that can improve your efficiency in using the app. Check them out in the Tips window.
+There are many hotkeys and actions that can improve your efficiency in using the app. Check them out in Help -> Tips.
 
 ### Download
 

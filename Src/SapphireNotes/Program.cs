@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
 using SapphireNotes.DependencyInjection;
 using Splat;
@@ -22,7 +21,7 @@ namespace SapphireNotes
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToDebug()
+                .LogToTrace()
                 .UseReactiveUI();
     }
 }

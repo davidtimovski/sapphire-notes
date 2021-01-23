@@ -61,8 +61,11 @@ namespace SapphireNotes.ViewModels
 
         private void NoteDeleted(object sender, DeletedNoteEventArgs e)
         {
-            var deletedVm = ArchivedNotes.First(x => x.Name == e.DeletedNote.Name);
-            RemoveNote(deletedVm);
+            ArchivedNoteViewModel deletedVm = ArchivedNotes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+            if (deletedVm != null)
+            {
+                RemoveNote(deletedVm);
+            }
         }
 
         private void RestoreSelectedNote()
@@ -137,11 +140,11 @@ namespace SapphireNotes.ViewModels
         private ArchivedNoteViewModel selected;
         private ArchivedNoteViewModel Selected
         {
-            get 
-            { 
-                return selected; 
+            get
+            {
+                return selected;
             }
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
                 ActionButtonsEnabled = value != null;

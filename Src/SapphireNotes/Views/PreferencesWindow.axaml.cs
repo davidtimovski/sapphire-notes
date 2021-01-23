@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
@@ -13,10 +12,6 @@ namespace SapphireNotes.Views
         public PreferencesWindow()
         {
             InitializeComponent();
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
 
             var changeNotesDirectoryButton = this.FindControl<Button>("changeNotesDirectoryButton");
             changeNotesDirectoryButton.Command = ReactiveCommand.Create(ChangeNotesDirectoryButtonClicked);
@@ -42,16 +37,13 @@ namespace SapphireNotes.Views
         {
             var vm = (PreferencesViewModel)DataContext;
 
-            var (success, notesAreDirty) = vm.Save();
-            if (!success)
+            var preferences = vm.Save();
+            if (preferences == null)
             {
                 return;
             }
 
-            Saved.Invoke(this, new PreferencesSavedEventArgs
-            {
-                NotesAreDirty = notesAreDirty
-            });
+            Saved.Invoke(this, preferences);
 
             Close();
         }
@@ -65,10 +57,5 @@ namespace SapphireNotes.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
-    }
-
-    public class PreferencesSavedEventArgs : EventArgs
-    {
-        public bool NotesAreDirty { get; set; }
     }
 }

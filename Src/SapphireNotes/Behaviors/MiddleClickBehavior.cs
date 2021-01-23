@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Reactive;
+using System.Windows.Input;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -9,21 +11,26 @@ namespace SapphireNotes.Behaviors
     public class MiddleClickBehavior : AvaloniaObject
     {
         public static readonly AttachedProperty<ICommand> CommandProperty = AvaloniaProperty.RegisterAttached<MiddleClickBehavior, Interactive, ICommand>(
-            "Command", default, false, BindingMode.OneTime, ValidateCommand);
+            "Command", default, false, BindingMode.OneTime);
 
-        private static ICommand ValidateCommand(Interactive element, ICommand commandValue)
+        static MiddleClickBehavior()
         {
-            element.AddHandler(InputElement.PointerReleasedEvent, Handler);
-            return commandValue;
+            CommandProperty.Changed.Subscribe(Observer.Create<AvaloniaPropertyChangedEventArgs>(e => {
+                var element = e.Sender as Border;
+                element.AddHandler(InputElement.PointerReleasedEvent, Handler);
 
-            void Handler(object s, PointerReleasedEventArgs e)
-            {
-                if (e.GetCurrentPoint(element).Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased
-                    && commandValue?.CanExecute(null) == true)
+                void Handler(object s, PointerReleasedEventArgs pointerReleasedEvent)
                 {
-                    commandValue.Execute(null);
+                    if (pointerReleasedEvent.GetCurrentPoint(element).Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
+                    {
+                        var commandValue = e.NewValue as ICommand;
+                        if (commandValue?.CanExecute(null) == true)
+                        {
+                            commandValue.Execute(null);
+                        }
+                    }
                 }
-            }
+            }));
         }
 
         public static void SetCommand(AvaloniaObject element, ICommand commandValue)

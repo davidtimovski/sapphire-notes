@@ -13,7 +13,6 @@ namespace SapphireNotes.ViewModels
     {
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
-        private readonly string _initialNotesDirectory;
         private const string CustomLabel = "[Custom]";
         private readonly int _initialFontIndex;
         private readonly int _initialFontSizeIndex;
@@ -32,7 +31,6 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
             _notesService = notesService;
 
-            _initialNotesDirectory = preferencesService.Preferences.NotesDirectory;
             notesDirectory = preferencesService.Preferences.NotesDirectory;
 
             string globalFont = _notesService.GetFontThatAllNotesUse();
@@ -49,13 +47,12 @@ namespace SapphireNotes.ViewModels
             int? globalFontSize = _notesService.GetFontSizeThatAllNotesUse();
             if (globalFontSize.HasValue)
             {
-                availableFontSizes = Globals.GetAvailableFontSizes().Select(x => x.ToString()).ToArray();
+                availableFontSizes = Globals.AvailableFontSizes.Select(x => x.ToString()).ToArray();
                 _initialFontSizeIndex = selectedFontSizeIndex = Array.IndexOf(availableFontSizes, globalFontSize.Value.ToString());
             }
             else
             {
-                var fontSizes = Globals.GetAvailableFontSizes();
-                availableFontSizes = DropdownUtil.GetOptionsWithFirst(fontSizes, CustomLabel);
+                availableFontSizes = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFontSizes, CustomLabel);
             }
 
             selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
@@ -69,41 +66,51 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        public (bool success, bool notesAreDirty) Save()
+        public PreferencesSavedEventArgs Save()
         {
             try
             {
-                if (moveNotes)
+                var preferences = new PreferencesSavedEventArgs
                 {
-                    _notesService.MoveAll(_initialNotesDirectory, notesDirectory);
+                    NotesDirectoryChanged = notesDirectory != _preferencesService.Preferences.NotesDirectory
+                };
+
+                if (preferences.NotesDirectoryChanged && moveNotes)
+                {
+                    _notesService.MoveAll(notesDirectory);
                 }
 
                 _preferencesService.Preferences.NotesDirectory = notesDirectory;
                 _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
 
-                bool notesAreDirty = _preferencesService.Preferences.NotesDirectory != _initialNotesDirectory;
-
                 if (selectedFontIndex != _initialFontIndex)
                 {
-                    _notesService.SetFontForAll(availableFonts[selectedFontIndex]);
-                    notesAreDirty = true;
+                    preferences.NewFontFamily = availableFonts[selectedFontIndex];
+                    _notesService.SetFontForAll(preferences.NewFontFamily);
                 }
 
                 if (selectedFontSizeIndex != _initialFontSizeIndex)
                 {
-                    _notesService.SetFontSizeForAll(int.Parse(availableFontSizes[selectedFontSizeIndex]));
-                    notesAreDirty = true;
+                    preferences.NewFontSize = int.Parse(availableFontSizes[selectedFontSizeIndex]);
+                    _notesService.SetFontSizeForAll(preferences.NewFontSize.Value);
                 }
 
                 _preferencesService.SavePreferences();
 
-                return (true, notesAreDirty);
+                return preferences;
             }
             catch (MoveNotesException ex)
             {
                 alert.Show(ex.Message);
-                return (false, false);
+                return null;
             }
+        }
+
+        private AlertViewModel alert = new AlertViewModel(450);
+        private AlertViewModel Alert
+        {
+            get => alert;
+            set => this.RaiseAndSetIfChanged(ref alert, value);
         }
 
         private string notesDirectory;
@@ -117,7 +124,7 @@ namespace SapphireNotes.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref notesDirectory, value);
 
-                if (notesDirectory == _initialNotesDirectory)
+                if (notesDirectory == _preferencesService.Preferences.NotesDirectory)
                 {
                     MoveNotes = false;
                     MoveNotesCheckBoxVisible = false;
@@ -222,12 +229,12 @@ namespace SapphireNotes.ViewModels
             get => saveEnabled;
             set => this.RaiseAndSetIfChanged(ref saveEnabled, value);
         }
+    }
 
-        private AlertViewModel alert = new AlertViewModel(450);
-        private AlertViewModel Alert
-        {
-            get => alert;
-            set => this.RaiseAndSetIfChanged(ref alert, value);
-        }
+    public class PreferencesSavedEventArgs : EventArgs
+    {
+        public bool NotesDirectoryChanged { get; set; }
+        public string NewFontFamily { get; set; }
+        public int? NewFontSize { get; set; }
     }
 }
