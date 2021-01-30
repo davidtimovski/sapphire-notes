@@ -8,7 +8,7 @@
         Title="Preferences">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
@@ -56,53 +56,62 @@
     <vm:PreferencesWindowViewModel/>
   </Design.DataContext>
 
-  <StackPanel>
-    <local:Alert DataContext="{Binding Alert}" />
+  <Border Classes="wrap">
+    <StackPanel>
+      <local:Alert DataContext="{Binding Alert}" />
     
-    <TextBlock>Notes Directory</TextBlock>
-    <Border Classes="directory">
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="350" />
-          <ColumnDefinition Width="100" />
-        </Grid.ColumnDefinitions>
+      <TextBlock>Notes Directory</TextBlock>
+      <Border Classes="directory">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="100" />
+          </Grid.ColumnDefinitions>
         
-        <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" Grid.Column="0" />
-        <Button Name="changeNotesDirectoryButton" Classes="button" Grid.Column="1">Change</Button>
-      </Grid>
-    </Border>
-
-    <Border IsVisible="{Binding MoveNotesCheckBoxVisible}" Classes="checkboxWrap">
-      <CheckBox IsChecked="{Binding MoveNotes}">Move all of my existing notes to this new location</CheckBox>
-    </Border>
-
-    <DockPanel Classes="formControlWrap">
-      <Border Classes="labelWrap">
-        <TextBlock>Font</TextBlock>
+          <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" Grid.Column="0" />
+          <Button Name="changeNotesDirectoryButton" Classes="button" Grid.Column="1">Change</Button>
+        </Grid>
       </Border>
-      <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
-    </DockPanel>
 
-    <DockPanel Classes="formControlWrap">
-      <Border Classes="labelWrap">
-        <TextBlock>Font Size</TextBlock>
+      <Border IsVisible="{Binding MoveNotesCheckBoxVisible}" Classes="checkboxWrap">
+        <CheckBox IsChecked="{Binding MoveNotes}">Move all of my existing notes to this new location</CheckBox>
       </Border>
-      <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
-    </DockPanel>
 
-    <DockPanel Classes="formControlWrap">
-      <Border Classes="labelWrap">
-        <TextBlock>Auto Save Interval</TextBlock>
-      </Border>
-      <ComboBox Items="{Binding AutoSaveIntervalLabels}" SelectedIndex="{Binding SelectedAutoSaveIntervalIndex}" />
-    </DockPanel>
-
-    <Border Classes="buttonsWrap">
-      <DockPanel>
-        <Button Name="applyButton" IsEnabled="{Binding SaveEnabled}" Classes="button primary">Apply</Button>
-        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Auto Save Interval</TextBlock>
+        </Border>
+        <ComboBox Items="{Binding AutoSaveIntervalLabels}" SelectedIndex="{Binding SelectedAutoSaveIntervalIndex}" />
       </DockPanel>
-    </Border>
-  </StackPanel>
+
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Theme</TextBlock>
+        </Border>
+        <ComboBox Items="{Binding AvailableThemes}" SelectedIndex="{Binding SelectedThemeIndex}" />
+      </DockPanel>
+
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Font</TextBlock>
+        </Border>
+        <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
+      </DockPanel>
+
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Font Size</TextBlock>
+        </Border>
+        <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
+      </DockPanel>
+
+      <Border Classes="buttonsWrap">
+        <DockPanel>
+          <Button Name="applyButton" IsEnabled="{Binding ApplyEnabled}" Classes="button primary">Apply</Button>
+          <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
 
 </Window>

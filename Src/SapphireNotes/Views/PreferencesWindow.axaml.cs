@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
@@ -23,8 +22,6 @@ namespace SapphireNotes.Views
             closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
         }
 
-        public event EventHandler<PreferencesSavedEventArgs> Saved;
-
         public async Task ChangeNotesDirectoryButtonClicked()
         {
             var directory = await new OpenFolderDialog().ShowAsync(this);
@@ -36,14 +33,7 @@ namespace SapphireNotes.Views
         private void ApplyButtonClicked()
         {
             var vm = (PreferencesViewModel)DataContext;
-
-            var preferences = vm.Save();
-            if (preferences == null)
-            {
-                return;
-            }
-
-            Saved.Invoke(this, preferences);
+            vm.Save();
 
             Close();
         }

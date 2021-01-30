@@ -7,7 +7,7 @@
         Title="Let's set things up">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
@@ -41,21 +41,23 @@
     <vm:InitialSetupViewModel/>
   </Design.DataContext>
 
-  <StackPanel>
-    <Border Classes="welcome">
-      <TextBlock  TextWrapping="Wrap">Welcome to Sapphire Notes.</TextBlock>
-    </Border>
+  <Border Classes="wrap">
+    <StackPanel>
+      <Border Classes="welcome">
+        <TextBlock  TextWrapping="Wrap">Welcome to Sapphire Notes.</TextBlock>
+      </Border>
 
-    <TextBlock TextWrapping="Wrap">Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
+      <TextBlock TextWrapping="Wrap">Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
 
-    <Border Classes="directory">
-      <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" IsReadOnly="True" />
-    </Border>
+      <Border Classes="directory">
+        <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" IsReadOnly="True" />
+      </Border>
 
-    <DockPanel HorizontalAlignment="Right">
-      <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
-      <Button Name="startButton" IsVisible="{Binding StartButtonVisible}" Classes="button primary">Start</Button>
-    </DockPanel>
-  </StackPanel>
+      <DockPanel HorizontalAlignment="Right">
+        <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
+        <Button Name="startButton" IsVisible="{Binding StartButtonVisible}" Classes="button primary">Start</Button>
+      </DockPanel>
+    </StackPanel>
+  </Border>
 
 </Window>

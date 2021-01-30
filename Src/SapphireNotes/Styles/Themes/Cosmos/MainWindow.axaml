@@ -1,0 +1,25 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style Selector="DockPanel.toolbar Menu">
+    <Setter Property="Margin" Value="0 0 0 1" />
+  </Style>
+
+  <Style Selector="TabItem Border.tabHeader">
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GreyColor}" />
+    <Setter Property="Padding" Value="7 4" />
+  </Style>
+  <Style Selector="TabItem:pointerover Border.tabHeader">
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+  </Style>
+  <Style Selector="TabItem:selected Border.tabHeader">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+  </Style>
+
+  <Style Selector="Border.editorContainer">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+</Styles>

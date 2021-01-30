@@ -13,6 +13,7 @@ namespace SapphireNotes.ViewModels
     {
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
+        private readonly int _initialThemeIndex;
         private const string CustomLabel = "[Custom]";
         private readonly int _initialFontIndex;
         private readonly int _initialFontSizeIndex;
@@ -32,6 +33,11 @@ namespace SapphireNotes.ViewModels
             _notesService = notesService;
 
             notesDirectory = preferencesService.Preferences.NotesDirectory;
+
+            selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
+
+            availableThemes = ThemeManager.Themes;
+            _initialThemeIndex = selectedThemeIndex = Array.IndexOf(availableThemes, preferencesService.Preferences.Theme);
 
             string globalFont = _notesService.GetFontThatAllNotesUse();
             if (globalFont != null)
@@ -54,8 +60,6 @@ namespace SapphireNotes.ViewModels
             {
                 availableFontSizes = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFontSizes, CustomLabel);
             }
-
-            selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
         }
 
         public void SetNotesDirectory(string directory)
@@ -66,11 +70,11 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        public PreferencesSavedEventArgs Save()
+        public void Save()
         {
             try
             {
-                var preferences = new PreferencesSavedEventArgs
+                var preferences = new UpdatedPreferencesEventArgs
                 {
                     NotesDirectoryChanged = notesDirectory != _preferencesService.Preferences.NotesDirectory
                 };
@@ -82,6 +86,12 @@ namespace SapphireNotes.ViewModels
 
                 _preferencesService.Preferences.NotesDirectory = notesDirectory;
                 _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
+                _preferencesService.Preferences.Theme = availableThemes[selectedThemeIndex];
+
+                if (selectedThemeIndex != _initialThemeIndex)
+                {
+                    preferences.NewTheme = _preferencesService.Preferences.Theme;
+                }
 
                 if (selectedFontIndex != _initialFontIndex)
                 {
@@ -95,14 +105,11 @@ namespace SapphireNotes.ViewModels
                     _notesService.SetFontSizeForAll(preferences.NewFontSize.Value);
                 }
 
-                _preferencesService.SavePreferences();
-
-                return preferences;
+                _preferencesService.UpdatePreferences(preferences);
             }
             catch (MoveNotesException ex)
             {
                 alert.Show(ex.Message);
-                return null;
             }
         }
 
@@ -133,7 +140,7 @@ namespace SapphireNotes.ViewModels
                 {
                     MoveNotes = true;
                     MoveNotesCheckBoxVisible = true;
-                    SaveEnabled = true;
+                    ApplyEnabled = true;
                 }
             }
         }
@@ -150,6 +157,56 @@ namespace SapphireNotes.ViewModels
         {
             get => moveNotes;
             set => this.RaiseAndSetIfChanged(ref moveNotes, value);
+        }
+
+        private string[] autoSaveIntervalLabels = new string[]
+{
+            "Never",
+            "Every second",
+            "Every 5 seconds",
+            "Every 10 seconds",
+            "Every 30 seconds",
+            "Every minute"
+};
+        private string[] AutoSaveIntervalLabels
+        {
+            get => autoSaveIntervalLabels;
+            set => this.RaiseAndSetIfChanged(ref autoSaveIntervalLabels, value);
+        }
+
+        private int selectedAutoSaveIntervalIndex;
+        private int SelectedAutoSaveIntervalIndex
+        {
+            get
+            {
+                return selectedAutoSaveIntervalIndex;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedAutoSaveIntervalIndex, value);
+                ApplyEnabled = true;
+            }
+        }
+
+        private string[] availableThemes;
+        private string[] AvailableThemes
+        {
+            get => availableThemes;
+            set => this.RaiseAndSetIfChanged(ref availableThemes, value);
+        }
+
+        private int selectedThemeIndex;
+        private int SelectedThemeIndex
+        {
+            get
+            {
+                return selectedThemeIndex;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedThemeIndex, value);
+                ApplyEnabled = true;
+            }
         }
 
         private string[] availableFonts;
@@ -169,7 +226,7 @@ namespace SapphireNotes.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedFontIndex, value);
-                SaveEnabled = true;
+                ApplyEnabled = true;
             }
         }
 
@@ -190,51 +247,15 @@ namespace SapphireNotes.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);
-                SaveEnabled = true;
+                ApplyEnabled = true;
             }
         }
 
-        private string[] autoSaveIntervalLabels = new string[]
+        private bool applyEnabled;
+        private bool ApplyEnabled
         {
-            "Never",
-            "Every second",
-            "Every 5 seconds",
-            "Every 10 seconds",
-            "Every 30 seconds",
-            "Every minute"
-        };
-        private string[] AutoSaveIntervalLabels
-        {
-            get => autoSaveIntervalLabels;
-            set => this.RaiseAndSetIfChanged(ref autoSaveIntervalLabels, value);
+            get => applyEnabled;
+            set => this.RaiseAndSetIfChanged(ref applyEnabled, value);
         }
-
-        private int selectedAutoSaveIntervalIndex;
-        private int SelectedAutoSaveIntervalIndex
-        {
-            get
-            {
-                return selectedAutoSaveIntervalIndex;
-            }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedAutoSaveIntervalIndex, value);
-                SaveEnabled = true;
-            }
-        }
-
-        private bool saveEnabled;
-        private bool SaveEnabled
-        {
-            get => saveEnabled;
-            set => this.RaiseAndSetIfChanged(ref saveEnabled, value);
-        }
-    }
-
-    public class PreferencesSavedEventArgs : EventArgs
-    {
-        public bool NotesDirectoryChanged { get; set; }
-        public string NewFontFamily { get; set; }
-        public int? NewFontSize { get; set; }
     }
 }

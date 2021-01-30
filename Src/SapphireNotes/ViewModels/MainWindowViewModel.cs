@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Avalonia.Media;
 using Avalonia.Threading;
 using ReactiveUI;
 using SapphireNotes.Contracts.Models;
@@ -23,6 +24,8 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
             _notesService = notesService;
 
+            _preferencesService.Updated += PreferencesUpdated;
+
             _notesService.Created += NoteCreated;
             _notesService.Updated += NoteUpdated;
             _notesService.Deleted += NoteDeleted;
@@ -40,35 +43,6 @@ namespace SapphireNotes.ViewModels
         public void SaveDirty()
         {
             SaveDirtyNotes(null, null);
-        }
-
-        public void PreferencesSaved(PreferencesSavedEventArgs preferences)
-        {
-            SetAutoSaveTimer();
-
-            if (preferences.NotesDirectoryChanged)
-            {
-                Notes.Clear();
-                LoadNotes();
-            }
-            else
-            {
-                if (preferences.NewFontFamily != null)
-                {
-                    foreach (NoteViewModel noteVm in Notes)
-                    {
-                        noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(preferences.NewFontFamily);
-                    }
-                }
-
-                if (preferences.NewFontSize.HasValue)
-                {
-                    foreach (NoteViewModel noteVm in Notes)
-                    {
-                        noteVm.FontSize = preferences.NewFontSize.Value;
-                    }
-                }
-            }
         }
 
         public void OnClosing(int windowWidth, int windowHeight, int windowPositionX, int windowPositionY)
@@ -94,6 +68,35 @@ namespace SapphireNotes.ViewModels
             if (select)
             {
                 Selected = noteVm;
+            }
+        }
+
+        private void PreferencesUpdated(object sender, UpdatedPreferencesEventArgs e)
+        {
+            SetAutoSaveTimer();
+
+            if (e.NotesDirectoryChanged)
+            {
+                Notes.Clear();
+                LoadNotes();
+            }
+            else
+            {
+                if (e.NewFontFamily != null)
+                {
+                    foreach (NoteViewModel noteVm in Notes)
+                    {
+                        noteVm.FontFamily = FontFamilyUtil.FontFamilyFromFont(e.NewFontFamily);
+                    }
+                }
+
+                if (e.NewFontSize.HasValue)
+                {
+                    foreach (NoteViewModel noteVm in Notes)
+                    {
+                        noteVm.FontSize = e.NewFontSize.Value;
+                    }
+                }
             }
         }
 
@@ -193,6 +196,13 @@ namespace SapphireNotes.ViewModels
         {
             get => selected;
             set => this.RaiseAndSetIfChanged(ref selected, value);
+        }
+
+        private Brush background = new SolidColorBrush(Color.Parse("#2d2d30"), 1);
+        public Brush Background
+        {
+            get => background;
+            set => this.RaiseAndSetIfChanged(ref background, value);
         }
     }
 }

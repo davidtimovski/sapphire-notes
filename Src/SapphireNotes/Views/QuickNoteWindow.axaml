@@ -8,7 +8,7 @@
         Title="Quick note">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
@@ -33,15 +33,17 @@
     <vm:QuickNoteViewModel/>
   </Design.DataContext>
 
-  <StackPanel>
-    <TextBox Text="{Binding Content}" AcceptsReturn="True" TextWrapping="Wrap" be:FocusBehavior.InitialFocus="True" />
+  <Border Classes="wrap">
+    <StackPanel>
+      <TextBox Text="{Binding Content}" AcceptsReturn="True" TextWrapping="Wrap" be:FocusBehavior.InitialFocus="True" />
 
-    <Border Classes="buttonsWrap">
-      <DockPanel>
-        <Button Name="createButton" HotKey="Ctrl+Enter" Classes="button primary">Create</Button>
-        <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
-      </DockPanel>
-    </Border>
-  </StackPanel>
+      <Border Classes="buttonsWrap">
+        <DockPanel>
+          <Button Name="createButton" HotKey="Ctrl+Enter" Classes="button primary">Create</Button>
+          <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
 
 </Window>

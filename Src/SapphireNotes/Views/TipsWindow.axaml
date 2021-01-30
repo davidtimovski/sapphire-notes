@@ -6,7 +6,7 @@
         Title="Tips">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
@@ -16,12 +16,12 @@
     </Style>
 
     <Style Selector="Border.section">
-      <Setter Property="Background" Value="{StaticResource GreyColor}" />
+      <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
 
     <Style Selector="Border.header">
-      <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
+      <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
       <Setter Property="Padding" Value="0 8" />
     </Style>
     <Style Selector="Border.header TextBlock">
@@ -45,57 +45,59 @@
     </Style>
   </Window.Styles>
 
-  <StackPanel>
-    <TextBlock TextWrapping="Wrap">Here are some tips for using Sapphire Notes efficiently.</TextBlock>
+  <Border Classes="wrap">
+    <StackPanel>
+      <TextBlock TextWrapping="Wrap">Here are some tips for using Sapphire Notes efficiently.</TextBlock>
 
-    <Border Classes="section">
-      <StackPanel>
-        <Border Classes="header">
-          <TextBlock>Hotkeys</TextBlock>
-        </Border>
+      <Border Classes="section">
+        <StackPanel>
+          <Border Classes="header">
+            <TextBlock>Hotkeys</TextBlock>
+          </Border>
 
-        <Grid ColumnDefinitions="1*,2*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-          <TextBlock Grid.Row="0" Grid.Column="0">Ctrl+N</TextBlock>
-          <TextBlock Grid.Row="0" Grid.Column="1">Open New note window. Enter to create.</TextBlock>
+          <Grid ColumnDefinitions="1*,2*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0">Ctrl+N</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1">Open New note window. Enter to create.</TextBlock>
 
-          <TextBlock Grid.Row="1" Grid.Column="0">Ctrl+Q</TextBlock>
-          <TextBlock Grid.Row="1" Grid.Column="1">Open Quick note window. Ctrl+Enter to create.</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0">Ctrl+Q</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1">Open Quick note window. Ctrl+Enter to create.</TextBlock>
 
-          <TextBlock Grid.Row="2" Grid.Column="0">Ctrl+R</TextBlock>
-          <TextBlock Grid.Row="2" Grid.Column="1">Open Archived notes window</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="0">Ctrl+R</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1">Open Archived notes window</TextBlock>
 
-          <TextBlock Grid.Row="3" Grid.Column="0">Ctrl+P</TextBlock>
-          <TextBlock Grid.Row="3" Grid.Column="1">Open Preferences window</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0">Ctrl+P</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1">Open Preferences window</TextBlock>
 
-          <TextBlock Grid.Row="5" Grid.Column="0">Escape</TextBlock>
-          <TextBlock Grid.Row="5" Grid.Column="1">Close currently active window</TextBlock>
-        </Grid>
-      </StackPanel>
-    </Border>
+            <TextBlock Grid.Row="5" Grid.Column="0">Escape</TextBlock>
+            <TextBlock Grid.Row="5" Grid.Column="1">Close currently active window</TextBlock>
+          </Grid>
+        </StackPanel>
+      </Border>
 
-    <Border Classes="section">
-      <StackPanel>
-        <Border Classes="header">
-          <TextBlock>Middle-mouse (wheel) click</TextBlock>
-        </Border>
+      <Border Classes="section">
+        <StackPanel>
+          <Border Classes="header">
+            <TextBlock>Middle-mouse (wheel) click</TextBlock>
+          </Border>
 
-        <Border Classes="description">
-          <StackPanel>
-            <TextBlock Margin="0 0 0 10">- When done on the note name (tab) in the main window it archives the note.</TextBlock>
+          <Border Classes="description">
+            <StackPanel>
+              <TextBlock Margin="0 0 0 10">- When done on the note name (tab) in the main window it archives the note.</TextBlock>
 
-            <TextBlock>- When done on a note in the Archived notes window it restores the note.</TextBlock>
-          </StackPanel>
-        </Border>
-      </StackPanel>
-    </Border>
+              <TextBlock>- When done on a note in the Archived notes window it restores the note.</TextBlock>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Border>
 
 
 
-    <Border Classes="buttonsWrap">
-      <DockPanel HorizontalAlignment="Right">
-        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
-      </DockPanel>
-    </Border>
-  </StackPanel>
+      <Border Classes="buttonsWrap">
+        <DockPanel HorizontalAlignment="Right">
+          <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
 
 </Window>

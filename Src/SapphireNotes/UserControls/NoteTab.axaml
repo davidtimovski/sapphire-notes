@@ -3,9 +3,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="SapphireNotes.UserControls.NoteTab">
+
+  <UserControl.Styles>
+    <Style Selector="Border.editorContainer">
+      <Setter Property="Padding" Value="1" />
+    </Style>
+
+    <Style Selector="TextBox">
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="TextBox:pointerover /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    </Style>
+  </UserControl.Styles>
   
-  <TextBox Name="editor" Text="{Binding Content}"
-                 AcceptsReturn="True" TextWrapping="Wrap"
-                 FontSize="{Binding FontSize}"
-                 FontFamily="{Binding FontFamily}" />
+  <Border Classes="editorContainer">
+    <TextBox Name="editor"
+             Text="{Binding Content}"
+             AcceptsReturn="True"
+             TextWrapping="Wrap"
+             FontSize="{Binding FontSize}"
+             FontFamily="{Binding FontFamily}" />
+  </Border>
 </UserControl>

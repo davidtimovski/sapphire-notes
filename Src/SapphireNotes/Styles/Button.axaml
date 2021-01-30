@@ -7,16 +7,7 @@
   </Style>
 
   <Style Selector="Button.button">
-    <Setter Property="Background" Value="{StaticResource GreyColor}" />
-    <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Padding" Value="15 5" />
     <Setter Property="Foreground" Value="White" />
-  </Style>
-  <Style Selector="Button.button:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
-  </Style>
-  <Style Selector="Button.button:pressed /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
   </Style>
 
   <Style Selector="Button.button.primary">

@@ -2,9 +2,11 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.DependencyInjection;
 using SapphireNotes.Services;
+using SapphireNotes.Utils;
 using SapphireNotes.ViewModels;
 using SapphireNotes.Views;
 using Splat;
@@ -27,8 +29,11 @@ namespace SapphireNotes
                 _desktop = desktop;
 
                 var preferencesService = Locator.Current.GetRequiredService<IPreferencesService>();
+                preferencesService.Updated += PreferencesUpdated;
 
                 bool notesDirectorySet = preferencesService.Load();
+                SetThemeStyles(preferencesService.Preferences.Theme);
+
                 if (notesDirectorySet)
                 {
                     OpenMainWindow(preferencesService.Preferences);
@@ -70,6 +75,24 @@ namespace SapphireNotes
                 DataContext = Locator.Current.GetRequiredService<MainWindowViewModel>()
             };
             _desktop.MainWindow.Show();
+        }
+
+        private void PreferencesUpdated(object sender, UpdatedPreferencesEventArgs e)
+        {
+            if (e.NewTheme != null)
+            {
+                Styles.RemoveRange(1, Styles.Count - 1);
+                SetThemeStyles(e.NewTheme);
+            }
+        }
+
+        private void SetThemeStyles(string theme)
+        {
+            var themeStyles = ThemeManager.GetThemeStyles(theme);
+            foreach (var style in themeStyles)
+            {
+                Styles.Add(style);
+            }
         }
     }
 }

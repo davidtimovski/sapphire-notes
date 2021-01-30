@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="ComboBox">
-    <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
     <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="MinHeight" Value="20" />
@@ -69,7 +69,7 @@
 
 
   <Style Selector="ComboBoxItem">
-    <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
     <Setter Property="Padding" Value="8 3"/>
   </Style>
 

@@ -150,7 +150,6 @@ namespace SapphireNotes.Views
                 Topmost = true,
                 CanResize = false
             };
-            window.Saved += PreferencesSaved;
             window.Show();
             window.Activate();
 
@@ -181,12 +180,6 @@ namespace SapphireNotes.Views
             window.Activate();
 
             _windows.Add(window);
-        }
-
-        private void PreferencesSaved(object sender, PreferencesSavedEventArgs e)
-        {
-            var vm = DataContext as MainWindowViewModel;
-            vm.PreferencesSaved(e);
         }
 
         private void MainWindow_DataContextChanged(object sender, EventArgs e)

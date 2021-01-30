@@ -9,7 +9,7 @@
         Title="{Binding Title, Mode=OneTime}">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/TextBox.axaml" />
     <StyleInclude Source="/Styles/ComboBox.axaml" />
@@ -47,33 +47,35 @@
     <vm:EditNoteViewModel/>
   </Design.DataContext>
 
-  <StackPanel>
-    <local:Alert DataContext="{Binding Alert}" />
+  <Border Classes="wrap">
+    <StackPanel>
+      <local:Alert DataContext="{Binding Alert}" />
     
-    <TextBox Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
+      <TextBox Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
 
-    <DockPanel Classes="formControlWrap">
-      <Border Classes="labelWrap">
-        <TextBlock>Font</TextBlock>
-      </Border>
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Font</TextBlock>
+        </Border>
 
-      <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
-    </DockPanel>
-
-    <DockPanel Classes="formControlWrap">
-      <Border Classes="labelWrap">
-        <TextBlock>Font Size</TextBlock>
-      </Border>
-
-      <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
-    </DockPanel>
-    
-    <Border Classes="buttonsWrap">
-      <DockPanel>
-        <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
-        <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
+        <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
       </DockPanel>
-    </Border>
-  </StackPanel>
+
+      <DockPanel Classes="formControlWrap">
+        <Border Classes="labelWrap">
+          <TextBlock>Font Size</TextBlock>
+        </Border>
+
+        <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
+      </DockPanel>
+    
+      <Border Classes="buttonsWrap">
+        <DockPanel>
+          <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
+          <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
 
 </Window>

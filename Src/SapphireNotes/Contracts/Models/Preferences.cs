@@ -7,6 +7,7 @@
 
         public string NotesDirectory { get; set; } = string.Empty;
         public short AutoSaveInterval { get; set; } = 10;
+        public string Theme { get; set; } = "Dark";
         public WindowPreferences Window { get; set; } = new WindowPreferences();
     }
 

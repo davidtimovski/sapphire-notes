@@ -46,4 +46,13 @@
     <EmbeddedResource Include="Assets\Fonts\Roboto.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Verdana.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\4.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\3.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\2.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\1.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\0.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Accents.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Dark\Accents.axaml" />
+  </ItemGroup>
 </Project>
