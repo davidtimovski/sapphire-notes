@@ -8,6 +8,5 @@
 
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-    <StyleInclude Source="/Styles/Themes/Dark.axaml"/>
   </Application.Styles>
 </Application>

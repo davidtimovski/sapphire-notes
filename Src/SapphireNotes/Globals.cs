@@ -22,7 +22,7 @@ namespace SapphireNotes
 
         public const string ApplicationName = "Sapphire Notes";
         public const string ArchivePrefix = "archive";
-        public const string DefaultFontFamily = "Arial";
+        public const string DefaultFontFamily = "Open Sans";
         public const int DefaultFontSize = 15;
         public static string[] AvailableFonts = new string[] { "Arial", "Calibri", "Consolas", "Open Sans", "Roboto", "Verdana" };
         public static int[] AvailableFontSizes;

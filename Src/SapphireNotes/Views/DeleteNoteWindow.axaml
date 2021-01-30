@@ -7,7 +7,7 @@
         Title="Delete note">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
@@ -28,15 +28,17 @@
     <vm:DeleteNoteViewModel/>
   </Design.DataContext>
 
-  <StackPanel>
-    <TextBlock Text="{Binding Text, Mode=OneTime}" TextWrapping="Wrap" />
+  <Border Classes="wrap">
+    <StackPanel>
+      <TextBlock Text="{Binding Text, Mode=OneTime}" TextWrapping="Wrap" />
     
-    <Border Classes="buttonsWrap">
-      <DockPanel HorizontalAlignment="Right">
-        <Button Name="yesButton" Classes="button primary">Yes</Button>
-        <Button Name="noButton" HotKey="Escape" Classes="button">No</Button>
-      </DockPanel>
-    </Border>
-  </StackPanel>
+      <Border Classes="buttonsWrap">
+        <DockPanel HorizontalAlignment="Right">
+          <Button Name="yesButton" Classes="button primary">Yes</Button>
+          <Button Name="noButton" HotKey="Escape" Classes="button">No</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
 
 </Window>

@@ -59,7 +59,7 @@
                    PlacementMode="Right"
                    IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}">
               <Border Background="{TemplateBinding Background}"
-                      BorderBrush="{DynamicResource GreyColor}"
+                      BorderBrush="{DynamicResource ControlBackgroundLight}"
                       BorderThickness="1">
                 <ScrollViewer Classes="menuscroller">
                   <ItemsPresenter Name="PART_ItemsPresenter"
@@ -79,13 +79,13 @@
   <Style Selector="MenuItem > Separator, MenuItem:separator">
     <Setter Property="Template">
       <ControlTemplate>
-        <Separator Background="{StaticResource GreyColor}" />
+        <Separator Background="{DynamicResource ControlBackgroundLight}" />
       </ControlTemplate>
     </Setter>
   </Style>
 
   <Style Selector="Menu > MenuItem">
-    <Setter Property="Background" Value="#2d2d30" />
+    <Setter Property="Background" Value="{DynamicResource Background}" />
     <Setter Property="Padding" Value="10 4" />
     <Setter Property="Template">
       <ControlTemplate>
@@ -124,20 +124,20 @@
   </Style>
 
   <Style Selector="Menu > MenuItem:selected">
-    <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
   </Style>
   <Style Selector="Menu > MenuItem:selected /template/ Border#root">
-    <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
   </Style>
 
   <Style Selector="Menu > MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{StaticResource LightGreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
   </Style>
   <Style Selector="Menu > MenuItem:selected:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
   </Style>
   <Style Selector="MenuItem MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{StaticResource GreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
   </Style>
 
   <Style Selector="MenuItem /template/ ItemsPresenter#PART_ItemsPresenter">

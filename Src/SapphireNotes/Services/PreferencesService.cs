@@ -9,14 +9,18 @@ namespace SapphireNotes.Services
     {
         Preferences Preferences { get; }
         bool Load();
+        void UpdatePreferences(UpdatedPreferencesEventArgs args);
         void SavePreferences();
         void SaveWindowPreferences(int width, int height, int positionX, int positionY);
+        event EventHandler<UpdatedPreferencesEventArgs> Updated;
     }
 
     public class PreferencesService : IPreferencesService
     {
         private const string PreferencesFileName = "preferences.bin";
         private string _preferencesFilePath;
+
+        public event EventHandler<UpdatedPreferencesEventArgs> Updated;
 
         public Preferences Preferences { get; private set; }
 
@@ -54,11 +58,18 @@ namespace SapphireNotes.Services
             return false;
         }
 
+        public void UpdatePreferences(UpdatedPreferencesEventArgs args)
+        {
+            SavePreferences();
+            Updated.Invoke(this, args);
+        }
+
         public void SavePreferences()
         {
             using var writer = new BinaryWriter(File.Open(_preferencesFilePath, FileMode.OpenOrCreate));
             writer.Write(Preferences.NotesDirectory);
             writer.Write(Preferences.AutoSaveInterval);
+            writer.Write(Preferences.Theme);
             writer.Write(Preferences.Window.Width);
             writer.Write(Preferences.Window.Height);
             writer.Write(Preferences.Window.PositionX);
@@ -86,6 +97,7 @@ namespace SapphireNotes.Services
             using var reader = new BinaryReader(File.Open(_preferencesFilePath, FileMode.Open));
             Preferences.NotesDirectory = reader.ReadString();
             Preferences.AutoSaveInterval = reader.ReadInt16();
+            Preferences.Theme = reader.ReadString();
             Preferences.Window = new WindowPreferences
             {
                 Width = reader.ReadInt32(),
@@ -94,5 +106,13 @@ namespace SapphireNotes.Services
                 PositionY = reader.ReadInt32()
             };
         }
+    }
+
+    public class UpdatedPreferencesEventArgs : EventArgs
+    {
+        public bool NotesDirectoryChanged { get; set; }
+        public string NewTheme { get; set; }
+        public string NewFontFamily { get; set; }
+        public int? NewFontSize { get; set; }
     }
 }

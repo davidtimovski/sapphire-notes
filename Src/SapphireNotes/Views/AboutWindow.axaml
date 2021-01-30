@@ -7,7 +7,7 @@
         Title="About">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Window.axaml" />
+    <StyleInclude Source="/Styles/Global.axaml" />
     <StyleInclude Source="/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Styles/Button.axaml" />
 
@@ -30,19 +30,21 @@
     </Style>
   </Window.Styles>
 
-  <StackPanel>
-    <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
+  <Border Classes="wrap">
+    <StackPanel>
+      <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
 
-    <TextBlock>Version: 0.2.0</TextBlock>
-    <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
-    
-    <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>
+      <TextBlock>Version: 0.3.0</TextBlock>
+      <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
 
-    <Border Classes="buttonsWrap">
-      <DockPanel HorizontalAlignment="Right">
-        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
-      </DockPanel>
-    </Border>
-  </StackPanel>
+      <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>
 
+      <Border Classes="buttonsWrap">
+        <DockPanel HorizontalAlignment="Right">
+          <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
+        </DockPanel>
+      </Border>
+    </StackPanel>
+  </Border>
+  
 </Window>
