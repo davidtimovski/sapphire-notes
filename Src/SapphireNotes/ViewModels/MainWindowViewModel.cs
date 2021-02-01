@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Avalonia.Media;
+using System.Reactive;
 using Avalonia.Threading;
 using ReactiveUI;
 using SapphireNotes.Contracts.Models;
@@ -35,6 +35,9 @@ namespace SapphireNotes.ViewModels
 
             autoSaveTimer.Tick += new EventHandler(SaveDirtyNotes);
             SetAutoSaveTimer();
+
+            CtrlW = ReactiveCommand.Create(SelectPreviousNote);
+            CtrlE = ReactiveCommand.Create(SelectNextNote);
         }
 
         public event EventHandler<EventArgs> NoteEditClicked;
@@ -52,6 +55,23 @@ namespace SapphireNotes.ViewModels
             _notesService.SaveAllWithMetadata(Notes.Select(x => x.ToNote()));
 
             _preferencesService.SaveWindowPreferences(windowWidth, windowHeight, windowPositionX, windowPositionY);
+        }
+
+        private ReactiveCommand<Unit, Unit> CtrlW { get; }
+        private ReactiveCommand<Unit, Unit> CtrlE { get; }
+        private void SelectPreviousNote()
+        {
+            if (Notes.Count > 1 && SelectedIndex > 0)
+            {
+                SelectedIndex--;
+            }
+        }
+        private void SelectNextNote()
+        {
+            if (Notes.Count > 1 && SelectedIndex < Notes.Count - 1)
+            {
+                SelectedIndex++;
+            }
         }
 
         private void AddNote(Note note, bool select = false)
@@ -191,6 +211,7 @@ namespace SapphireNotes.ViewModels
         }
 
         private ObservableCollection<NoteViewModel> Notes { get; set; } = new ObservableCollection<NoteViewModel>();
+
         private NoteViewModel selected;
         public NoteViewModel Selected
         {
@@ -198,11 +219,11 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref selected, value);
         }
 
-        private Brush background = new SolidColorBrush(Color.Parse("#2d2d30"), 1);
-        public Brush Background
+        private int selectedIndex;
+        public int SelectedIndex
         {
-            get => background;
-            set => this.RaiseAndSetIfChanged(ref background, value);
+            get => selectedIndex;
+            set => this.RaiseAndSetIfChanged(ref selectedIndex, value);
         }
     }
 }
