@@ -55,21 +55,27 @@
             <TextBlock>Hotkeys</TextBlock>
           </Border>
 
-          <Grid ColumnDefinitions="1*,2*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-            <TextBlock Grid.Row="0" Grid.Column="0">Ctrl+N</TextBlock>
-            <TextBlock Grid.Row="0" Grid.Column="1">Open New note window. Enter to create.</TextBlock>
+          <Grid ColumnDefinitions="1*,2*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0">Ctrl+W</TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1">Select previous note</TextBlock>
 
-            <TextBlock Grid.Row="1" Grid.Column="0">Ctrl+Q</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1">Open Quick note window. Ctrl+Enter to create.</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="0">Ctrl+E</TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1">Select next note</TextBlock>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0">Ctrl+N</TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1">Open New note window. Enter to create.</TextBlock>
 
-            <TextBlock Grid.Row="2" Grid.Column="0">Ctrl+R</TextBlock>
-            <TextBlock Grid.Row="2" Grid.Column="1">Open Archived notes window</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0">Ctrl+Q</TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1">Open Quick note window. Ctrl+Enter to create.</TextBlock>
 
-            <TextBlock Grid.Row="3" Grid.Column="0">Ctrl+P</TextBlock>
-            <TextBlock Grid.Row="3" Grid.Column="1">Open Preferences window</TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="0">Ctrl+R</TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="1">Open Archived notes window</TextBlock>
 
-            <TextBlock Grid.Row="5" Grid.Column="0">Escape</TextBlock>
-            <TextBlock Grid.Row="5" Grid.Column="1">Close currently active window</TextBlock>
+            <TextBlock Grid.Row="5" Grid.Column="0">Ctrl+P</TextBlock>
+            <TextBlock Grid.Row="5" Grid.Column="1">Open Preferences window</TextBlock>
+
+            <TextBlock Grid.Row="6" Grid.Column="0">Escape</TextBlock>
+            <TextBlock Grid.Row="6" Grid.Column="1">Close currently active window</TextBlock>
           </Grid>
         </StackPanel>
       </Border>
