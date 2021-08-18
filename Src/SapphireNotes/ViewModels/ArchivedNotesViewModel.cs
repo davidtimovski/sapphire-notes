@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using DynamicData;
@@ -10,7 +9,7 @@ using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
 {
-    public class ArchivedNotesViewModel : ViewModelBase, INotifyPropertyChanged
+    public class ArchivedNotesViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
 
@@ -135,7 +134,7 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref actionButtonsEnabled, value);
         }
 
-        private ObservableCollection<ArchivedNoteViewModel> ArchivedNotes { get; set; } = new ObservableCollection<ArchivedNoteViewModel>();
+        private ObservableCollection<ArchivedNoteViewModel> ArchivedNotes { get; } = new ObservableCollection<ArchivedNoteViewModel>();
 
         private ArchivedNoteViewModel selected;
         private ArchivedNoteViewModel Selected

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reactive;
 using Avalonia.Media;
 using ReactiveUI;
@@ -8,7 +7,7 @@ using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels
 {
-    public class ArchivedNoteViewModel : ViewModelBase, INotifyPropertyChanged
+    public class ArchivedNoteViewModel : ViewModelBase
     {
         public ArchivedNoteViewModel(Note note)
         {

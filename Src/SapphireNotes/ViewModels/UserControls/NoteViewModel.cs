@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reactive;
 using Avalonia.Media;
 using ReactiveUI;
@@ -8,7 +7,7 @@ using SapphireNotes.Utils;
 
 namespace SapphireNotes.ViewModels.UserControls
 {
-    public class NoteViewModel : ViewModelBase, INotifyPropertyChanged
+    public class NoteViewModel : ViewModelBase
     {
         private readonly Note _model;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using ReactiveUI;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Exceptions;
@@ -8,7 +7,7 @@ using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.ViewModels
 {
-    public class EditNoteViewModel : ViewModelBase, INotifyPropertyChanged
+    public class EditNoteViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
         private readonly Note EditNote;
@@ -41,7 +40,7 @@ namespace SapphireNotes.ViewModels
             selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
         }
 
-        public void Create()
+        public bool Create()
         {
             string fontFamily = availableFonts[selectedFontIndex];
             int fontSize = availableFontSizes[selectedFontSizeIndex];
@@ -53,11 +52,13 @@ namespace SapphireNotes.ViewModels
             catch (ValidationException ex)
             {
                 alert.Show(ex.Message);
-                throw;
+                return false;
             }
+
+            return true;
         }
 
-        public void Update()
+        public bool Update()
         {
             EditNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
             EditNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
@@ -69,8 +70,10 @@ namespace SapphireNotes.ViewModels
             catch (ValidationException ex)
             {
                 alert.Show(ex.Message);
-                throw;
+                return false;
             }
+
+            return true;
         }
 
         private string title;
@@ -80,7 +83,7 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref title, value);
         }
 
-        private AlertViewModel alert = new AlertViewModel(250);
+        private AlertViewModel alert = new(250);
         private AlertViewModel Alert
         {
             get => alert;

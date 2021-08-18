@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using ReactiveUI;
 using SapphireNotes.Exceptions;
@@ -9,7 +8,7 @@ using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.ViewModels
 {
-    public class PreferencesViewModel : ViewModelBase, INotifyPropertyChanged
+    public class PreferencesViewModel : ViewModelBase
     {
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
@@ -113,7 +112,7 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        private AlertViewModel alert = new AlertViewModel(450);
+        private AlertViewModel alert = new(450);
         private AlertViewModel Alert
         {
             get => alert;

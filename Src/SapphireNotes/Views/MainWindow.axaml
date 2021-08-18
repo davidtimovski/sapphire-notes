@@ -8,8 +8,7 @@
         xmlns:local="clr-namespace:SapphireNotes.UserControls"
         mc:Ignorable="d"
         x:Class="SapphireNotes.Views.MainWindow"
-        Title="Sapphire Notes"
-        Classes="mainWindow">
+        Title="Sapphire Notes">
 
   <Window.Styles>
     <StyleInclude Source="/Styles/Global.axaml" />

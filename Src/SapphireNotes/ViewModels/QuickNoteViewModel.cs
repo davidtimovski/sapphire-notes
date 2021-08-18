@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using ReactiveUI;
+﻿using ReactiveUI;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
 {
-    public class QuickNoteViewModel : ViewModelBase, INotifyPropertyChanged
+    public class QuickNoteViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
 

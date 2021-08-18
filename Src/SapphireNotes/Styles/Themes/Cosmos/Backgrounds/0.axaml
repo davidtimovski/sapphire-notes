@@ -4,9 +4,9 @@
 
   <Style.Resources>
     <ImageBrush x:Key="WindowBackground" Source="/Assets/Themes/Cosmos/0.jpg" Stretch="UniformToFill" />
-    <SolidColorBrush x:Key="WindowOverlay">#dd08111c</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackground">#dd08111c</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackgroundLight">#18212c</SolidColorBrush>
+    <SolidColorBrush x:Key="WindowOverlay">#dd080d1c</SolidColorBrush>
+    <SolidColorBrush x:Key="ControlBackground">#dd080d1c</SolidColorBrush>
+    <SolidColorBrush x:Key="ControlBackgroundLight">#181d2c</SolidColorBrush>
   </Style.Resources>
 
 </Style>

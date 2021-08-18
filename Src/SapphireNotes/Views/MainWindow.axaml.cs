@@ -15,16 +15,13 @@ namespace SapphireNotes.Views
     public class MainWindow : Window
     {
         private readonly INotesService _notesService;
-        private readonly List<Window> _windows = new List<Window>();
+        private readonly List<Window> _windows = new();
 
         public MainWindow()
         {
             InitializeComponent();
 
             _notesService = Locator.Current.GetService<INotesService>();
-
-            var escapeButton = this.FindControl<Button>("escapeButton");
-            escapeButton.Command = ReactiveCommand.Create(ExcapeButtonClicked);
 
             var newNoteMenuItem = this.FindControl<MenuItem>("newNoteMenuItem");
             newNoteMenuItem.Command = ReactiveCommand.Create(NewNoteMenuItemClicked);
@@ -91,11 +88,6 @@ namespace SapphireNotes.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-        }
-
-        private void ExcapeButtonClicked()
-        {
-            Close();
         }
 
         private void NewNoteMenuItemClicked()

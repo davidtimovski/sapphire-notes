@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Moq;
 using SapphireNotes;
@@ -11,8 +12,8 @@ namespace UnitTests.Services
 {
     public class NotesServiceTests
     {
-        private readonly Mock<INotesMetadataService> _notesMetadataServiceMock = new Mock<INotesMetadataService>();
-        private readonly Mock<INotesRepository> _notesRepositoryMock = new Mock<INotesRepository>();
+        private readonly Mock<INotesMetadataService> _notesMetadataServiceMock = new();
+        private readonly Mock<INotesRepository> _notesRepositoryMock = new();
         private readonly INotesService _sut;
 
         public NotesServiceTests()
@@ -224,7 +225,7 @@ namespace UnitTests.Services
         [Fact]
         public void GetFontThatAllNotesUseReturnsDefaultIfNoNotes()
         {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new string[0]);
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(Array.Empty<string>());
 
             string font = _sut.GetFontThatAllNotesUse();
 
@@ -255,7 +256,7 @@ namespace UnitTests.Services
         [Fact]
         public void GetFontSizeThatAllNotesUseReturnsDefaultIfNoNotes()
         {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new int[0]);
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(Array.Empty<int>());
 
             int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
