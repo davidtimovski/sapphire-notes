@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using ReactiveUI;
+﻿using ReactiveUI;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
 {
-    public class InitialSetupViewModel : ViewModelBase, INotifyPropertyChanged
+    public class InitialSetupViewModel : ViewModelBase
     {
         private readonly IPreferencesService _preferencesService;
 

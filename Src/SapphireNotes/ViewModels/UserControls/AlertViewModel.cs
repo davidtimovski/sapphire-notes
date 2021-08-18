@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using ReactiveUI;
+﻿using ReactiveUI;
 
 namespace SapphireNotes.ViewModels.UserControls
 {
-    public class AlertViewModel : ViewModelBase, INotifyPropertyChanged
+    public class AlertViewModel : ViewModelBase
     {
         public AlertViewModel(int maxWidth)
         {

@@ -108,7 +108,7 @@ namespace SapphireNotes.Repositories
         {
             if (!Directory.Exists(_preferencesService.Preferences.NotesDirectory))
             {
-                return new Note[0];
+                return Array.Empty<Note>();
             }
 
             string[] textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
@@ -141,13 +141,13 @@ namespace SapphireNotes.Repositories
             string archiveDirectory = GetArchiveDirectory();
             if (!Directory.Exists(archiveDirectory))
             {
-                return new Note[0];
+                return Array.Empty<Note>();
             }
 
             string[] textFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
             if (textFiles.Length == 0)
             {
-                return new Note[0];
+                return Array.Empty<Note>();
             }
 
             var notes = new List<Note>(textFiles.Length);

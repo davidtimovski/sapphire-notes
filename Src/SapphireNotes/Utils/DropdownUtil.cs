@@ -1,6 +1,6 @@
 ﻿namespace SapphireNotes.Utils
 {
-    public class DropdownUtil
+    public static class DropdownUtil
     {
         public static string[] GetOptionsWithFirst<T>(T[] options, string firstOption)
         {

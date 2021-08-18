@@ -4,6 +4,8 @@
 
 A cross-platform desktop application for managing notes built with [Avalonia](https://avaloniaui.net/). Prettier than Notepad and snappier than Electron alternatives.
 
+![Preview](preview.webp)
+
 ### Features
 
 Create and manage notes. Wow!

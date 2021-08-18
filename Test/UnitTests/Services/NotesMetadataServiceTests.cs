@@ -1,3 +1,4 @@
+using System;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 using Xunit;
@@ -12,7 +13,7 @@ namespace UnitTests.Services
         {
             _sut = new NotesMetadataService();
 
-            _sut.Initialize(new string[0]);
+            _sut.Initialize(Array.Empty<string>());
         }
 
         [Fact]

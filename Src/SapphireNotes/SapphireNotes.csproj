@@ -3,14 +3,15 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon>logo.ico</ApplicationIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
+    <PackageReference Include="Avalonia" Version="0.10.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\ArchivedNotesWindow.axaml.cs">
@@ -47,7 +48,6 @@
     <EmbeddedResource Include="Assets\Fonts\Verdana.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\4.axaml" />
     <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\3.axaml" />
     <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\2.axaml" />
     <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\1.axaml" />

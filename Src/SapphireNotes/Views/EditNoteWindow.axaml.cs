@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
-using SapphireNotes.Exceptions;
 using SapphireNotes.ViewModels;
 
 namespace SapphireNotes.Views
@@ -23,22 +22,19 @@ namespace SapphireNotes.Views
         {
             var vm = (EditNoteViewModel)DataContext;
 
-            try
+            bool success;
+            if (vm.IsNew)
             {
-                if (vm.IsNew)
-                {
-                    vm.Create();
-                }
-                else
-                {
-                    vm.Update();
-                }
-
-                Close();
+                success = vm.Create();
             }
-            catch (ValidationException)
+            else
             {
-                // Do nothing. Handled in view model.
+                success = vm.Update();
+            }
+
+            if (success)
+            {
+                Close();
             }
         }
 

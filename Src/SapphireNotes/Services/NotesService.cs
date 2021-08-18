@@ -103,7 +103,7 @@ namespace SapphireNotes.Services
             }
 
             var fileName = newName + ".txt";
-            if (originalName.ToLowerInvariant() != newName.ToLowerInvariant() && _notesRepository.Exists(newName))
+            if (!string.Equals(originalName, newName, StringComparison.InvariantCultureIgnoreCase) && _notesRepository.Exists(newName))
             {
                 throw new ValidationException("A note with the same name already exists.");
             }
@@ -172,7 +172,7 @@ namespace SapphireNotes.Services
             else
             {
                 _notesRepository.Delete(note.Name);
-            }            
+            }
 
             _notesMetadataService.Remove(note.Name);
             _notesMetadataService.Save();

@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
-using ReactiveUI;
+﻿using ReactiveUI;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
 {
-    public class DeleteNoteViewModel : ViewModelBase, INotifyPropertyChanged
+    public class DeleteNoteViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
         private readonly Note Note;

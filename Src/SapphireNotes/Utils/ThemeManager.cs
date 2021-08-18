@@ -7,12 +7,12 @@ namespace SapphireNotes.Utils
 {
     public static class ThemeManager
     {
-        private static readonly Dictionary<string, ThemeResources> _themeResources = new Dictionary<string, ThemeResources>
+        private static readonly Dictionary<string, ThemeResources> _themeResources = new()
         {
             { "Dark", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 0) },
-            { "Cosmos", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 5) }
+            { "Cosmos", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 4) }
         };
-        private static readonly Random _random = new Random();
+        private static readonly Random _random = new();
 
         public static string[] Themes => _themeResources.Keys.ToArray();
 
@@ -51,7 +51,7 @@ namespace SapphireNotes.Utils
             Backgrounds = backgrounds;
         }
 
-        public string[] Styles { get; private set; }
-        public int Backgrounds { get; private set; }
+        public string[] Styles { get; }
+        public int Backgrounds { get; }
     }
 }

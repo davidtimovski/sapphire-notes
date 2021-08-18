@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using Avalonia.Threading;
@@ -13,11 +12,11 @@ using SapphireNotes.ViewModels.UserControls;
 
 namespace SapphireNotes.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
-        private readonly DispatcherTimer autoSaveTimer = new DispatcherTimer();
+        private readonly DispatcherTimer autoSaveTimer = new();
 
         public MainWindowViewModel(IPreferencesService preferencesService, INotesService notesService)
         {
@@ -33,7 +32,7 @@ namespace SapphireNotes.ViewModels
 
             LoadNotes();
 
-            autoSaveTimer.Tick += new EventHandler(SaveDirtyNotes);
+            autoSaveTimer.Tick += SaveDirtyNotes;
             SetAutoSaveTimer();
 
             CtrlW = ReactiveCommand.Create(SelectPreviousNote);
@@ -210,7 +209,7 @@ namespace SapphireNotes.ViewModels
             }
         }
 
-        private ObservableCollection<NoteViewModel> Notes { get; set; } = new ObservableCollection<NoteViewModel>();
+        private ObservableCollection<NoteViewModel> Notes { get; } = new ObservableCollection<NoteViewModel>();
 
         private NoteViewModel selected;
         public NoteViewModel Selected
