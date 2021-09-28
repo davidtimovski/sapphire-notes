@@ -34,7 +34,7 @@
     <StackPanel>
       <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
 
-      <TextBlock>Version: 0.5.0</TextBlock>
+      <TextBlock>Version: 0.6.0</TextBlock>
       <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
 
       <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>
