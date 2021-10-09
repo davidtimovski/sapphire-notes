@@ -12,6 +12,8 @@ namespace SapphireNotes.ViewModels
     public class ArchivedNotesViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
+        
+        public  ArchivedNotesViewModel() {}
 
         public ArchivedNotesViewModel(INotesService notesService)
         {

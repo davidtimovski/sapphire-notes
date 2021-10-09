@@ -80,7 +80,7 @@ namespace UnitTests.Services
         [InlineData("Arial", "Arial", "Arial", 1)]
         public void GetDistinctFonts(string font1, string font2, string font3, int distinct)
         {
-            var fonts = new string[] { font1, font2, font3 };
+            var fonts = new[] { font1, font2, font3 };
             for (var i = 0; i < fonts.Length; i++)
             {
                 _sut.Add($"dummy name {i}", new NoteMetadata { FontFamily = fonts[i] });
@@ -101,7 +101,7 @@ namespace UnitTests.Services
         [InlineData(15, 15, 15, 1)]
         public void GetDistinctFontSizes(int fontSize1, int fontSize2, int fontSize3, int distinct)
         {
-            var fontSizes = new int[] { fontSize1, fontSize2, fontSize3 };
+            var fontSizes = new[] { fontSize1, fontSize2, fontSize3 };
             for (var i = 0; i < fontSizes.Length; i++)
             {
                 _sut.Add($"dummy name {i}", new NoteMetadata { FontSize = fontSizes[i] });

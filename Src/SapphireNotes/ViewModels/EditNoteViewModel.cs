@@ -10,8 +10,9 @@ namespace SapphireNotes.ViewModels
     public class EditNoteViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
-        private readonly Note EditNote;
+        private readonly Note _editNote;
 
+        public EditNoteViewModel() {}
         public EditNoteViewModel(INotesService notesService)
         {
             _notesService = notesService;
@@ -33,7 +34,7 @@ namespace SapphireNotes.ViewModels
             title = "Edit note";
             saveButtonLabel = "Save";
             name = note.Name;
-            EditNote = note;
+            _editNote = note;
 
             selectedFontIndex = Array.IndexOf(availableFonts, note.Metadata.FontFamily);
             availableFontSizes = Globals.AvailableFontSizes;
@@ -60,12 +61,12 @@ namespace SapphireNotes.ViewModels
 
         public bool Update()
         {
-            EditNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
-            EditNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
+            _editNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
+            _editNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
 
             try
             {
-                _notesService.Update(name, EditNote);
+                _notesService.Update(name, _editNote);
             }
             catch (ValidationException ex)
             {

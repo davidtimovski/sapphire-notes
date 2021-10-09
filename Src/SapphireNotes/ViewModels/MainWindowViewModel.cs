@@ -16,8 +16,9 @@ namespace SapphireNotes.ViewModels
     {
         private readonly IPreferencesService _preferencesService;
         private readonly INotesService _notesService;
-        private readonly DispatcherTimer autoSaveTimer = new();
+        private readonly DispatcherTimer _autoSaveTimer = new();
 
+        public MainWindowViewModel() {}
         public MainWindowViewModel(IPreferencesService preferencesService, INotesService notesService)
         {
             _preferencesService = preferencesService;
@@ -32,7 +33,7 @@ namespace SapphireNotes.ViewModels
 
             LoadNotes();
 
-            autoSaveTimer.Tick += SaveDirtyNotes;
+            _autoSaveTimer.Tick += SaveDirtyNotes;
             SetAutoSaveTimer();
 
             CtrlW = ReactiveCommand.Create(SelectPreviousNote);
@@ -49,7 +50,7 @@ namespace SapphireNotes.ViewModels
 
         public void OnClosing(int windowWidth, int windowHeight, int windowPositionX, int windowPositionY)
         {
-            autoSaveTimer.Stop();
+            _autoSaveTimer.Stop();
 
             _notesService.SaveAllWithMetadata(Notes.Select(x => x.ToNote()));
 
@@ -88,6 +89,8 @@ namespace SapphireNotes.ViewModels
             {
                 Selected = noteVm;
             }
+
+            ShowIntroMessage = false;
         }
 
         private void PreferencesUpdated(object sender, UpdatedPreferencesEventArgs e)
@@ -142,6 +145,8 @@ namespace SapphireNotes.ViewModels
             {
                 Notes.Remove(noteVm);
             }
+            
+            ShowIntroMessage = !Notes.Any();
         }
 
         private void NoteRestored(object sender, RestoredNoteEventArgs e)
@@ -156,16 +161,18 @@ namespace SapphireNotes.ViewModels
             {
                 AddNote(note);
             }
+
+            ShowIntroMessage = !Notes.Any();
         }
 
         private void SetAutoSaveTimer()
         {
-            autoSaveTimer.Stop();
+            _autoSaveTimer.Stop();
 
             if (_preferencesService.Preferences.AutoSaveInterval != 0)
             {
-                autoSaveTimer.Interval = TimeSpan.FromSeconds(_preferencesService.Preferences.AutoSaveInterval);
-                autoSaveTimer.Start();
+                _autoSaveTimer.Interval = TimeSpan.FromSeconds(_preferencesService.Preferences.AutoSaveInterval);
+                _autoSaveTimer.Start();
             }
         }
 
@@ -193,6 +200,8 @@ namespace SapphireNotes.ViewModels
         {
             _notesService.Archive(noteVm.ToNote());
             Notes.Remove(noteVm);
+
+            ShowIntroMessage = !Notes.Any();
         }
 
         private void SaveDirtyNotes(object sender, EventArgs e)
@@ -211,6 +220,13 @@ namespace SapphireNotes.ViewModels
 
         private ObservableCollection<NoteViewModel> Notes { get; } = new ObservableCollection<NoteViewModel>();
 
+        private bool showIntroMessage;
+        public bool ShowIntroMessage
+        {
+            get => showIntroMessage;
+            set => this.RaiseAndSetIfChanged(ref showIntroMessage, value);
+        }
+        
         private NoteViewModel selected;
         public NoteViewModel Selected
         {

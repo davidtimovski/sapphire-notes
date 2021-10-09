@@ -1,12 +1,11 @@
 ﻿<Style xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=netstandard">
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style.Resources>
     <ImageBrush x:Key="WindowBackground" Source="/Assets/Themes/Cosmos/3.jpg" Stretch="UniformToFill" />
     <SolidColorBrush x:Key="WindowOverlay">#dd081a1c</SolidColorBrush>
     <SolidColorBrush x:Key="ControlBackground">#dd081a1c</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackgroundLight">#182a2c</SolidColorBrush>
+    <SolidColorBrush x:Key="ControlBackgroundHighlighted">#182a2c</SolidColorBrush>
   </Style.Resources>
 
 </Style>

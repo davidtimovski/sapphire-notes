@@ -5,7 +5,7 @@
     <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
     <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
     <Setter Property="Padding" Value="8 6" />
-    <Setter Property="Foreground" Value="{StaticResource WhiteColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
     <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>

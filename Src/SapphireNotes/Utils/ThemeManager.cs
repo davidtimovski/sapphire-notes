@@ -7,19 +7,20 @@ namespace SapphireNotes.Utils
 {
     public static class ThemeManager
     {
-        private static readonly Dictionary<string, ThemeResources> _themeResources = new()
+        private static readonly Dictionary<string, ThemeResources> ThemeResources = new()
         {
-            { "Dark", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 0) },
-            { "Cosmos", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 4) }
+            { "Dark", new ThemeResources(0) },
+            { "Light", new ThemeResources(0) },
+            { "Cosmos", new ThemeResources(4) }
         };
-        private static readonly Random _random = new();
+        private static readonly Random Random = new();
 
-        public static string[] Themes => _themeResources.Keys.ToArray();
+        public static string[] Themes => ThemeResources.Keys.ToArray();
 
         public static IEnumerable<StyleInclude> GetThemeStyles(string theme)
         {
-            var styles = _themeResources[theme].Styles;
-            int backgrounds = _themeResources[theme].Backgrounds;
+            var styles = ThemeResources[theme].Styles;
+            int backgrounds = ThemeResources[theme].Backgrounds;
             var result = new List<StyleInclude>(styles.Length + (backgrounds > 0 ? 1 : 0));
 
             foreach (var style in styles)
@@ -32,7 +33,7 @@ namespace SapphireNotes.Utils
 
             if (backgrounds > 0)
             {
-                int backgroundIndex = _random.Next(0, backgrounds);
+                int backgroundIndex = Random.Next(0, backgrounds);
                 result.Add(new StyleInclude(new Uri("resm:Styles?assembly=SapphireNotes"))
                 {
                     Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Backgrounds/{backgroundIndex}.axaml")
@@ -45,13 +46,12 @@ namespace SapphireNotes.Utils
 
     public class ThemeResources
     {
-        public ThemeResources(string[] styles, int backgrounds)
+        public ThemeResources(int backgrounds)
         {
-            Styles = styles;
             Backgrounds = backgrounds;
         }
 
-        public string[] Styles { get; }
+        public string[] Styles { get; } = { "Accents", "Button", "MainWindow", "ScrollBar" };
         public int Backgrounds { get; }
     }
 }

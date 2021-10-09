@@ -6,12 +6,13 @@
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="BorderBrush" Value="{DynamicResource GreyColor}" />
     <Setter Property="Padding" Value="14 4" />
+    <Setter Property="Foreground" Value="White" />
   </Style>
   <Style Selector="Button.button:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
   </Style>
   <Style Selector="Button.button:pressed /template/ ContentPresenter">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
   </Style>
 
 </Styles>

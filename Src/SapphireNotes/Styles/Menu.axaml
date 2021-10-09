@@ -59,7 +59,7 @@
                    PlacementMode="Right"
                    IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}">
               <Border Background="{TemplateBinding Background}"
-                      BorderBrush="{DynamicResource ControlBackgroundLight}"
+                      BorderBrush="{DynamicResource ControlBackgroundHighlighted}"
                       BorderThickness="1">
                 <ScrollViewer Classes="menuscroller">
                   <ItemsPresenter Name="PART_ItemsPresenter"
@@ -79,7 +79,7 @@
   <Style Selector="MenuItem > Separator, MenuItem:separator">
     <Setter Property="Template">
       <ControlTemplate>
-        <Separator Background="{DynamicResource ControlBackgroundLight}" />
+        <Separator Background="{DynamicResource ControlBackgroundHighlighted}" />
       </ControlTemplate>
     </Setter>
   </Style>
@@ -131,13 +131,13 @@
   </Style>
 
   <Style Selector="Menu > MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
   </Style>
   <Style Selector="Menu > MenuItem:selected:pointerover /template/ Border#root">
     <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
   </Style>
   <Style Selector="MenuItem MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
   </Style>
 
   <Style Selector="MenuItem /template/ ItemsPresenter#PART_ItemsPresenter">

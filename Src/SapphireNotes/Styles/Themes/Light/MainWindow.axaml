@@ -11,7 +11,7 @@
   </Style>
 
   <Style Selector="TabItem Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource GreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource WhiteColor}" />
     <Setter Property="Padding" Value="8 5" />
   </Style>
   <Style Selector="TabItem:pointerover Border.tabHeader">
@@ -22,14 +22,14 @@
   </Style>
   
   <Style Selector="TabItem Border.tabHeader TextBlock">
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Foreground" Value="#222" />
   </Style>
   <Style Selector="TabItem:selected Border.tabHeader TextBlock">
     <Setter Property="Foreground" Value="White" />
   </Style>
 
   <Style Selector="Border.editorContainer">
-    <Setter Property="Background" Value="{DynamicResource GreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource WhiteColor}" />
   </Style>
 
 </Styles>

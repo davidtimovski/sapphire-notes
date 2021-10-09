@@ -6,10 +6,6 @@
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
 
-  <Style Selector="Button.button">
-    <Setter Property="Foreground" Value="White" />
-  </Style>
-
   <Style Selector="Button.button.primary">
     <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
   </Style>

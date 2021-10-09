@@ -16,8 +16,7 @@ namespace SapphireNotes.ViewModels
         private const string CustomLabel = "[Custom]";
         private readonly int _initialFontIndex;
         private readonly int _initialFontSizeIndex;
-        private readonly short[] _autoSaveIntervalValues = new short[]
-        {
+        private readonly short[] _autoSaveIntervalValues = {
             0,
             1,
             5,
@@ -26,6 +25,7 @@ namespace SapphireNotes.ViewModels
             60
         };
 
+        public PreferencesViewModel() {}
         public PreferencesViewModel(IPreferencesService preferencesService, INotesService notesService)
         {
             _preferencesService = preferencesService;
@@ -73,10 +73,8 @@ namespace SapphireNotes.ViewModels
         {
             try
             {
-                var preferences = new UpdatedPreferencesEventArgs
-                {
-                    NotesDirectoryChanged = notesDirectory != _preferencesService.Preferences.NotesDirectory
-                };
+                var preferences =
+                    new UpdatedPreferencesEventArgs(notesDirectory != _preferencesService.Preferences.NotesDirectory);
 
                 if (preferences.NotesDirectoryChanged && moveNotes)
                 {
@@ -122,10 +120,7 @@ namespace SapphireNotes.ViewModels
         private string notesDirectory;
         private string NotesDirectory
         {
-            get
-            {
-                return notesDirectory;
-            }
+            get => notesDirectory;
             set
             {
                 this.RaiseAndSetIfChanged(ref notesDirectory, value);
@@ -158,15 +153,14 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref moveNotes, value);
         }
 
-        private string[] autoSaveIntervalLabels = new string[]
-{
+        private string[] autoSaveIntervalLabels = {
             "Never",
             "Every second",
             "Every 5 seconds",
             "Every 10 seconds",
             "Every 30 seconds",
             "Every minute"
-};
+        };
         private string[] AutoSaveIntervalLabels
         {
             get => autoSaveIntervalLabels;
@@ -176,10 +170,7 @@ namespace SapphireNotes.ViewModels
         private int selectedAutoSaveIntervalIndex;
         private int SelectedAutoSaveIntervalIndex
         {
-            get
-            {
-                return selectedAutoSaveIntervalIndex;
-            }
+            get => selectedAutoSaveIntervalIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedAutoSaveIntervalIndex, value);
@@ -197,10 +188,7 @@ namespace SapphireNotes.ViewModels
         private int selectedThemeIndex;
         private int SelectedThemeIndex
         {
-            get
-            {
-                return selectedThemeIndex;
-            }
+            get => selectedThemeIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedThemeIndex, value);
@@ -218,10 +206,7 @@ namespace SapphireNotes.ViewModels
         private int selectedFontIndex;
         private int SelectedFontIndex
         {
-            get
-            {
-                return selectedFontIndex;
-            }
+            get => selectedFontIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedFontIndex, value);
@@ -239,10 +224,7 @@ namespace SapphireNotes.ViewModels
         private int selectedFontSizeIndex;
         private int SelectedFontSizeIndex
         {
-            get
-            {
-                return selectedFontSizeIndex;
-            }
+            get => selectedFontSizeIndex;
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);

@@ -5,14 +5,14 @@ namespace SapphireNotes.Utils
 {
     public static class FileUtil
     {
-        private static readonly string numberPattern = " ({0})";
+        private const string NumberPattern = " ({0})";
 
         public static string NextAvailableFileName(string path)
         {
             if (!File.Exists(path))
                 return path;
 
-            return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path)), numberPattern));
+            return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path)), NumberPattern));
         }
 
         private static string GetNextFilename(string pattern)

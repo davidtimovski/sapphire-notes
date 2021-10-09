@@ -93,7 +93,12 @@
     <SolidColorBrush x:Key="WindowBackground">#2d2d30</SolidColorBrush>
     <SolidColorBrush x:Key="WindowOverlay">Transparent</SolidColorBrush>
     <SolidColorBrush x:Key="ControlBackground">#1e1e1e</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackgroundLight">#3d3d43</SolidColorBrush>
+    <SolidColorBrush x:Key="ControlBackgroundHighlighted">#3d3d43</SolidColorBrush>
+    
+    <SolidColorBrush x:Key="TextColor">#e8e8e8</SolidColorBrush>
+    <SolidColorBrush x:Key="TextColorHighlighted">#e8e8e8</SolidColorBrush>
+
+    <SolidColorBrush x:Key="ComboBoxArrowColor">#e8e8e8</SolidColorBrush>
   </Style.Resources>
 
 </Style>

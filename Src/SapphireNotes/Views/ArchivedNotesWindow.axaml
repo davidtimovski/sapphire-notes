@@ -1,10 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         xmlns:be="clr-namespace:SapphireNotes.Behaviors"
-        xmlns:local="clr-namespace:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.ArchivedNotesWindow"
         Title="Archived notes">
 
@@ -48,38 +45,38 @@
     </Style>
 
     <Style Selector="DockPanel.headers">
-      <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+      <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
     </Style>
     <Style Selector="DockPanel.headers Border">
       <Setter Property="Padding" Value="10" />
     </Style>
     
-    <Style Selector="ListBox">
+    <Style Selector="ListBox.archivedNotesListBox">
       <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Margin" Value="0 0 0 10" />
     </Style>
 
-    <Style Selector="ListBoxItem">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem">
       <Setter Property="Padding" Value="0" />
     </Style>
-    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="{StaticResource ControlBackgroundLight}" />
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{StaticResource ControlBackgroundHighlighted}" />
     </Style>
-    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
     </Style>
-    <Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:focus /template/ ContentPresenter">
       <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
     </Style>
-    <Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
     </Style>
-    <Style Selector="ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
     </Style>
-    <Style Selector="ListBoxItem Border">
+    <Style Selector="ListBox.archivedNotesListBox ListBoxItem Border">
       <!-- Somehow makes Border fully clickable -->
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="Padding" Value="10 5" />
@@ -153,7 +150,7 @@
           </Border>
         </DockPanel>
 
-        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
+        <ListBox Classes="archivedNotesListBox" Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">

@@ -3,7 +3,7 @@
 
   <Style Selector="ContextMenu">
     <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
   
@@ -13,7 +13,7 @@
   </Style>
 
   <Style Selector="ContextMenu MenuItem:selected /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
   </Style>
 
 </Styles>

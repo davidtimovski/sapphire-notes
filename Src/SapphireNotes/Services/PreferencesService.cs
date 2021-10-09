@@ -114,7 +114,12 @@ namespace SapphireNotes.Services
 
     public class UpdatedPreferencesEventArgs : EventArgs
     {
-        public bool NotesDirectoryChanged { get; set; }
+        public UpdatedPreferencesEventArgs(bool notesDirectoryChanged)
+        {
+            NotesDirectoryChanged = notesDirectoryChanged;
+        }
+
+        public bool NotesDirectoryChanged { get; }
         public string NewTheme { get; set; }
         public string NewFontFamily { get; set; }
         public int? NewFontSize { get; set; }

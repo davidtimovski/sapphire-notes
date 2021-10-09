@@ -21,7 +21,7 @@ namespace SapphireNotes.ViewModels
             archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
         }
 
-        public Note Note { get; set; }
+        public Note Note { get; }
 
         public event EventHandler<EventArgs> MiddleMouseClicked;
 
