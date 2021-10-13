@@ -69,7 +69,7 @@
     
       <Border Classes="buttonsWrap">
         <DockPanel>
-          <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
+          <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary" />
           <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
         </DockPanel>
       </Border>

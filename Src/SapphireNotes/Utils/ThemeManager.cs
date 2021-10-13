@@ -9,8 +9,8 @@ namespace SapphireNotes.Utils
     {
         private static readonly Dictionary<string, ThemeResources> ThemeResources = new()
         {
-            { "Dark", new ThemeResources(0) },
-            { "Light", new ThemeResources(0) },
+            { "Dark", new ThemeResources() },
+            { "Light", new ThemeResources() },
             { "Cosmos", new ThemeResources(4) }
         };
         private static readonly Random Random = new();
@@ -46,12 +46,12 @@ namespace SapphireNotes.Utils
 
     public class ThemeResources
     {
-        public ThemeResources(int backgrounds)
+        public ThemeResources(int backgrounds = 0)
         {
             Backgrounds = backgrounds;
         }
 
-        public string[] Styles { get; } = { "Accents", "Button", "MainWindow", "ScrollBar" };
+        public string[] Styles { get; } = { "Accents", "Resources", "MainWindow" };
         public int Backgrounds { get; }
     }
 }

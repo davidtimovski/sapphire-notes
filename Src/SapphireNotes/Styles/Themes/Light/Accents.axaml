@@ -94,11 +94,6 @@
     <SolidColorBrush x:Key="WindowOverlay">Transparent</SolidColorBrush>
     <SolidColorBrush x:Key="ControlBackground">#fafafa</SolidColorBrush>
     <SolidColorBrush x:Key="ControlBackgroundHighlighted">#eee</SolidColorBrush>
-    
-    <SolidColorBrush x:Key="TextColor">#222</SolidColorBrush>
-    <SolidColorBrush x:Key="TextColorHighlighted">#fff</SolidColorBrush>
-
-    <SolidColorBrush x:Key="ComboBoxArrowColor">#444</SolidColorBrush>
   </Style.Resources>
 
 </Style>

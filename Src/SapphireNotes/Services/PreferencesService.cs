@@ -18,8 +18,6 @@ namespace SapphireNotes.Services
     public class PreferencesService : IPreferencesService
     {
         private const string PreferencesFileName = "preferences.bin";
-        private const int DefaultWindowPositionX = 640;
-        private const int DefaultWindowPositionY = 360;
         private string _preferencesFilePath;
 
         public event EventHandler<UpdatedPreferencesEventArgs> Updated;
@@ -88,8 +86,14 @@ namespace SapphireNotes.Services
                 Preferences.Window.Height = height;
             }
 
-            Preferences.Window.PositionX = positionX > 0 ? positionX : DefaultWindowPositionX;
-            Preferences.Window.PositionY = positionY > 0 ? positionY : DefaultWindowPositionY;
+            if (positionX > 0)
+            {
+                Preferences.Window.PositionX = positionX;
+            }
+            if (positionY > 0)
+            {
+                Preferences.Window.PositionY = positionY;
+            }
 
             SavePreferences();
         }

@@ -1,0 +1,41 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style.Resources>
+	<!-- Button -->
+	<SolidColorBrush x:Key="ButtonBackground">#e8e8e8</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonBackgroundHover">#ddd</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonForeground">#222</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonBorderBrush">Transparent</SolidColorBrush>
+	<Thickness x:Key="ButtonBorderThickness">0</Thickness>
+	<Thickness x:Key="ButtonPadding">15 5</Thickness>
+	<SolidColorBrush x:Key="ButtonPrimaryBackground">#007acc</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover">#1c97ea</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessBackground">#00aa5a</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover">#1cba6a</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerBackground">#cc3322</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerBackgroundHover">#dd4433</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
+
+	<!-- Form Controls -->
+	<SolidColorBrush x:Key="FormControlBackground">#fafafa</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlForeground">#222</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlBorderBrush">#bbb</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlBorderBrushHover">#1b6091</SolidColorBrush>
+
+	<!-- ComboBox -->
+	<SolidColorBrush x:Key="ComboBoxArrowColor">#444</SolidColorBrush>
+	<SolidColorBrush x:Key="ComboBoxItemHoverBackground">#e5e5e5</SolidColorBrush>
+	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
+
+	<!-- ScrollBar -->
+	<SolidColorBrush x:Key="ScrollBarBackground">#eee</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackground">#ccc</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover">#bbb</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#aaa</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarRepeatButtonFill">#fff</SolidColorBrush>
+  </Style.Resources>
+
+</Style>

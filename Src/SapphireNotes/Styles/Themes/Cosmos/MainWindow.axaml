@@ -6,7 +6,7 @@
   </Style>
   
   <Style Selector="TextBlock.introMessage">
-    <Setter Property="Foreground" Value="#ccc"></Setter>
+    <Setter Property="Foreground" Value="#ddd" />
   </Style>
 
   <Style Selector="TabItem Border.tabHeader">

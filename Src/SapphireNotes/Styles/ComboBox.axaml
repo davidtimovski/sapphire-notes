@@ -6,7 +6,7 @@
     <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="MinHeight" Value="20" />
-    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
     <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
     <Setter Property="Template">
@@ -74,22 +74,26 @@
   </Style>
 
   <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource GreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBackground}" />
   </Style>
-  
+
   <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
   </Style>
   
   <Style Selector="ComboBoxItem:selected:focus /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+  </Style>
+
+  <Style Selector="ComboBoxItem:selected:focus TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ComboBoxItemSelectedForeground}" />
   </Style>
 
   <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
   </Style>
   
   <Style Selector="ComboBoxItem:selected:focus:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
+    <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}" />
   </Style>
 </Styles>

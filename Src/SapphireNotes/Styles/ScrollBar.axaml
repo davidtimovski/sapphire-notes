@@ -1,10 +1,78 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   
-  <Style Selector="ScrollBar /template/ RepeatButton:pointerover > Path">
-    <Setter Property="Fill" Value="{StaticResource PrimaryColorLight}" />
+  <Style Selector="ScrollBar">
+  	<Setter Property="Cursor" Value="Arrow" />
+  	<Setter Property="Template">
+  		<ControlTemplate>
+  			<Border Background="{DynamicResource ScrollBarBackground}"
+  					UseLayoutRounding="False">
+  				<Grid RowDefinitions="Auto,*,Auto">
+  					<RepeatButton Name="PART_LineUpButton" HorizontalAlignment="Center"
+  									Classes="repeat"
+  									Grid.Row="0"
+  									Focusable="False"
+  									MinHeight="{DynamicResource ScrollBarThickness}">
+  						<Path Data="M 0 4 L 8 4 L 4 0 Z" />
+  					</RepeatButton>
+  					<Track Grid.Row="1"
+  							Grid.Column="1"
+  							Minimum="{TemplateBinding Minimum}"
+  							Maximum="{TemplateBinding Maximum}"
+  							Value="{TemplateBinding Value, Mode=TwoWay}"
+  							ViewportSize="{TemplateBinding ViewportSize}"
+  							Orientation="{TemplateBinding Orientation}"
+  							IsDirectionReversed="True">
+  						<Track.DecreaseButton>
+  							<RepeatButton Name="PART_PageUpButton"
+  											Classes="repeattrack"
+  											Focusable="False"/>
+  						</Track.DecreaseButton>
+  						<Track.IncreaseButton>
+  							<RepeatButton Name="PART_PageDownButton"
+  											Classes="repeattrack"
+  											Focusable="False"/>
+  						</Track.IncreaseButton>
+  						<Thumb Name="thumb"/>
+  					</Track>
+  					<RepeatButton Name="PART_LineDownButton" HorizontalAlignment="Center"
+  									Classes="repeat"
+  									Grid.Row="2"
+  									Grid.Column="2"
+  									Focusable="False"
+  									MinHeight="{DynamicResource ScrollBarThickness}">
+  						<Path Data="M 0 0 L 4 4 L 8 0 Z" />
+  					</RepeatButton>
+  				</Grid>
+  			</Border>
+  		</ControlTemplate>
+  	</Setter>
   </Style>
 
+  <Style Selector="ScrollBar /template/ RepeatButton.repeattrack">
+     <Setter Property="Template">
+         <ControlTemplate>
+            <Border Background="{DynamicResource ScrollBarBackground}" />
+         </ControlTemplate>
+     </Setter>
+  </Style>
+
+  <Style Selector="ScrollBar /template/ Thumb#thumb">
+  	<Setter Property="Background" Value="{DynamicResource ScrollBarThumbBackground}" />
+  </Style>
+  <Style Selector="ScrollBar /template/ Thumb#thumb:pointerover">
+  	<Setter Property="Background" Value="{DynamicResource ScrollBarThumbBackgroundHover}" />
+  </Style>
+  <Style Selector="ScrollBar /template/ Thumb#thumb:pressed">
+  	<Setter Property="Background" Value="{DynamicResource ScrollBarThumbBackgroundPressed}" />
+  </Style>
+
+  <Style Selector="ScrollBar /template/ RepeatButton > Path">
+  	<Setter Property="Fill" Value="{DynamicResource ScrollBarRepeatButtonFill}" />
+  </Style>
+  <Style Selector="ScrollBar /template/ RepeatButton:pointerover > Path">
+  	<Setter Property="Fill" Value="{StaticResource PrimaryColorLight}" />
+  </Style>
   <Style Selector="ScrollBar /template/ RepeatButton:pressed > Path">
     <Setter Property="Fill" Value="{StaticResource PrimaryColor}" />
   </Style>
