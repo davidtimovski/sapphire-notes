@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.DependencyInjection;
@@ -32,7 +34,8 @@ namespace SapphireNotes
                 preferencesService.Updated += PreferencesUpdated;
 
                 bool notesDirectorySet = preferencesService.Load();
-                SetThemeStyles(preferencesService.Preferences.Theme);
+                SetThemeOverrides(preferencesService.Preferences.Theme);
+                SetGlobalStyles();
 
                 if (notesDirectorySet)
                 {
@@ -81,18 +84,23 @@ namespace SapphireNotes
         {
             if (e.NewTheme != null)
             {
-                Styles.RemoveRange(1, Styles.Count - 1);
-                SetThemeStyles(e.NewTheme);
+                var themeOverrides = Styles.Where(x => (x as StyleInclude).Source.AbsolutePath.StartsWith("/Styles/Themes")).ToArray();
+                Styles.RemoveAll(themeOverrides);
+
+                SetThemeOverrides(e.NewTheme);
             }
         }
 
-        private void SetThemeStyles(string theme)
+        private void SetGlobalStyles()
         {
-            var themeStyles = ThemeManager.GetThemeStyles(theme);
-            foreach (var style in themeStyles)
-            {
-                Styles.Add(style);
-            }
+            var globalStyles = ThemeManager.GetGlobalStyles();
+            Styles.AddRange(globalStyles);
+        }
+
+        private void SetThemeOverrides(string theme)
+        {
+            var themeOverrides = ThemeManager.GetThemeOverrides(theme);
+            Styles.AddRange(themeOverrides);
         }
     }
 }

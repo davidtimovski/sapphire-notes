@@ -6,13 +6,6 @@
         Title="Preferences">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-    <StyleInclude Source="/Styles/CheckBox.axaml" />
-    <StyleInclude Source="/Styles/ComboBox.axaml" />
-
     <Style Selector="DockPanel.formControlWrap">
       <Setter Property="Margin" Value="0 5 0 0" />
     </Style>

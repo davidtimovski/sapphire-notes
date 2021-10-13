@@ -6,10 +6,6 @@
         Title="Quick note">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="TextBox">
       <Setter Property="Width" Value="500" />
       <Setter Property="Height" Value="200" />

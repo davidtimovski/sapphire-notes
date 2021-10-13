@@ -35,7 +35,6 @@
 	<SolidColorBrush x:Key="ScrollBarThumbBackground">#505050</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover">#606060</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#707070</SolidColorBrush>
-	<SolidColorBrush x:Key="ScrollBarRepeatButtonFill">#999999</SolidColorBrush>
   </Style.Resources>
 
 </Style>

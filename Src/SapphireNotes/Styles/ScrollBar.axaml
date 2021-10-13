@@ -67,8 +67,11 @@
   	<Setter Property="Background" Value="{DynamicResource ScrollBarThumbBackgroundPressed}" />
   </Style>
 
+  <Style Selector="ScrollBar /template/ RepeatButton">
+  	<Setter Property="Background" Value="{DynamicResource ScrollBarBackground}" />
+  </Style>
   <Style Selector="ScrollBar /template/ RepeatButton > Path">
-  	<Setter Property="Fill" Value="{DynamicResource ScrollBarRepeatButtonFill}" />
+  	<Setter Property="Fill" Value="{DynamicResource ScrollBarThumbBackgroundHover}" />
   </Style>
   <Style Selector="ScrollBar /template/ RepeatButton:pointerover > Path">
   	<Setter Property="Fill" Value="{StaticResource PrimaryColorLight}" />

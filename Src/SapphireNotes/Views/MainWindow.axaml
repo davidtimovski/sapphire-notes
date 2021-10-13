@@ -10,13 +10,6 @@
         Title="Sapphire Notes">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/Menu.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/ScrollBar.axaml" />
-    <StyleInclude Source="/Styles/ContextMenu.axaml" />
-
     <Style Selector="Window">
       <Setter Property="SizeToContent" Value="Manual" />
       <Setter Property="Padding" Value="5" />

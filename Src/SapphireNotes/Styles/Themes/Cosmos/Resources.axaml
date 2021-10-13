@@ -35,7 +35,6 @@
 	<SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover" Color="{DynamicResource ScrollBarThumbBackgroundHoverColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
-	<SolidColorBrush x:Key="ScrollBarRepeatButtonFill">#999999</SolidColorBrush>
   </Style.Resources>
 
 </Style>

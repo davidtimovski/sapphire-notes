@@ -5,11 +5,6 @@
         Title="Let's set things up">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="450" />
     </Style>

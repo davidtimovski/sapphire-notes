@@ -5,10 +5,6 @@
         Title="Delete note">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>

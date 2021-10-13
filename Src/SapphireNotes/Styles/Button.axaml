@@ -19,7 +19,9 @@
 
   <Style Selector="Button.button.primary">
 	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
-	<Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
+  </Style>
+  <Style Selector="Button.button.primary TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
   </Style>
   <Style Selector="Button.button.primary:pointerover /template/ ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackgroundHover}" />
@@ -33,7 +35,9 @@
 
   <Style Selector="Button.button.success">
     <Setter Property="Background" Value="{DynamicResource ButtonSuccessBackground}" />
-	<Setter Property="Foreground" Value="{DynamicResource ButtonSuccessForeground}" />
+  </Style>
+  <Style Selector="Button.button.success TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonSuccessForeground}" />
   </Style>
   <Style Selector="Button.button.success:pointerover /template/ ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource ButtonSuccessBackgroundHover}" />
@@ -44,7 +48,9 @@
 
   <Style Selector="Button.button.danger">
     <Setter Property="Background" Value="{DynamicResource ButtonDangerBackground}" />
-	<Setter Property="Foreground" Value="{DynamicResource ButtonDangerForeground}" />
+  </Style>
+  <Style Selector="Button.button.danger TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonDangerForeground}" />
   </Style>
   <Style Selector="Button.button.danger:pointerover /template/ ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource ButtonDangerBackgroundHover}" />
