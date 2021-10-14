@@ -15,7 +15,7 @@
     <Style Selector="TextBlock.applicationName">
       <Setter Property="Margin" Value="0 0 0 20" />
       <Setter Property="FontSize" Value="22" />
-      <Setter Property="Foreground" Value="{StaticResource PrimaryColorLight}" />
+      <Setter Property="Foreground" Value="#1c97ea" />
     </Style>
 
     <Style Selector="TextBlock.developer">

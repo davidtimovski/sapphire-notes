@@ -1,31 +1,8 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-  <Style Selector="DockPanel.toolbar Menu">
-    <Setter Property="BorderThickness" Value="0 0 0 1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
-  </Style>
   
   <Style Selector="TextBlock.introMessage">
     <Setter Property="Foreground" Value="#888" />
-  </Style>
-
-  <Style Selector="TabItem Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-    <Setter Property="Padding" Value="8 5" />
-  </Style>
-  <Style Selector="TabItem:pointerover Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
-  </Style>
-  <Style Selector="TabItem:selected Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
-  </Style>
-  
-  <Style Selector="TabItem Border.tabHeader TextBlock">
-    <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-  </Style>
-  <Style Selector="TabItem:selected Border.tabHeader TextBlock">
-    <Setter Property="Foreground" Value="White" />
   </Style>
 
 </Styles>

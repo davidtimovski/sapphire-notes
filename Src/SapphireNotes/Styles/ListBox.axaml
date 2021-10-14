@@ -5,19 +5,19 @@
   	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
   <Style Selector="ListBox ListBoxItem:selected /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+  	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}"/>
   </Style>
   <Style Selector="ListBox ListBoxItem:selected TextBlock">
   	<Setter Property="Foreground" Value="{DynamicResource ListBoxItemSelectedForeground}"/>
   </Style>
   <Style Selector="ListBox ListBoxItem:selected:focus /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+  	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}"/>
   </Style>
   <Style Selector="ListBox ListBoxItem:selected:pointerover /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+  	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}"/>
   </Style>
   <Style Selector="ListBox ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
+  	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackgroundHover}"/>
   </Style>
 
 </Styles>

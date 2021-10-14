@@ -15,5 +15,8 @@
   <Style Selector="TextBox:focus /template/ Border#border">
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrushHover}" />
   </Style>
+  <Style Selector="TextBox[IsReadOnly=True] /template/ Border#border">
+  	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+  </Style>
 
 </Styles>

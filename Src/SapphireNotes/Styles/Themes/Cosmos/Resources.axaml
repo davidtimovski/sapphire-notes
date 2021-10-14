@@ -2,6 +2,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style.Resources>
+	<!-- WindowBackground and WindowOverlay are in Backgrounds -->
+	  
 	<!-- Button -->
 	<SolidColorBrush x:Key="ButtonBackground" Color="{DynamicResource ControlBackground}" />
 	<SolidColorBrush x:Key="ButtonBackgroundHover" Color="{DynamicResource ControlBackgroundHighlighted}" />
@@ -9,14 +11,14 @@
 	<SolidColorBrush x:Key="ButtonBorderBrush">#3d3d43</SolidColorBrush>
 	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
 	<Thickness x:Key="ButtonPadding">14 4</Thickness>
-    <SolidColorBrush x:Key="ButtonPrimaryBackground">#007acc</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover">#1c97ea</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
+	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
 	<SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonSuccessBackground">#00aa5a</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover">#1cba6a</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessBackground" Color="{DynamicResource SuccessColor}" />
+	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover" Color="{DynamicResource SuccessColorLight}" />
 	<SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonDangerBackground">#cc3322</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonDangerBackgroundHover">#dd4433</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerBackground" Color="{DynamicResource DangerColor}" />
+	<SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
 	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
 	  
 	<!-- Form Controls -->
@@ -41,6 +43,7 @@
 	  
 	<!-- Editor -->
 	<SolidColorBrush x:Key="EditorContainerBorderBackground">Transparent</SolidColorBrush>
-  </Style.Resources>
+  
+</Style.Resources>
 
 </Style>
