@@ -10,17 +10,20 @@
 	<SolidColorBrush x:Key="ButtonBackground">#3d3d43</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonBackgroundHover">#4d4d53</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonBorderBrush">Transparent</SolidColorBrush>
-	<Thickness x:Key="ButtonBorderThickness">0</Thickness>
-	<Thickness x:Key="ButtonPadding">15 5</Thickness>
+	<SolidColorBrush x:Key="ButtonBorderBrush">#555</SolidColorBrush>
+	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
+	<Thickness x:Key="ButtonPadding">14 4</Thickness>
 	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
 	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
+	<SolidColorBrush x:Key="ButtonPrimaryBorderBrush">#007acc</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonSuccessBackground" Color="{DynamicResource SuccessColor}" />
 	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover" Color="{DynamicResource SuccessColorLight}" />
+	<SolidColorBrush x:Key="ButtonSuccessBorderBrush">#219a31</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonDangerBackground" Color="{DynamicResource DangerColor}" />
 	<SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
+	<SolidColorBrush x:Key="ButtonDangerBorderBrush">#8a3121</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
 
 	<!-- Form Controls -->

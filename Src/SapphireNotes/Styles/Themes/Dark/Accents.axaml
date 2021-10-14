@@ -81,12 +81,12 @@
     <FontFamily x:Key="MainFontFamily">resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans</FontFamily>
     <sys:Double x:Key="FontSize">14</sys:Double>
 
-	<Color x:Key="PrimaryColor">#007acc</Color>
-	<Color x:Key="PrimaryColorLight">#1c97ea</Color>
-	<Color x:Key="SuccessColor">#00aa5a</Color>
-	<Color x:Key="SuccessColorLight">#1cba6a</Color>
-	<Color x:Key="DangerColor">#cc3322</Color>
-	<Color x:Key="DangerColorLight">#dd4433</Color>
+	<Color x:Key="PrimaryColor">#4171ff</Color>
+	<Color x:Key="PrimaryColorLight">#5181ff</Color>
+	<Color x:Key="SuccessColor">#51aa61</Color>
+	<Color x:Key="SuccessColorLight">#71aa81</Color>
+	<Color x:Key="DangerColor">#aa6151</Color>
+	<Color x:Key="DangerColorLight">#aa8171</Color>
   </Style.Resources>
 
 </Style>

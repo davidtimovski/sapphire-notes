@@ -34,11 +34,11 @@
     </Style>
     <Style Selector="TabItem">
       <Setter Property="Padding" Value="0" />
-      <Setter Property="Margin" Value="0 0 3 3" />
+      <Setter Property="Margin" Value="0 0 4 4" />
     </Style>
 	<Style Selector="TabItem Border.tabHeader">
 	  <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-	  <Setter Property="Padding" Value="8 5" />
+	  <Setter Property="Padding" Value="10 4" />
 	</Style>
 	<Style Selector="TabItem:pointerover Border.tabHeader">
 	  <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
@@ -48,7 +48,7 @@
 	</Style>
 	<Style Selector="TabItem Border.tabHeader TextBlock">
 	  <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-	  <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+	  <Setter Property="FontSize" Value="13" />
 	</Style>
 	<Style Selector="TabItem:selected Border.tabHeader TextBlock">
 	  <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />

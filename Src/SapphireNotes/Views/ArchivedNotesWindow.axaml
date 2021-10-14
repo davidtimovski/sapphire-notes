@@ -66,12 +66,6 @@
       <Setter Property="MinHeight" Value="150" />
       <Setter Property="MaxHeight" Value="350" />
     </Style>
-    <Style Selector="TextBox:pointerover /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
-    </Style>
-    <Style Selector="TextBox:focus /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
-    </Style>
 
     <Style Selector="Border.noNotesAlert">
       <Setter Property="Background" Value="#444171ff" />

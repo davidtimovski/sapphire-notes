@@ -94,7 +94,7 @@
   </Style>
 
   <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource ButtonPrimaryBackground}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
   </Style>
 
   <Style Selector="ComboBoxItem:selected:focus:pointerover /template/ ContentPresenter">
