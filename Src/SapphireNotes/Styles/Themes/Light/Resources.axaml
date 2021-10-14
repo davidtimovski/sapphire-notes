@@ -22,7 +22,7 @@
 	<!-- Form Controls -->
 	<SolidColorBrush x:Key="FormControlBackground">#fafafa</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlForeground">#222</SolidColorBrush>
-	<SolidColorBrush x:Key="FormControlBorderBrush">#bbb</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlBorderBrush">#ccc</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlBorderBrushHover">#1c97ea</SolidColorBrush>
 
 	<!-- ComboBox -->
@@ -30,11 +30,17 @@
 	<SolidColorBrush x:Key="ComboBoxItemHoverBackground">#e5e5e5</SolidColorBrush>
 	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- ListBox -->
+	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+
 	<!-- ScrollBar -->
 	<SolidColorBrush x:Key="ScrollBarBackground">#eee</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackground">#ccc</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover">#bbb</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#aaa</SolidColorBrush>
+
+	<!-- Editor -->
+	<SolidColorBrush x:Key="EditorContainerBorderBackground">#ccc</SolidColorBrush>
   </Style.Resources>
 
 </Style>

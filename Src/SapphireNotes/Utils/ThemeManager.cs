@@ -7,7 +7,7 @@ namespace SapphireNotes.Utils
 {
     public static class ThemeManager
     {
-        private static readonly string[] GlobalStyles = { "Button", "CheckBox", "ComboBox", "ContextMenu", "Global", "Menu", "ScrollBar", "TextBlock", "TextBox" };
+        private static readonly string[] GlobalStyles = { "Button", "CheckBox", "ComboBox", "ContextMenu", "Global", "ListBox", "Menu", "ScrollBar", "TextBlock", "TextBox" };
         private static readonly string[] ThemeOverrides = { "Accents", "Resources", "MainWindow" };
         private static readonly Dictionary<string, int> ThemeBackgroundCount = new()
         {
@@ -49,15 +49,5 @@ namespace SapphireNotes.Utils
                 Source = new Uri($"avares://SapphireNotes/Styles/{x}.axaml")
             });
         }
-    }
-
-    public class ThemeResources
-    {
-        public ThemeResources(int backgrounds = 0)
-        {
-            Backgrounds = backgrounds;
-        }
-
-        public int Backgrounds { get; }
     }
 }

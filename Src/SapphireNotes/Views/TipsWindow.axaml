@@ -10,12 +10,12 @@
     </Style>
 
     <Style Selector="Border.section">
-      <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+      <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
 
     <Style Selector="Border.header">
-      <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
       <Setter Property="Padding" Value="0 8" />
     </Style>
     <Style Selector="Border.header TextBlock">

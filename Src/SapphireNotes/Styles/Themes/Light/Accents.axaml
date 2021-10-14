@@ -86,9 +86,6 @@
     <SolidColorBrush x:Key="SuccessColorLight">#1cba6a</SolidColorBrush>
     <SolidColorBrush x:Key="DangerColor">#cc3322</SolidColorBrush>
     <SolidColorBrush x:Key="DangerColorLight">#dd4433</SolidColorBrush>
-    <SolidColorBrush x:Key="WhiteColor">#e8e8e8</SolidColorBrush>
-    <SolidColorBrush x:Key="GreyColor">#aaa</SolidColorBrush>
-    <SolidColorBrush x:Key="LightGreyColor">#ccc</SolidColorBrush>
 
     <SolidColorBrush x:Key="WindowBackground">#fafafa</SolidColorBrush>
     <SolidColorBrush x:Key="WindowOverlay">Transparent</SolidColorBrush>

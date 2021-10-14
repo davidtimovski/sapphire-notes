@@ -10,12 +10,6 @@
     <Style Selector="TextBox">
       <Setter Property="BorderThickness" Value="0" />
     </Style>
-    <Style Selector="TextBox:pointerover /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
-    </Style>
-    <Style Selector="TextBox:focus /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
-    </Style>
   </UserControl.Styles>
   
   <Border Classes="editorContainer">

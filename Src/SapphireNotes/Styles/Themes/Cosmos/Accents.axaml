@@ -87,9 +87,6 @@
     <SolidColorBrush x:Key="DangerColor">#cc3322</SolidColorBrush>
     <SolidColorBrush x:Key="DangerColorLight">#dd4433</SolidColorBrush>
     <SolidColorBrush x:Key="BackgroundColor">#dd1e1e1e</SolidColorBrush>
-    <SolidColorBrush x:Key="WhiteColor">#e8e8e8</SolidColorBrush>
-    <SolidColorBrush x:Key="GreyColor">#3d3d43</SolidColorBrush>
-    <SolidColorBrush x:Key="LightGreyColor">#4d4d53</SolidColorBrush>
   </Style.Resources>
 
 </Style>

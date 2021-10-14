@@ -10,27 +10,23 @@
   </Style>
 
   <Style Selector="TabItem Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource GreyColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Padding" Value="7 4" />
   </Style>
   <Style Selector="TabItem:pointerover Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
   <Style Selector="TabItem:selected Border.tabHeader">
     <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
   </Style>
   
   <Style Selector="TabItem Border.tabHeader TextBlock">
-    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
   </Style>
   <Style Selector="TabItem:selected Border.tabHeader TextBlock">
     <Setter Property="Foreground" Value="White" />
-  </Style>
-
-  <Style Selector="Border.editorContainer">
-    <Setter Property="Background" Value="Transparent" />
   </Style>
 
 </Styles>

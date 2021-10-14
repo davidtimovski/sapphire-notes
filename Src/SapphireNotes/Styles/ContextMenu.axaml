@@ -2,18 +2,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="ContextMenu">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
   
   <Style Selector="ContextMenu MenuItem">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Padding" Value="6 3" />
   </Style>
 
   <Style Selector="ContextMenu MenuItem:selected /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
 
 </Styles>

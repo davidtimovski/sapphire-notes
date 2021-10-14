@@ -30,11 +30,17 @@
 	<SolidColorBrush x:Key="ComboBoxItemHoverBackground">#3d3d43</SolidColorBrush>
 	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- ListBox -->
+	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+
 	<!-- ScrollBar -->
 	<SolidColorBrush x:Key="ScrollBarBackground">#2d2d30</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackground">#505050</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover">#606060</SolidColorBrush>
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#707070</SolidColorBrush>
+
+	<!-- Editor -->
+	<SolidColorBrush x:Key="EditorContainerBorderBackground">#3d3d43</SolidColorBrush>
   </Style.Resources>
 
 </Style>

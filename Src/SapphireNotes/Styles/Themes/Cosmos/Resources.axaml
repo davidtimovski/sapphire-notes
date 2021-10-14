@@ -30,11 +30,17 @@
 	<SolidColorBrush x:Key="ComboBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
 	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- ListBox -->
+	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+
 	<!-- ScrollBar -->
 	<SolidColorBrush x:Key="ScrollBarBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover" Color="{DynamicResource ScrollBarThumbBackgroundHoverColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
+	  
+	<!-- Editor -->
+	<SolidColorBrush x:Key="EditorContainerBorderBackground">Transparent</SolidColorBrush>
   </Style.Resources>
 
 </Style>

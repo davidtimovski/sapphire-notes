@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="ComboBox">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="MinHeight" Value="20" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
@@ -69,7 +69,7 @@
 
 
   <Style Selector="ComboBoxItem">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}"/>
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}"/>
     <Setter Property="Padding" Value="8 3"/>
   </Style>
 

@@ -59,7 +59,7 @@
                    PlacementMode="Right"
                    IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}">
               <Border Background="{TemplateBinding Background}"
-                      BorderBrush="{DynamicResource ControlBackgroundHighlighted}"
+                      BorderBrush="{DynamicResource ButtonBackgroundHover}"
                       BorderThickness="1">
                 <ScrollViewer Classes="menuscroller">
                   <ItemsPresenter Name="PART_ItemsPresenter"
@@ -79,7 +79,7 @@
   <Style Selector="MenuItem > Separator, MenuItem:separator">
     <Setter Property="Template">
       <ControlTemplate>
-        <Separator Background="{DynamicResource ControlBackgroundHighlighted}" />
+        <Separator Background="{DynamicResource ButtonBackgroundHover}" />
       </ControlTemplate>
     </Setter>
   </Style>
@@ -124,20 +124,20 @@
   </Style>
 
   <Style Selector="Menu > MenuItem:selected">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
   </Style>
   <Style Selector="Menu > MenuItem:selected /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
   </Style>
 
   <Style Selector="Menu > MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
   <Style Selector="Menu > MenuItem:selected:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
   <Style Selector="MenuItem MenuItem:pointerover /template/ Border#root">
-    <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
 
   <Style Selector="MenuItem /template/ ItemsPresenter#PART_ItemsPresenter">

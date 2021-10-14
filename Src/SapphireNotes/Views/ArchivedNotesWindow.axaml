@@ -40,38 +40,23 @@
     </Style>
 
     <Style Selector="DockPanel.headers">
-      <Setter Property="Background" Value="{DynamicResource ControlBackgroundHighlighted}" />
+      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
     </Style>
     <Style Selector="DockPanel.headers Border">
       <Setter Property="Padding" Value="10" />
     </Style>
     
-    <Style Selector="ListBox.archivedNotesListBox">
-      <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+    <Style Selector="ListBox">
+      <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Margin" Value="0 0 0 10" />
     </Style>
 
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem">
+    <Style Selector="ListBox ListBoxItem">
       <Setter Property="Padding" Value="0" />
     </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="{StaticResource ControlBackgroundHighlighted}" />
-    </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected /template/ ContentPresenter">
-      <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
-    </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:focus /template/ ContentPresenter">
-      <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
-    </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
-    </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem:selected:focus:pointerover /template/ ContentPresenter">
-      <Setter Property="Background" Value="{DynamicResource PrimaryColorLight}"/>
-    </Style>
-    <Style Selector="ListBox.archivedNotesListBox ListBoxItem Border">
+    <Style Selector="ListBox ListBoxItem Border">
       <!-- Somehow makes Border fully clickable -->
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="Padding" Value="10 5" />
@@ -82,10 +67,10 @@
       <Setter Property="MaxHeight" Value="350" />
     </Style>
     <Style Selector="TextBox:pointerover /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
     </Style>
     <Style Selector="TextBox:focus /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
     </Style>
 
     <Style Selector="Border.noNotesAlert">
@@ -145,7 +130,7 @@
           </Border>
         </DockPanel>
 
-        <ListBox Classes="archivedNotesListBox" Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
+        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">

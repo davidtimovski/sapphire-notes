@@ -3,7 +3,7 @@
 
   <Style Selector="DockPanel.toolbar Menu">
     <Setter Property="BorderThickness" Value="0 0 0 1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource LightGreyColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
   </Style>
   
   <Style Selector="TextBlock.introMessage">
@@ -11,25 +11,20 @@
   </Style>
 
   <Style Selector="TabItem Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource WhiteColor}" />
     <Setter Property="Padding" Value="8 5" />
   </Style>
   <Style Selector="TabItem:pointerover Border.tabHeader">
-    <Setter Property="Background" Value="{DynamicResource LightGreyColor}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
   <Style Selector="TabItem:selected Border.tabHeader">
     <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
   </Style>
   
   <Style Selector="TabItem Border.tabHeader TextBlock">
-    <Setter Property="Foreground" Value="#222" />
+    <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
   </Style>
   <Style Selector="TabItem:selected Border.tabHeader TextBlock">
     <Setter Property="Foreground" Value="White" />
-  </Style>
-
-  <Style Selector="Border.editorContainer">
-    <Setter Property="Background" Value="{DynamicResource WhiteColor}" />
   </Style>
 
 </Styles>
