@@ -37,4 +37,6 @@ msbuild.wrn
 .vs/
 
 # Custom
-Publishing/
+Publishing/*/*.lnk
+Publishing/*/installers/
+Publishing/linux/output/

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Sapphire Notes
+Comment=Manage your notes in a simple and intuitive way
+GenericName=Text Editor
+Exec=sapphire-notes
+Icon=/usr/share/icons/hicolor/scalable/apps/sapphire-notes.svg
+Type=Application
+Categories=Utility;TextEditor;Development;
+Keywords=sapphire;notes;
