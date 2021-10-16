@@ -1,27 +1,21 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="SapphireNotes.Views.TipsWindow"
         Title="Tips">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="Window">
       <Setter Property="Width" Value="600" />
       <Setter Property="SizeToContent" Value="Height" />
     </Style>
 
     <Style Selector="Border.section">
-      <Setter Property="Background" Value="{DynamicResource ControlBackground}" />
+      <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
 
     <Style Selector="Border.header">
-      <Setter Property="Background" Value="{DynamicResource ControlBackgroundLight}" />
+      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
       <Setter Property="Padding" Value="0 8" />
     </Style>
     <Style Selector="Border.header TextBlock">

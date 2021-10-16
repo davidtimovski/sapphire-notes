@@ -1,16 +1,9 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         x:Class="SapphireNotes.Views.AboutWindow"
         Title="About">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
@@ -22,7 +15,7 @@
     <Style Selector="TextBlock.applicationName">
       <Setter Property="Margin" Value="0 0 0 20" />
       <Setter Property="FontSize" Value="22" />
-      <Setter Property="Foreground" Value="{StaticResource PrimaryColorLight}" />
+      <Setter Property="Foreground" Value="#1c97ea" />
     </Style>
 
     <Style Selector="TextBlock.developer">
@@ -34,7 +27,7 @@
     <StackPanel>
       <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
 
-      <TextBlock>Version: 0.5.0</TextBlock>
+      <TextBlock>Version: 0.6.0</TextBlock>
       <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
 
       <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>

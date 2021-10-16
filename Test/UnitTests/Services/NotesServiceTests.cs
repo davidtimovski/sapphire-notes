@@ -236,7 +236,7 @@ namespace UnitTests.Services
         public void GetFontThatAllNotesUseReturnsFirstIfOneNote()
         {
             const string singleFontName = "single font";
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new string[] { singleFontName });
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { singleFontName });
 
             string font = _sut.GetFontThatAllNotesUse();
 
@@ -246,7 +246,7 @@ namespace UnitTests.Services
         [Fact]
         public void GetFontThatAllNotesUseReturnsNullIfMultipleNotes()
         {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new string[] { "font one", "font two" });
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { "font one", "font two" });
 
             string font = _sut.GetFontThatAllNotesUse();
 
@@ -267,7 +267,7 @@ namespace UnitTests.Services
         public void GetFontSizeThatAllNotesUseReturnsFirstIfOneNote()
         {
             const int singleFontSize = 16;
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new int[] { singleFontSize });
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { singleFontSize });
 
             int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
@@ -277,7 +277,7 @@ namespace UnitTests.Services
         [Fact]
         public void GetFontSizeThatAllNotesUseReturnsNullIfMultipleNotes()
         {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new int[] { 16, 22 });
+            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { 16, 22 });
 
             int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 

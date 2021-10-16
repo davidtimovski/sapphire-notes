@@ -28,5 +28,6 @@ namespace SapphireNotes.Contracts.Models
         public string Content { get; set; }
         public DateTime? LastWriteTime { get; set; }
         public NoteMetadata Metadata { get; set; }
+        public bool IsDirty { get; set; }
     }
 }

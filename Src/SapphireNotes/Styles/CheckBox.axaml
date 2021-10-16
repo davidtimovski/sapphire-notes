@@ -15,7 +15,7 @@
                   VerticalAlignment="Center">
             <Panel>
               <Path Name="checkMark"
-                    Fill="{StaticResource PrimaryColor}"
+                    Fill="{DynamicResource ButtonPrimaryBackground}"
                     Width="11"
                     Height="10"
                     Stretch="Uniform"
@@ -39,10 +39,10 @@
   </Style>
 
   <Style Selector="CheckBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrushHover}" />
   </Style>
   <Style Selector="CheckBox:focus /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{StaticResource PrimaryColorDark}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrushHover}" />
   </Style>
 
 </Styles>

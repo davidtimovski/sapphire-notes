@@ -7,32 +7,32 @@ namespace SapphireNotes.Utils
 {
     public static class ThemeManager
     {
-        private static readonly Dictionary<string, ThemeResources> _themeResources = new()
+        private static readonly string[] GlobalStyles = { "Button", "CheckBox", "ComboBox", "ContextMenu", "Global", "ListBox", "Menu", "ScrollBar", "TextBlock", "TextBox" };
+        private static readonly string[] ThemeOverrides = { "Accents", "Resources", "MainWindow" };
+        private static readonly Dictionary<string, int> ThemeBackgroundCount = new()
         {
-            { "Dark", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 0) },
-            { "Cosmos", new ThemeResources(new string[] { "Accents", "Button", "MainWindow" }, 4) }
+            { "Dark", 0 },
+            { "Light", 0 },
+            { "Cosmos", 4 }
         };
-        private static readonly Random _random = new();
+        private static readonly Random Random = new();
 
-        public static string[] Themes => _themeResources.Keys.ToArray();
+        public static string[] Themes => ThemeBackgroundCount.Keys.ToArray();
 
-        public static IEnumerable<StyleInclude> GetThemeStyles(string theme)
+        public static IEnumerable<StyleInclude> GetThemeOverrides(string theme)
         {
-            var styles = _themeResources[theme].Styles;
-            int backgrounds = _themeResources[theme].Backgrounds;
-            var result = new List<StyleInclude>(styles.Length + (backgrounds > 0 ? 1 : 0));
+            var result = new List<StyleInclude>();
 
-            foreach (var style in styles)
+            var themeIncludes = ThemeOverrides.Select(x => new StyleInclude(new Uri("resm:Styles?assembly=SapphireNotes"))
             {
-                result.Add(new StyleInclude(new Uri("resm:Styles?assembly=SapphireNotes"))
-                {
-                    Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/{style}.axaml")
-                });
-            }
+                Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/{x}.axaml")
+            });
+            result.AddRange(themeIncludes);
 
+            int backgrounds = ThemeBackgroundCount[theme];
             if (backgrounds > 0)
             {
-                int backgroundIndex = _random.Next(0, backgrounds);
+                int backgroundIndex = Random.Next(0, backgrounds);
                 result.Add(new StyleInclude(new Uri("resm:Styles?assembly=SapphireNotes"))
                 {
                     Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Backgrounds/{backgroundIndex}.axaml")
@@ -41,17 +41,13 @@ namespace SapphireNotes.Utils
 
             return result;
         }
-    }
 
-    public class ThemeResources
-    {
-        public ThemeResources(string[] styles, int backgrounds)
+        public static IEnumerable<StyleInclude> GetGlobalStyles()
         {
-            Styles = styles;
-            Backgrounds = backgrounds;
+            return GlobalStyles.Select(x => new StyleInclude(new Uri("resm:Styles?assembly=SapphireNotes"))
+            {
+                Source = new Uri($"avares://SapphireNotes/Styles/{x}.axaml")
+            });
         }
-
-        public string[] Styles { get; }
-        public int Backgrounds { get; }
     }
 }

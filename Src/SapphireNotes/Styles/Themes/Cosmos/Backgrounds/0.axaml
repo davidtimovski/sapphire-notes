@@ -1,12 +1,18 @@
 ﻿<Style xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=netstandard">
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style.Resources>
     <ImageBrush x:Key="WindowBackground" Source="/Assets/Themes/Cosmos/0.jpg" Stretch="UniformToFill" />
-    <SolidColorBrush x:Key="WindowOverlay">#dd080d1c</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackground">#dd080d1c</SolidColorBrush>
-    <SolidColorBrush x:Key="ControlBackgroundLight">#181d2c</SolidColorBrush>
+	<Color x:Key="WindowOverlay">#dd080d1c</Color>
+	<Color x:Key="ControlBackground">#dd080d1c</Color>
+	<Color x:Key="ControlBackgroundHighlighted">#181d2c</Color>
+	<Color x:Key="ScrollBarThumbBackgroundColor">#383d4c</Color>
+	<Color x:Key="ScrollBarThumbBackgroundHoverColor">#484d5c</Color>
+	<Color x:Key="ScrollBarThumbBackgroundPressedColor">#585d6c</Color>
+
+	<Color x:Key="PrimaryColor">#a6484d5c</Color>
+	<Color x:Key="PrimaryColorLight">#a6585d6c</Color>
+	<Color x:Key="PrimaryColorBorderBrush">#585d6c</Color>
   </Style.Resources>
 
 </Style>

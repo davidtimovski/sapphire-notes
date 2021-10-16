@@ -3,7 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
-        xmlns:m="clr-namespace:SapphireNotes.Models;assembly=SapphireNotes"
         xmlns:be="clr-namespace:SapphireNotes.Behaviors"
         xmlns:local="clr-namespace:SapphireNotes.UserControls"
         mc:Ignorable="d"
@@ -11,13 +10,6 @@
         Title="Sapphire Notes">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/Menu.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/ScrollBar.axaml" />
-    <StyleInclude Source="/Styles/ContextMenu.axaml" />
-
     <Style Selector="Window">
       <Setter Property="SizeToContent" Value="Manual" />
       <Setter Property="Padding" Value="5" />
@@ -30,29 +22,49 @@
       <Setter Property="Padding" Value="0 0 0 5" />
       <Setter Property="DockPanel.Dock" Value="Top" />
     </Style>
+    
+    <Style Selector="TextBlock.introMessage">
+      <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+      <Setter Property="VerticalAlignment" Value="Center"></Setter>
+      <Setter Property="FontSize" Value="20"></Setter>
+    </Style>
 
     <Style Selector="TabControl[TabStripPlacement=Top]">
       <Setter Property="Padding" Value="0 0 0 0"/>
     </Style>
     <Style Selector="TabItem">
       <Setter Property="Padding" Value="0" />
-      <Setter Property="Margin" Value="0 0 3 3" />
+      <Setter Property="Margin" Value="0 0 4 4" />
     </Style>
-    <Style Selector="TabItem Border.tabHeader TextBlock">
-      <Setter Property="Foreground" Value="White" />
-      <Setter Property="FontSize" Value="{StaticResource FontSize}" />
-    </Style>
+	<Style Selector="TabItem Border.tabHeader">
+	  <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+	  <Setter Property="Padding" Value="10 4" />
+	</Style>
+	<Style Selector="TabItem:pointerover Border.tabHeader">
+	  <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+	</Style>
+	<Style Selector="TabItem:selected Border.tabHeader">
+	  <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
+	</Style>
+	<Style Selector="TabItem Border.tabHeader TextBlock">
+	  <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+	  <Setter Property="FontSize" Value="13" />
+	  <Setter Property="FontWeight" Value="500" />
+	</Style>
+	<Style Selector="TabItem:selected Border.tabHeader TextBlock">
+	  <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
+	</Style>
+
+	<Style Selector="Border.editorContainer">
+	  <Setter Property="Background" Value="{DynamicResource EditorContainerBorderBackground}" />
+	</Style>
   </Window.Styles>
 
   <Design.DataContext>
     <vm:MainWindowViewModel/>
   </Design.DataContext>
 
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="1*" />
-    </Grid.RowDefinitions>
+  <Grid RowDefinitions="Auto,1*">
 
     <DockPanel Grid.Row="0" Classes="toolbar">
       <Button Command="{Binding CtrlW}" HotKey="Ctrl+W" IsVisible="False"></Button>
@@ -75,7 +87,9 @@
         </MenuItem>
       </Menu>
     </DockPanel>
-
+    
+    <TextBlock IsVisible="{Binding ShowIntroMessage}" Classes="introMessage" Grid.Row="1">Ctrl+N to create a new note</TextBlock>
+    
     <TabControl Items="{Binding Notes}" SelectedItem="{Binding Selected}" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate>
@@ -105,6 +119,7 @@
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>
+    
   </Grid>
 
 </Window>

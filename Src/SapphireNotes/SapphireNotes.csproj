@@ -9,9 +9,14 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.7" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.7" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.7" />
+    <AvaloniaXaml Remove="Styles\Themes\Cosmos\Resources.axaml" />
+    <AvaloniaXaml Remove="Styles\Themes\Dark\Resources.axaml" />
+    <AvaloniaXaml Remove="Styles\Themes\Light\Resources.axaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.8" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.8" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.8" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\ArchivedNotesWindow.axaml.cs">
@@ -43,7 +48,8 @@
     <EmbeddedResource Include="Assets\Fonts\Arial.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Calibri.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Consolas.ttf" />
-    <EmbeddedResource Include="Assets\Fonts\OpenSans.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\OpenSans-Regular.ttf" />
+	<EmbeddedResource Include="Assets\Fonts\OpenSans-Medium.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Roboto.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Verdana.ttf" />
   </ItemGroup>
@@ -53,6 +59,10 @@
     <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\1.axaml" />
     <AvaloniaResource Include="Styles\Themes\Cosmos\Backgrounds\0.axaml" />
     <AvaloniaResource Include="Styles\Themes\Cosmos\Accents.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Cosmos\Resources.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Dark\Resources.axaml" />
     <AvaloniaResource Include="Styles\Themes\Dark\Accents.axaml" />
+	<AvaloniaResource Include="Styles\Themes\Light\Accents.axaml" />
+    <AvaloniaResource Include="Styles\Themes\Light\Resources.axaml" />
   </ItemGroup>
 </Project>

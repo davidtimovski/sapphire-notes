@@ -1,0 +1,56 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Style.Resources>
+	<!-- Window -->
+	<SolidColorBrush x:Key="WindowBackground">#2d2d30</SolidColorBrush>
+	<SolidColorBrush x:Key="WindowOverlay">Transparent</SolidColorBrush>
+	  
+	<!-- Button -->
+	<SolidColorBrush x:Key="ButtonBackground">#3d3d43</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonBackgroundHover">#4d4d53</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonBorderBrush">#555</SolidColorBrush>
+	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
+	<Thickness x:Key="ButtonPadding">14 4</Thickness>
+	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
+	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
+	<SolidColorBrush x:Key="ButtonPrimaryBorderBrush">#007acc</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessBackground" Color="{DynamicResource SuccessColor}" />
+	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover" Color="{DynamicResource SuccessColorLight}" />
+	<SolidColorBrush x:Key="ButtonSuccessBorderBrush">#219a31</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerBackground" Color="{DynamicResource DangerColor}" />
+	<SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
+	<SolidColorBrush x:Key="ButtonDangerBorderBrush">#8a3121</SolidColorBrush>
+	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
+
+	<!-- Form Controls -->
+	<SolidColorBrush x:Key="FormControlBackground">#1e1e1e</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlForeground">#e8e8e8</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlBorderBrush">#3d3d43</SolidColorBrush>
+	<SolidColorBrush x:Key="FormControlBorderBrushHover">#1b6091</SolidColorBrush>
+
+	<!-- ComboBox -->
+	<SolidColorBrush x:Key="ComboBoxArrowColor">#e8e8e8</SolidColorBrush>
+	<SolidColorBrush x:Key="ComboBoxItemHoverBackground">#3d3d43</SolidColorBrush>
+	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
+
+	<!-- ListBox -->
+	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+	  
+	<!-- ContextMenu -->
+	<SolidColorBrush x:Key="ContextMenuBackground">#2d2d30</SolidColorBrush>
+
+	<!-- ScrollBar -->
+	<SolidColorBrush x:Key="ScrollBarBackground">#2d2d30</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackground">#505050</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover">#606060</SolidColorBrush>
+	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#707070</SolidColorBrush>
+
+	<!-- Editor -->
+	<SolidColorBrush x:Key="EditorContainerBorderBackground">#3d3d43</SolidColorBrush>
+  </Style.Resources>
+
+</Style>

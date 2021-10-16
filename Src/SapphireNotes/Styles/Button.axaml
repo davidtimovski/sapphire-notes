@@ -2,42 +2,68 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="Button">
+	<Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+	<Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
+	<Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThickness}" />
+	<Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
     <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>
-
-  <Style Selector="Button.button">
-    <Setter Property="Foreground" Value="White" />
+  <Style Selector="Button.button:pointerover /template/ ContentPresenter">
+  	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
+  </Style>
+  <Style Selector="Button.button:pressed /template/ ContentPresenter">
+  	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
 
   <Style Selector="Button.button.primary">
-    <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+	<Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBorderBrush}" />
+  </Style>
+  <Style Selector="Button.button.primary TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
   </Style>
   <Style Selector="Button.button.primary:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource PrimaryColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackgroundHover}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBorderBrush}" />
   </Style>
   <Style Selector="Button.button.primary:pressed /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource PrimaryColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackgroundHover}" />
+  </Style>
+  <Style Selector="Button.button.primary:disabled TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
   </Style>
 
   <Style Selector="Button.button.success">
-    <Setter Property="Background" Value="{StaticResource SuccessColor}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonSuccessBackground}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonSuccessBorderBrush}" />
+  </Style>
+  <Style Selector="Button.button.success TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonSuccessForeground}" />
   </Style>
   <Style Selector="Button.button.success:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource SuccessColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonSuccessBackgroundHover}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonSuccessBorderBrush}" />
   </Style>
   <Style Selector="Button.button.success:pressed /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource SuccessColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonSuccessBackgroundHover}" />
   </Style>
 
   <Style Selector="Button.button.danger">
-    <Setter Property="Background" Value="{StaticResource DangerColor}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonDangerBackground}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonDangerBorderBrush}" />
+  </Style>
+  <Style Selector="Button.button.danger TextBlock">
+  	<Setter Property="Foreground" Value="{DynamicResource ButtonDangerForeground}" />
   </Style>
   <Style Selector="Button.button.danger:pointerover /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource DangerColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonDangerBackgroundHover}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource ButtonDangerBorderBrush}" />
   </Style>
   <Style Selector="Button.button.danger:pressed /template/ ContentPresenter">
-    <Setter Property="Background" Value="{StaticResource DangerColorLight}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonDangerBackgroundHover}" />
   </Style>
 
 </Styles>

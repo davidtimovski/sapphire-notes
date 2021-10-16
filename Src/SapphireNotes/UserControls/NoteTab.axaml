@@ -1,7 +1,5 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="SapphireNotes.UserControls.NoteTab">
 
   <UserControl.Styles>
@@ -11,12 +9,6 @@
 
     <Style Selector="TextBox">
       <Setter Property="BorderThickness" Value="0" />
-    </Style>
-    <Style Selector="TextBox:pointerover /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
-    </Style>
-    <Style Selector="TextBox:focus /template/ Border#border">
-      <Setter Property="BorderBrush" Value="{StaticResource GreyColor}" />
     </Style>
   </UserControl.Styles>
   

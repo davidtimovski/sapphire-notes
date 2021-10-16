@@ -1,20 +1,11 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         xmlns:local="clr-namespace:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.PreferencesWindow"
         Title="Preferences">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-    <StyleInclude Source="/Styles/CheckBox.axaml" />
-    <StyleInclude Source="/Styles/ComboBox.axaml" />
-
     <Style Selector="DockPanel.formControlWrap">
       <Setter Property="Margin" Value="0 5 0 0" />
     </Style>
@@ -53,7 +44,7 @@
   </Window.Styles>
 
   <Design.DataContext>
-    <vm:PreferencesWindowViewModel/>
+    <vm:PreferencesViewModel/>
   </Design.DataContext>
 
   <Border Classes="wrap">

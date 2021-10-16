@@ -28,7 +28,6 @@ namespace SapphireNotes.Services
         {
             string appDataDirectory = string.Empty;
 
-#if !DEBUG
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
@@ -42,6 +41,9 @@ namespace SapphireNotes.Services
             {
                 Directory.CreateDirectory(appDataDirectory);
             }
+
+#if DEBUG
+            appDataDirectory = string.Empty;
 #endif
 
             _preferencesFilePath = Path.Combine(appDataDirectory, PreferencesFileName);
@@ -84,8 +86,14 @@ namespace SapphireNotes.Services
                 Preferences.Window.Height = height;
             }
 
-            Preferences.Window.PositionX = positionX;
-            Preferences.Window.PositionY = positionY;
+            if (positionX > 0)
+            {
+                Preferences.Window.PositionX = positionX;
+            }
+            if (positionY > 0)
+            {
+                Preferences.Window.PositionY = positionY;
+            }
 
             SavePreferences();
         }
@@ -110,7 +118,12 @@ namespace SapphireNotes.Services
 
     public class UpdatedPreferencesEventArgs : EventArgs
     {
-        public bool NotesDirectoryChanged { get; set; }
+        public UpdatedPreferencesEventArgs(bool notesDirectoryChanged)
+        {
+            NotesDirectoryChanged = notesDirectoryChanged;
+        }
+
+        public bool NotesDirectoryChanged { get; }
         public string NewTheme { get; set; }
         public string NewFontFamily { get; set; }
         public int? NewFontSize { get; set; }

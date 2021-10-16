@@ -7,6 +7,7 @@ namespace SapphireNotes.ViewModels
     {
         private readonly INotesService _notesService;
 
+        public QuickNoteViewModel() {}
         public QuickNoteViewModel(INotesService notesService)
         {
             _notesService = notesService;

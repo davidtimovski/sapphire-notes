@@ -18,8 +18,6 @@ Easily archive notes you're currently not using.
 
 Where the notes are stored is your choice. If you want them to be backed up you can simply choose your OneDrive or DropBox folder as the storage location and voilà, cloud backup! 🌐
 
-Pick from a wide range of 2 themes: Dark and Cosmos. Soon to be more, maybe!
-
 There are many hotkeys and actions that can improve your efficiency in using the app and make you feel like a hax0r. Check them out in Help -> Tips.
 
 ### Download

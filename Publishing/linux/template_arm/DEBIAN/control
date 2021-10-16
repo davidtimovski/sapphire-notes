@@ -1,0 +1,13 @@
+Package: sapphire-notes
+Architecture: armhf
+Section: base
+Standards-Version: 4.0.0
+Priority: optional
+Name: Sapphire Notes
+Description: Manage your notes in a simple and intuitive way.
+Author: David Timovski <david.timovski@gmail.com>
+Maintainer: David Timovski <david.timovski@gmail.com>
+Version: 0.6.0
+Essential: no
+Icon: /usr/share/icons/hicolor/scalable/apps/sapphire-notes.svg
+Homepage: https://www.davidtimovski.com/sapphire-notes

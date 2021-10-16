@@ -1,7 +1,5 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         xmlns:be="clr-namespace:SapphireNotes.Behaviors"
         xmlns:local="clr-namespace:SapphireNotes.UserControls"
@@ -9,12 +7,6 @@
         Title="{Binding Title, Mode=OneTime}">
 
   <Window.Styles>
-    <StyleInclude Source="/Styles/Global.axaml" />
-    <StyleInclude Source="/Styles/TextBlock.axaml" />
-    <StyleInclude Source="/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Styles/ComboBox.axaml" />
-    <StyleInclude Source="/Styles/Button.axaml" />
-
     <Style Selector="TextBox">
       <Setter Property="Width" Value="250" />
     </Style>
@@ -71,7 +63,7 @@
     
       <Border Classes="buttonsWrap">
         <DockPanel>
-          <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary"></Button>
+          <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary" />
           <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
         </DockPanel>
       </Border>

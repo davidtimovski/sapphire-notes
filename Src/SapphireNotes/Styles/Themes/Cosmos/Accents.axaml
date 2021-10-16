@@ -75,21 +75,16 @@
 
     <sys:Double x:Key="IconElementThemeHeight">20</sys:Double>
     <sys:Double x:Key="IconElementThemeWidth">20</sys:Double>
+	  
+	<!-- Custom -->
 
     <FontFamily x:Key="MainFontFamily">resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans</FontFamily>
     <sys:Double x:Key="FontSize">14</sys:Double>
 
-    <SolidColorBrush x:Key="PrimaryColor">#007acc</SolidColorBrush>
-    <SolidColorBrush x:Key="PrimaryColorLight">#1c97ea</SolidColorBrush>
-    <SolidColorBrush x:Key="PrimaryColorDark">#1b6091</SolidColorBrush>
-    <SolidColorBrush x:Key="SuccessColor">#00aa5a</SolidColorBrush>
-    <SolidColorBrush x:Key="SuccessColorLight">#1cba6a</SolidColorBrush>
-    <SolidColorBrush x:Key="DangerColor">#cc3322</SolidColorBrush>
-    <SolidColorBrush x:Key="DangerColorLight">#dd4433</SolidColorBrush>
-    <SolidColorBrush x:Key="BackgroundColor">#dd1e1e1e</SolidColorBrush>
-    <SolidColorBrush x:Key="WhiteColor">#e8e8e8</SolidColorBrush>
-    <SolidColorBrush x:Key="GreyColor">#3d3d43</SolidColorBrush>
-    <SolidColorBrush x:Key="LightGreyColor">#4d4d53</SolidColorBrush>
+	<Color x:Key="SuccessColor">#6641ff51</Color>
+	<Color x:Key="SuccessColorLight">#8861ff71</Color>
+	<Color x:Key="DangerColor">#66ff5141</Color>
+	<Color x:Key="DangerColorLight">#88ff7161</Color>
   </Style.Resources>
 
 </Style>

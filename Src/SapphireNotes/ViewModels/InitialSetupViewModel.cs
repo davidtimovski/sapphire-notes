@@ -14,17 +14,16 @@ namespace SapphireNotes.ViewModels
 
         public void SetNotesDirectory(string directory)
         {
-            if (directory != string.Empty)
-            {
-                DirectoryTextBoxVisible = true;
+            if (directory == string.Empty) return;
+            
+            DirectoryTextBoxVisible = true;
 
-                _preferencesService.Preferences.NotesDirectory = directory;
-                _preferencesService.SavePreferences();
+            _preferencesService.Preferences.NotesDirectory = directory;
+            _preferencesService.SavePreferences();
 
-                NotesDirectory = _preferencesService.Preferences.NotesDirectory;
-                SelectButtonLabel = "Change storage folder";
-                StartButtonVisible = true;
-            }
+            NotesDirectory = _preferencesService.Preferences.NotesDirectory;
+            SelectButtonLabel = "Change storage folder";
+            StartButtonVisible = true;
         }
 
         private bool directoryTextBoxVisible;
