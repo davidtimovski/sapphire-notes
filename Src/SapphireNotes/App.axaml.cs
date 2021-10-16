@@ -70,8 +70,8 @@ namespace SapphireNotes
         {
             _desktop.MainWindow = new MainWindow
             {
-                Width = preferences.Window.Width,
-                Height = preferences.Window.Height,
+                Width = 960,
+                Height = 540,
                 MinWidth = Preferences.WindowMinWidth,
                 MinHeight = Preferences.WindowMinHeight,
                 Position = new PixelPoint(preferences.Window.PositionX, preferences.Window.PositionY),

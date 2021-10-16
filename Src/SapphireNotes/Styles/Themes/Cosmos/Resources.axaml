@@ -38,6 +38,9 @@
 	<!-- ListBox -->
 	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- ContextMenu -->
+	<SolidColorBrush x:Key="ContextMenuBackground" Color="{DynamicResource ControlBackground}" />
+
 	<!-- ScrollBar -->
 	<SolidColorBrush x:Key="ScrollBarBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />

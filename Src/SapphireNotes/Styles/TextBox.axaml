@@ -6,6 +6,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
+	<Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorLight}" />
     <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
   </Style>

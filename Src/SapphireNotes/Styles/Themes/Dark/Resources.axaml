@@ -39,6 +39,9 @@
 
 	<!-- ListBox -->
 	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+	  
+	<!-- ContextMenu -->
+	<SolidColorBrush x:Key="ContextMenuBackground">#2d2d30</SolidColorBrush>
 
 	<!-- ScrollBar -->
 	<SolidColorBrush x:Key="ScrollBarBackground">#2d2d30</SolidColorBrush>

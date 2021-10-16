@@ -2,18 +2,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="ContextMenu">
-    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
-    <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
-    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+	<Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
+	<Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
+	<Setter Property="Padding" Value="3" />
+  	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}"/>
   </Style>
   
   <Style Selector="ContextMenu MenuItem">
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-    <Setter Property="Padding" Value="6 3" />
   </Style>
 
   <Style Selector="ContextMenu MenuItem:selected /template/ Border#root">
     <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+  </Style>
+
+  <Style Selector="MenuFlyoutPresenter">
+  	<Setter Property="Background" Value="{DynamicResource ContextMenuBackground}" />
+  	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+  	<Setter Property="BorderThickness" Value="1" />
+  	<Setter Property="Padding" Value="3" />
+  	<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+  	<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+  	<Setter Property="Template">
+  	  <ControlTemplate>
+  	  	<Border Name="LayoutRoot"
+  	  			Background="{TemplateBinding Background}"
+  	  			BorderBrush="{TemplateBinding BorderBrush}"
+  	  			BorderThickness="{TemplateBinding BorderThickness}"
+  	  			CornerRadius="{TemplateBinding CornerRadius}">
+  	  		<ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+  	  					  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+  	  		  <ItemsPresenter Name="PART_ItemsPresenter"
+  	  						  Items="{TemplateBinding Items}"
+  	  						  ItemsPanel="{TemplateBinding ItemsPanel}"
+  	  						  ItemTemplate="{TemplateBinding ItemTemplate}"
+  	  						  Margin="{TemplateBinding Padding}"
+  	  						  KeyboardNavigation.TabNavigation="Continue"
+  	  						  Grid.IsSharedSizeScope="True" />
+  	  		</ScrollViewer>
+  	  	</Border>
+  	  </ControlTemplate>
+  	</Setter>
+  </Style>
+  
+  <Style Selector="MenuFlyoutPresenter MenuItem">
+  	<Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+  </Style>
+  
+  <Style Selector="MenuFlyoutPresenter MenuItem:selected /template/ Border#root">
+  	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
 
 </Styles>

@@ -10,8 +10,8 @@
 	<Color x:Key="ScrollBarThumbBackgroundHoverColor">#484d5c</Color>
 	<Color x:Key="ScrollBarThumbBackgroundPressedColor">#585d6c</Color>
 
-	<Color x:Key="PrimaryColor">#a2484d5c</Color>
-	<Color x:Key="PrimaryColorLight">#a2585d6c</Color>
+	<Color x:Key="PrimaryColor">#a6484d5c</Color>
+	<Color x:Key="PrimaryColorLight">#a6585d6c</Color>
 	<Color x:Key="PrimaryColorBorderBrush">#585d6c</Color>
   </Style.Resources>
 
