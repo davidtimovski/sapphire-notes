@@ -48,7 +48,8 @@
     <EmbeddedResource Include="Assets\Fonts\Arial.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Calibri.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Consolas.ttf" />
-    <EmbeddedResource Include="Assets\Fonts\OpenSans.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\OpenSans-Regular.ttf" />
+	<EmbeddedResource Include="Assets\Fonts\OpenSans-Medium.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Roboto.ttf" />
     <EmbeddedResource Include="Assets\Fonts\Verdana.ttf" />
   </ItemGroup>
@@ -61,6 +62,7 @@
     <AvaloniaResource Include="Styles\Themes\Cosmos\Resources.axaml" />
     <AvaloniaResource Include="Styles\Themes\Dark\Resources.axaml" />
     <AvaloniaResource Include="Styles\Themes\Dark\Accents.axaml" />
+	<AvaloniaResource Include="Styles\Themes\Light\Accents.axaml" />
     <AvaloniaResource Include="Styles\Themes\Light\Resources.axaml" />
   </ItemGroup>
 </Project>
