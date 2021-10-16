@@ -86,6 +86,7 @@ namespace SapphireNotes.ViewModels.UserControls
             _model.Name = name;
             _model.Content = content;
             _model.Metadata.CaretPosition = caretPosition;
+            _model.IsDirty = IsDirty;
 
             return _model;
         }

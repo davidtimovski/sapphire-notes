@@ -206,16 +206,11 @@ namespace SapphireNotes.ViewModels
 
         private void SaveDirtyNotes(object sender, EventArgs e)
         {
-            IEnumerable<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty);
-            if (dirtyNotesVMs.Any())
-            {
-                _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
+            List<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty).ToList();
 
-                foreach (var note in dirtyNotesVMs)
-                {
-                    note.SetPristine();
-                }
-            }
+            _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
+
+            dirtyNotesVMs.ForEach(x => x.SetPristine());
         }
 
         private ObservableCollection<NoteViewModel> Notes { get; } = new ObservableCollection<NoteViewModel>();

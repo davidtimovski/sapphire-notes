@@ -195,7 +195,11 @@ namespace SapphireNotes.Services
         {
             foreach (Note note in notes)
             {
-                _notesRepository.Save(note.Name, note.Content);
+                if (note.IsDirty)
+                {
+                    _notesRepository.Save(note.Name, note.Content);
+                }
+                
                 _notesMetadataService.AddOrUpdate(note.Name, note.Metadata);
             }
 
@@ -214,7 +218,7 @@ namespace SapphireNotes.Services
                 note.Metadata = _notesMetadataService.Get(note.Name);
             }
 
-            return notes.OrderByDescending(x => x.LastWriteTime).ToArray();
+            return notes.OrderBy(x => x.LastWriteTime).ToArray();
         }
 
         public Note[] LoadArchived()
