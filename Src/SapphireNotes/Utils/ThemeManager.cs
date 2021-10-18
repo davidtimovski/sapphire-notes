@@ -8,7 +8,7 @@ namespace SapphireNotes.Utils
     public static class ThemeManager
     {
         private static readonly string[] GlobalStyles = { "Button", "CheckBox", "ComboBox", "ContextMenu", "Global", "ListBox", "Menu", "ScrollBar", "TextBlock", "TextBox" };
-        private static readonly string[] ThemeOverrides = { "Accents", "Resources", "MainWindow" };
+        private static readonly string[] ThemeOverrides = { "Accents", "Resources" };
         private static readonly Dictionary<string, int> ThemeBackgroundCount = new()
         {
             { "Dark", 0 },

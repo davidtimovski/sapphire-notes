@@ -24,39 +24,65 @@
     </Style>
     
     <Style Selector="TextBlock.introMessage">
-      <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-      <Setter Property="VerticalAlignment" Value="Center"></Setter>
-      <Setter Property="FontSize" Value="20"></Setter>
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="FontSize" Value="20" />
     </Style>
 
     <Style Selector="TabControl[TabStripPlacement=Top]">
-      <Setter Property="Padding" Value="0 0 0 0"/>
+      <Setter Property="Padding" Value="0" />
     </Style>
     <Style Selector="TabItem">
+	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Margin" Value="0 0 4 4" />
     </Style>
 	<Style Selector="TabItem Border.tabHeader">
 	  <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
 	  <Setter Property="Padding" Value="10 4" />
+	  <Setter Property="Transitions">
+	  	<Transitions>
+	  	  <BrushTransition Property="Background" Duration="0:0:0.2" Easing="CubicEaseOut" />
+	  	</Transitions>
+	  </Setter>
 	</Style>
 	<Style Selector="TabItem:pointerover Border.tabHeader">
 	  <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
 	</Style>
 	<Style Selector="TabItem:selected Border.tabHeader">
 	  <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
+	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
 	</Style>
 	<Style Selector="TabItem Border.tabHeader TextBlock">
 	  <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
 	  <Setter Property="FontSize" Value="13" />
 	  <Setter Property="FontWeight" Value="500" />
+	  <Setter Property="Transitions">
+	  	<Transitions>
+	  	  <BrushTransition Property="Foreground" Duration="0:0:0.2" Easing="CubicEaseOut" />
+	  	</Transitions>
+	  </Setter>
 	</Style>
 	<Style Selector="TabItem:selected Border.tabHeader TextBlock">
 	  <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
 	</Style>
 
-	<Style Selector="Border.editorContainer">
-	  <Setter Property="Background" Value="{DynamicResource EditorContainerBorderBackground}" />
+	<Style Selector="TextBlock.introMessage">
+	  <Setter Property="Foreground" Value="{DynamicResource CreateNoteMessageForeground}" />
+	</Style>
+	  
+	<Style Selector="TextBox.editor">
+	  <Setter Property="BorderThickness" Value="{DynamicResource EditorBorderThickness}" />
+	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
+	  <Setter Property="CornerRadius" Value="{DynamicResource EditorCornerRadius}" />
+	</Style>
+	<Style Selector="TextBox.editor:pointerover /template/ Border#border">
+	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
+	</Style>
+	<Style Selector="TextBox.editor:focus /template/ Border#border">
+	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
 	</Style>
   </Window.Styles>
 

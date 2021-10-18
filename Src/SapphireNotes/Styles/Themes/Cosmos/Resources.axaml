@@ -3,7 +3,7 @@
 
   <Style.Resources>
 	<!-- WindowBackground and WindowOverlay are in Backgrounds -->
-	  
+
 	<!-- Button -->
 	<SolidColorBrush x:Key="ButtonBackground" Color="{DynamicResource ControlBackground}" />
 	<SolidColorBrush x:Key="ButtonBackgroundHover" Color="{DynamicResource ControlBackgroundHighlighted}" />
@@ -11,6 +11,7 @@
 	<SolidColorBrush x:Key="ButtonBorderBrush">#3d3d43</SolidColorBrush>
 	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
 	<Thickness x:Key="ButtonPadding">14 4</Thickness>
+	<CornerRadius x:Key="ButtonCornerRadius">3</CornerRadius>
 	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
 	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
 	<SolidColorBrush x:Key="ButtonPrimaryBorderBrush" Color="{DynamicResource PrimaryColorBorderBrush}" />
@@ -23,12 +24,13 @@
 	<SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
 	<SolidColorBrush x:Key="ButtonDangerBorderBrush">#8a3121</SolidColorBrush>
 	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
-	  
+
 	<!-- Form Controls -->
 	<SolidColorBrush x:Key="FormControlBackground" Color="{DynamicResource ControlBackground}" />
 	<SolidColorBrush x:Key="FormControlForeground">#e8e8e8</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlBorderBrush">#3d3d43</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlBorderBrushHover" Color="{DynamicResource PrimaryColorBorderBrush}" />
+	<CornerRadius x:Key="FormControlCornerRadius">3</CornerRadius>
 
 	<!-- ComboBox -->
 	<SolidColorBrush x:Key="ComboBoxArrowColor">#e8e8e8</SolidColorBrush>
@@ -46,10 +48,22 @@
 	<SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover" Color="{DynamicResource ScrollBarThumbBackgroundHoverColor}" />
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
-	  
+
 	<!-- Editor -->
-	<SolidColorBrush x:Key="EditorContainerBorderBackground">Transparent</SolidColorBrush>
-  
-</Style.Resources>
+	<SolidColorBrush x:Key="CreateNoteMessageForeground">#ddd</SolidColorBrush>
+	<Thickness x:Key="EditorBorderThickness">0</Thickness>
+	<SolidColorBrush x:Key="EditorBorderBrush">Transparent</SolidColorBrush>
+	<CornerRadius x:Key="EditorCornerRadius">5</CornerRadius>
+
+	<!-- TabControl -->
+	<CornerRadius x:Key="TabItemCornerRadius">3</CornerRadius>
+
+	<!-- ArchivedNotes -->
+	<SolidColorBrush x:Key="ArchivedNotesHeaderBackground" Color="{DynamicResource PrimaryColor}" />
+	  
+	<!-- Tips -->
+	<SolidColorBrush x:Key="TipsSectionBackground" Color="{DynamicResource ControlBackground}" />
+	<SolidColorBrush x:Key="TipsHeaderBackground" Color="{DynamicResource PrimaryColor}" />
+  </Style.Resources>
 
 </Style>

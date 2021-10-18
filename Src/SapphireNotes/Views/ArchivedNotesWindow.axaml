@@ -39,13 +39,12 @@
       <Setter Property="Margin" Value="0 0 5 0" />
     </Style>
 
-    <Style Selector="DockPanel.headers">
-      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
-    </Style>
-    <Style Selector="DockPanel.headers Border">
-      <Setter Property="Padding" Value="10" />
-    </Style>
-    
+    <Style Selector="Border.header">
+      <Setter Property="Background" Value="{DynamicResource ArchivedNotesHeaderBackground}" />
+	  <Setter Property="CornerRadius" Value="3 3 0 0" />
+	  <Setter Property="Padding" Value="10" />
+	</Style>
+
     <Style Selector="ListBox">
       <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
       <Setter Property="BorderThickness" Value="0" />
@@ -57,9 +56,9 @@
       <Setter Property="Padding" Value="0" />
     </Style>
     <Style Selector="ListBox ListBoxItem Border">
-      <!-- Somehow makes Border fully clickable -->
-      <Setter Property="Background" Value="Transparent" />
-      <Setter Property="Padding" Value="10 5" />
+	  <!-- Somehow makes Border fully middle-mouse clickable -->
+	  <Setter Property="Background" Value="Transparent" />
+	  <Setter Property="Padding" Value="10 5" />
     </Style>
 
     <Style Selector="TextBox">
@@ -71,6 +70,7 @@
       <Setter Property="Background" Value="#444171ff" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="BorderBrush" Value="#4171ff" />
+	  <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="15" />
     </Style>
     <Style Selector="Border.noNotesAlert TextBlock">
@@ -115,16 +115,18 @@
           </StackPanel>
         </StackPanel>
 
-        <DockPanel Classes="headers" Grid.Row="1">
-          <Border>
-            <TextBlock>Note</TextBlock>
-          </Border>
-          <Border HorizontalAlignment="Right">
-            <TextBlock>Archived</TextBlock>
-          </Border>
-        </DockPanel>
+		<Border Grid.Row="1" Classes="header">
+		  <DockPanel>
+		  	<Border>
+		  	  <TextBlock>Note</TextBlock>
+		  	</Border>
+		  	<Border HorizontalAlignment="Right">
+		  	  <TextBlock>Archived</TextBlock>
+		  	</Border>
+		  </DockPanel>
+		</Border>
 
-        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
+		<ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">
@@ -139,12 +141,12 @@
 
         <Border Grid.Row="3">
           <TextBox DataContext="{Binding Selected}"
-                  Text="{Binding Content}"
-                  IsReadOnly="True"
-                  FontSize="{Binding FontSize}"
-                  FontFamily="{Binding FontFamily}"
-                  AcceptsReturn="True"
-                  TextWrapping="Wrap" />
+                   Text="{Binding Content}"
+                   IsReadOnly="True"
+                   FontSize="{Binding FontSize}"
+                   FontFamily="{Binding FontFamily}"
+                   AcceptsReturn="True"
+                   TextWrapping="Wrap" />
         </Border>
       </Grid>
 

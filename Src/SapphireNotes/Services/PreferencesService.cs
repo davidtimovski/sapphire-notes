@@ -100,18 +100,20 @@ namespace SapphireNotes.Services
 
         private void ReadPreferences()
         {
-            Preferences = new Preferences();
-
             using var reader = new BinaryReader(File.Open(_preferencesFilePath, FileMode.Open));
-            Preferences.NotesDirectory = reader.ReadString();
-            Preferences.AutoSaveInterval = reader.ReadInt16();
-            Preferences.Theme = reader.ReadString();
-            Preferences.Window = new WindowPreferences
+
+            Preferences = new Preferences
             {
-                Width = reader.ReadInt32(),
-                Height = reader.ReadInt32(),
-                PositionX = reader.ReadInt32(),
-                PositionY = reader.ReadInt32()
+                NotesDirectory = reader.ReadString(),
+                AutoSaveInterval = reader.ReadInt16(),
+                Theme = reader.ReadString(),
+                Window = new WindowPreferences
+                {
+                    Width = reader.ReadInt32(),
+                    Height = reader.ReadInt32(),
+                    PositionX = reader.ReadInt32(),
+                    PositionY = reader.ReadInt32()
+                }
             };
         }
     }

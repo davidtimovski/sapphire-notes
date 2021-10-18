@@ -13,6 +13,7 @@
 	<SolidColorBrush x:Key="ButtonBorderBrush">#cfcfcf</SolidColorBrush>
 	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
 	<Thickness x:Key="ButtonPadding">14 4</Thickness>
+	<CornerRadius x:Key="ButtonCornerRadius">3</CornerRadius>
 	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
 	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
 	<SolidColorBrush x:Key="ButtonPrimaryBorderBrush">#007acc</SolidColorBrush>
@@ -31,6 +32,7 @@
 	<SolidColorBrush x:Key="FormControlForeground">#222</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlBorderBrush">#ccc</SolidColorBrush>
 	<SolidColorBrush x:Key="FormControlBorderBrushHover">#1c97ea</SolidColorBrush>
+	<CornerRadius x:Key="FormControlCornerRadius">3</CornerRadius>
 
 	<!-- ComboBox -->
 	<SolidColorBrush x:Key="ComboBoxArrowColor">#444</SolidColorBrush>
@@ -50,7 +52,20 @@
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed">#aaa</SolidColorBrush>
 
 	<!-- Editor -->
-	<SolidColorBrush x:Key="EditorContainerBorderBackground">#cfcfcf</SolidColorBrush>
+	<SolidColorBrush x:Key="CreateNoteMessageForeground">#888</SolidColorBrush>
+	<Thickness x:Key="EditorBorderThickness">1</Thickness>
+	<SolidColorBrush x:Key="EditorBorderBrush">#cfcfcf</SolidColorBrush>
+	<CornerRadius x:Key="EditorCornerRadius">5</CornerRadius>
+
+	<!-- TabControl -->
+	<CornerRadius x:Key="TabItemCornerRadius">3</CornerRadius>
+
+	<!-- ArchivedNotes -->
+	<SolidColorBrush x:Key="ArchivedNotesHeaderBackground">#e2e2e2</SolidColorBrush>
+
+	<!-- Tips -->
+	<SolidColorBrush x:Key="TipsSectionBackground">#ececec</SolidColorBrush>
+	<SolidColorBrush x:Key="TipsHeaderBackground">#ddd</SolidColorBrush>
   </Style.Resources>
 
 </Style>

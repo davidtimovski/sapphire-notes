@@ -14,7 +14,8 @@
         <Border Name="border"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}">
+                BorderThickness="{TemplateBinding BorderThickness}"
+				CornerRadius="{DynamicResource FormControlCornerRadius}">
           <Grid ColumnDefinitions="*,24">
             <TextBlock Name="PlaceholderTextBlock"
                        Grid.Column="0"

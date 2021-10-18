@@ -1,14 +1,22 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Style Selector="Button">
+  <Style Selector="Button.button">
 	<Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
 	<Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
 	<Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
 	<Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThickness}" />
+	<Setter Property="CornerRadius" Value="{DynamicResource ButtonCornerRadius}" />
 	<Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
     <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+  </Style>
+  <Style Selector="Button.button /template/ ContentPresenter">
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.2" Easing="CubicEaseOut" />
+      </Transitions>
+    </Setter>
   </Style>
   <Style Selector="Button.button:pointerover /template/ ContentPresenter">
   	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />

@@ -30,14 +30,14 @@ namespace SapphireNotes.Services
 
         public NotesMetadataService()
         {
-#if DEBUG
-            string appDataDirectory = string.Empty;
-#else
             string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
             if (!Directory.Exists(appDataDirectory))
             {
                 Directory.CreateDirectory(appDataDirectory);
             }
+
+#if DEBUG
+            appDataDirectory = string.Empty;
 #endif
 
             _metadataFilePath = Path.Combine(appDataDirectory, MetadataFileName);
@@ -108,7 +108,7 @@ namespace SapphireNotes.Services
             Save();
         }
 
-        public void Initialize(IEnumerable<string> notesOnFilesystem)
+        public void Initialize(IEnumerable<string> notesOnFileSystem)
         {
             if (File.Exists(_metadataFilePath))
             {
@@ -135,13 +135,13 @@ namespace SapphireNotes.Services
                     _notesMetadata.Add(noteName, metadata);
                 }
 
-                SynchronizeWithFileSystem(notesOnFilesystem);
+                SynchronizeWithFileSystem(notesOnFileSystem);
             }
             else
             {
-                _notesMetadata = new Dictionary<string, NoteMetadata>(notesOnFilesystem.Count());
+                _notesMetadata = new Dictionary<string, NoteMetadata>(notesOnFileSystem.Count());
 
-                foreach (string noteName in notesOnFilesystem)
+                foreach (string noteName in notesOnFileSystem)
                 {
                     if (noteName.Contains(Globals.ArchivePrefix + "/"))
                     {
@@ -173,15 +173,15 @@ namespace SapphireNotes.Services
             }
         }
 
-        private void SynchronizeWithFileSystem(IEnumerable<string> notesOnFilesystem)
+        private void SynchronizeWithFileSystem(IEnumerable<string> notesOnFileSystem)
         {
-            IEnumerable<string> deletedNotes = _notesMetadata.Keys.Where(k => !notesOnFilesystem.Contains(k));
+            IEnumerable<string> deletedNotes = _notesMetadata.Keys.Where(k => !notesOnFileSystem.Contains(k));
             foreach (string noteName in deletedNotes)
             {
                 _notesMetadata.Remove(noteName);
             }
 
-            IEnumerable<string> addedNotes = notesOnFilesystem.Where(k => !_notesMetadata.Keys.Contains(k));
+            IEnumerable<string> addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.Keys.Contains(k));
             foreach (string noteName in addedNotes)
             {
                 if (noteName.Contains(Globals.ArchivePrefix + "/"))

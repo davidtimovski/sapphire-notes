@@ -4,6 +4,7 @@
   <Style Selector="TextBox">
     <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+	<Setter Property="CornerRadius" Value="{DynamicResource FormControlCornerRadius}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
 	<Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorLight}" />
