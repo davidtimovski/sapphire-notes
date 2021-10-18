@@ -7,6 +7,9 @@
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
+	<Style Selector="Button#closeButton">
+	  <Setter Property="HorizontalAlignment" Value="Right" />
+	</Style>
 
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="400" />
@@ -33,9 +36,7 @@
       <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>
 
       <Border Classes="buttonsWrap">
-        <DockPanel HorizontalAlignment="Right">
-          <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
-        </DockPanel>
+		<Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
     </StackPanel>
   </Border>

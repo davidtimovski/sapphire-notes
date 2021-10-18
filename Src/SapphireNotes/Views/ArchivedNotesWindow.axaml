@@ -50,6 +50,7 @@
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Margin" Value="0 0 0 10" />
+	  <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
     </Style>
 
     <Style Selector="ListBox ListBoxItem">
@@ -64,6 +65,9 @@
     <Style Selector="TextBox">
       <Setter Property="MinHeight" Value="150" />
       <Setter Property="MaxHeight" Value="350" />
+      <Setter Property="IsReadOnly" Value="True" />
+	  <Setter Property="AcceptsReturn" Value="True" />
+	  <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style Selector="Border.noNotesAlert">
@@ -80,6 +84,9 @@
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
+	<Style Selector="Button#closeButton">
+	  <Setter Property="HorizontalAlignment" Value="Right" />
+	</Style>
   </Window.Styles>
 
   <Design.DataContext>
@@ -117,16 +124,12 @@
 
 		<Border Grid.Row="1" Classes="header">
 		  <DockPanel>
-		  	<Border>
-		  	  <TextBlock>Note</TextBlock>
-		  	</Border>
-		  	<Border HorizontalAlignment="Right">
-		  	  <TextBlock>Archived</TextBlock>
-		  	</Border>
+			<TextBlock>Note</TextBlock>
+			<TextBlock HorizontalAlignment="Right">Archived</TextBlock>
 		  </DockPanel>
 		</Border>
 
-		<ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
+		<ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">
@@ -139,15 +142,11 @@
           </ListBox.ItemTemplate>
         </ListBox>
 
-        <Border Grid.Row="3">
-          <TextBox DataContext="{Binding Selected}"
-                   Text="{Binding Content}"
-                   IsReadOnly="True"
-                   FontSize="{Binding FontSize}"
-                   FontFamily="{Binding FontFamily}"
-                   AcceptsReturn="True"
-                   TextWrapping="Wrap" />
-        </Border>
+        <TextBox Grid.Row="3"
+				 DataContext="{Binding Selected}"
+                 Text="{Binding Content}"
+                 FontSize="{Binding FontSize}"
+                 FontFamily="{Binding FontFamily}" />
       </Grid>
 
       <Border IsVisible="{Binding !ArchivedNotesExist}" Classes="noNotesAlert">
@@ -155,7 +154,7 @@
       </Border>
 
       <Border Classes="buttonsWrap">
-        <Button Name="closeButton" HorizontalAlignment="Right" HotKey="Escape" Classes="button">Close</Button>
+        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
     </StackPanel>
   </Border>

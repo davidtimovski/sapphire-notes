@@ -13,6 +13,9 @@
     <Style Selector="Border.directory">
       <Setter Property="Margin" Value="0 5" />
     </Style>
+	<Style Selector="Border.directory TextBox">
+	  <Setter Property="IsReadOnly" Value="True" />
+	</Style>
 
     <Style Selector="Button#changeNotesDirectoryButton">
       <Setter Property="Margin" Value="5 0 0 0" />
@@ -59,7 +62,7 @@
             <ColumnDefinition Width="100" />
           </Grid.ColumnDefinitions>
         
-          <TextBox Text="{Binding NotesDirectory}" IsReadOnly="True" Grid.Column="0" />
+          <TextBox Text="{Binding NotesDirectory}" Grid.Column="0" />
           <Button Name="changeNotesDirectoryButton" Classes="button" Grid.Column="1">Change</Button>
         </Grid>
       </Border>

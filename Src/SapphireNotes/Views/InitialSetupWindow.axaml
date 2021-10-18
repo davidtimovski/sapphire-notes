@@ -7,6 +7,7 @@
   <Window.Styles>
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="450" />
+	  <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style Selector="Border.welcome">
@@ -23,7 +24,12 @@
 
     <Style Selector="TextBox">
       <Setter Property="Width" Value="450" />
+	  <Setter Property="IsReadOnly" Value="True" />
     </Style>
+
+	<Style Selector="DockPanel">
+	  <Setter Property="HorizontalAlignment" Value="Right" />
+	</Style>
 
     <Style Selector="Button.primary">
       <Setter Property="Margin" Value="10 0 0 0" />
@@ -37,16 +43,16 @@
   <Border Classes="wrap">
     <StackPanel>
       <Border Classes="welcome">
-        <TextBlock  TextWrapping="Wrap">Welcome to Sapphire Notes.</TextBlock>
+        <TextBlock>Welcome to Sapphire Notes.</TextBlock>
       </Border>
 
-      <TextBlock TextWrapping="Wrap">Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
+      <TextBlock>Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
 
       <Border Classes="directory">
-        <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" IsReadOnly="True" />
+        <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" />
       </Border>
 
-      <DockPanel HorizontalAlignment="Right">
+      <DockPanel>
         <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
         <Button Name="startButton" IsVisible="{Binding StartButtonVisible}" Classes="button primary">Start</Button>
       </DockPanel>
