@@ -20,8 +20,15 @@
     </Style>
 
     <Style Selector="ComboBox">
+	  <Setter Property="Width" Value="120" />
       <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
+	<Style Selector="ComboBox.fontSelector">
+	  <Setter Property="Width" Value="120" />
+	</Style>
+	<Style Selector="ComboBox.fontSizeSelector">
+	  <Setter Property="Width" Value="70" />
+	</Style>
 
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 20 0 0" />
@@ -50,7 +57,7 @@
           <TextBlock>Font</TextBlock>
         </Border>
 
-        <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" />
+        <ComboBox Items="{Binding AvailableFonts}" SelectedIndex="{Binding SelectedFontIndex}" Classes="fontSelector" />
       </DockPanel>
 
       <DockPanel Classes="formControlWrap">
@@ -58,7 +65,7 @@
           <TextBlock>Font Size</TextBlock>
         </Border>
 
-        <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" />
+        <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" Classes="fontSizeSelector" />
       </DockPanel>
     
       <Border Classes="buttonsWrap">

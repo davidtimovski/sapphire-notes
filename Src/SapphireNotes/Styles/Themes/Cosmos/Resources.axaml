@@ -37,8 +37,11 @@
 	<SolidColorBrush x:Key="ComboBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
 	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- CheckBox -->
+	<SolidColorBrush x:Key="CheckBoxCheckMarkColor">#4171ff</SolidColorBrush>
+
 	<!-- ListBox -->
-	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ListBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
 
 	<!-- ContextMenu -->
 	<SolidColorBrush x:Key="ContextMenuBackground" Color="{DynamicResource ControlBackground}" />
@@ -50,7 +53,7 @@
 	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
 
 	<!-- Editor -->
-	<SolidColorBrush x:Key="CreateNoteMessageForeground">#ddd</SolidColorBrush>
+	<SolidColorBrush x:Key="CreateNoteMessageForeground">#eee</SolidColorBrush>
 	<Thickness x:Key="EditorBorderThickness">0</Thickness>
 	<SolidColorBrush x:Key="EditorBorderBrush">Transparent</SolidColorBrush>
 	<CornerRadius x:Key="EditorCornerRadius">5</CornerRadius>

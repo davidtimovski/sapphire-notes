@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="CheckBox">
-    <Setter Property="Padding" Value="7,0,0,0"/>
+	<Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
+	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+    <Setter Property="Padding" Value="7 0 0 0" />
     <Setter Property="Template">
       <ControlTemplate>
         <Grid ColumnDefinitions="Auto,*">
@@ -10,14 +12,15 @@
                   Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
-                  Width="18"
-                  Height="18"
+				  CornerRadius="{DynamicResource FormControlCornerRadius}"
+                  Width="20"
+                  Height="20"
                   VerticalAlignment="Center">
             <Panel>
               <Path Name="checkMark"
-                    Fill="{DynamicResource ButtonPrimaryBackground}"
-                    Width="11"
-                    Height="10"
+                    Fill="{DynamicResource CheckBoxCheckMarkColor}"
+                    Width="12"
+                    Height="11"
                     Stretch="Uniform"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"

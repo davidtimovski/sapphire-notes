@@ -39,8 +39,11 @@
 	<SolidColorBrush x:Key="ComboBoxItemHoverBackground">#3d3d43</SolidColorBrush>
 	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
+	<!-- CheckBox -->
+	<SolidColorBrush x:Key="CheckBoxCheckMarkColor" Color="{DynamicResource PrimaryColor}" />
+
 	<!-- ListBox -->
-	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+	<SolidColorBrush x:Key="ListBoxItemHoverBackground">#3d3d43</SolidColorBrush>
 
 	<!-- ContextMenu -->
 	<SolidColorBrush x:Key="ContextMenuBackground">#2d2d30</SolidColorBrush>

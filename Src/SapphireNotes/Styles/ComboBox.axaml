@@ -45,7 +45,8 @@
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                    PlacementTarget="{TemplateBinding}">
               <Border BorderBrush="{DynamicResource FormControlBorderBrush}"
-                      BorderThickness="1">
+                      BorderThickness="1"
+					  CornerRadius="{DynamicResource FormControlCornerRadius}">
                 <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                               VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                   <ItemsPresenter Name="PART_ItemsPresenter"
