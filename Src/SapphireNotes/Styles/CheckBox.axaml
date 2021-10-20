@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Style Selector="CheckBox">
-	<Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
-	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
     <Setter Property="Padding" Value="7 0 0 0" />
     <Setter Property="Template">
       <ControlTemplate>

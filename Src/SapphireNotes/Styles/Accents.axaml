@@ -20,7 +20,7 @@
     <Color x:Key="ThemeControlHighlightLowColor">#FFA8A8A8</Color>
     <Color x:Key="ThemeControlHighlightMidColor">#FF828282</Color>
     <Color x:Key="ThemeControlHighlightHighColor">#FF505050</Color>
-    <Color x:Key="ThemeForegroundColor">#FF222222</Color>
+    <Color x:Key="ThemeForegroundColor">#FFDEDEDE</Color>
     <Color x:Key="ThemeForegroundLowColor">#FF808080</Color>
 
     <Color x:Key="HighlightColor">#FF119EDA</Color>
@@ -67,26 +67,11 @@
     <sys:Double x:Key="ThemeDisabledOpacity">0.5</sys:Double>
 
     <sys:Double x:Key="FontSizeSmall">10</sys:Double>
-    <sys:Double x:Key="FontSizeNormal">14</sys:Double>
+    <sys:Double x:Key="FontSizeNormal">16</sys:Double>
     <sys:Double x:Key="FontSizeLarge">16</sys:Double>
-
-    <sys:Double x:Key="ScrollBarThickness">18</sys:Double>
-    <sys:Double x:Key="ScrollBarThumbThickness">8</sys:Double>
 
     <sys:Double x:Key="IconElementThemeHeight">20</sys:Double>
     <sys:Double x:Key="IconElementThemeWidth">20</sys:Double>
-
-	<!-- Custom -->
-
-    <FontFamily x:Key="MainFontFamily">resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans</FontFamily>
-    <sys:Double x:Key="FontSize">14</sys:Double>
-
-	<Color x:Key="PrimaryColor">#4171ff</Color>
-	<Color x:Key="PrimaryColorLight">#5181ff</Color>
-	<Color x:Key="SuccessColor">#51aa61</Color>
-	<Color x:Key="SuccessColorLight">#71aa81</Color>
-	<Color x:Key="DangerColor">#aa6151</Color>
-	<Color x:Key="DangerColorLight">#aa8171</Color>
   </Style.Resources>
 
 </Style>

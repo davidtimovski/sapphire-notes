@@ -20,15 +20,15 @@
     </Style>
 
     <Style Selector="ComboBox">
-	  <Setter Property="Width" Value="120" />
+      <Setter Property="Width" Value="120" />
       <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-	<Style Selector="ComboBox.fontSelector">
-	  <Setter Property="Width" Value="120" />
-	</Style>
-	<Style Selector="ComboBox.fontSizeSelector">
-	  <Setter Property="Width" Value="70" />
-	</Style>
+    <Style Selector="ComboBox.fontSelector">
+      <Setter Property="Width" Value="120" />
+    </Style>
+    <Style Selector="ComboBox.fontSizeSelector">
+      <Setter Property="Width" Value="70" />
+    </Style>
 
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 20 0 0" />
@@ -49,7 +49,7 @@
   <Border Classes="wrap">
     <StackPanel>
       <local:Alert DataContext="{Binding Alert}" />
-    
+
       <TextBox Text="{Binding Name}" MaxLength="30" Watermark="Name" be:FocusBehavior.InitialFocus="{Binding IsNew}" />
 
       <DockPanel Classes="formControlWrap">
@@ -67,7 +67,7 @@
 
         <ComboBox Items="{Binding AvailableFontSizes}" SelectedIndex="{Binding SelectedFontSizeIndex}" Classes="fontSizeSelector" />
       </DockPanel>
-    
+
       <Border Classes="buttonsWrap">
         <DockPanel>
           <Button Name="saveButton" Content="{Binding SaveButtonLabel, Mode=OneTime}" HotKey="Enter" Classes="button primary" />

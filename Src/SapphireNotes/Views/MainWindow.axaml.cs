@@ -165,6 +165,7 @@ namespace SapphireNotes.Views
         {
             var window = new AboutWindow
             {
+                DataContext = new AboutViewModel(),
                 Topmost = true,
                 CanResize = false
             };

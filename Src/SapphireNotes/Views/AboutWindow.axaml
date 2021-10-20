@@ -1,5 +1,6 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
         x:Class="SapphireNotes.Views.AboutWindow"
         Title="About">
 
@@ -7,9 +8,9 @@
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
-	<Style Selector="Button#closeButton">
-	  <Setter Property="HorizontalAlignment" Value="Right" />
-	</Style>
+    <Style Selector="Button#closeButton">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
 
     <Style Selector="TextBlock">
       <Setter Property="MaxWidth" Value="400" />
@@ -26,19 +27,23 @@
     </Style>
   </Window.Styles>
 
+  <Design.DataContext>
+    <vm:AboutViewModel/>
+  </Design.DataContext>
+
   <Border Classes="wrap">
     <StackPanel>
       <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
 
-      <TextBlock>Version: 0.6.0</TextBlock>
+      <TextBlock Text="{Binding Version}" />
       <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
 
       <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>
 
       <Border Classes="buttonsWrap">
-		<Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
+        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
     </StackPanel>
   </Border>
-  
+
 </Window>

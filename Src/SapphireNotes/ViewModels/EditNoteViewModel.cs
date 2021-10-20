@@ -22,9 +22,9 @@ namespace SapphireNotes.ViewModels
             isNew = true;
             name = string.Empty;
 
-            selectedFontIndex = Array.IndexOf(availableFonts, Globals.DefaultFontFamily);
+            selectedFontIndex = Array.IndexOf(availableFonts, Globals.DefaultNotesFontFamily);
             availableFontSizes = Globals.AvailableFontSizes;
-            selectedFontSizeIndex = Array.IndexOf(availableFontSizes, Globals.DefaultFontSize);
+            selectedFontSizeIndex = Array.IndexOf(availableFontSizes, Globals.DefaultNotesFontSize);
         }
 
         public EditNoteViewModel(INotesService notesService, Note note)

@@ -35,7 +35,7 @@ namespace SapphireNotes
 
                 bool notesDirectorySet = preferencesService.Load();
                 SetThemeOverrides(preferencesService.Preferences.Theme);
-                SetGlobalStyles();
+                SetComponentStyles();
 
                 if (notesDirectorySet)
                 {
@@ -91,10 +91,9 @@ namespace SapphireNotes
             }
         }
 
-        private void SetGlobalStyles()
+        private void SetComponentStyles()
         {
-            var globalStyles = ThemeManager.GetGlobalStyles();
-            Styles.AddRange(globalStyles);
+            Styles.AddRange(ThemeManager.ComponentStyles);
         }
 
         private void SetThemeOverrides(string theme)

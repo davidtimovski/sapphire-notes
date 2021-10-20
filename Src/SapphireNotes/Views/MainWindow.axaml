@@ -22,7 +22,7 @@
       <Setter Property="Padding" Value="0 0 0 5" />
       <Setter Property="DockPanel.Dock" Value="Top" />
     </Style>
-    
+
     <Style Selector="TextBlock.introMessage">
       <Setter Property="HorizontalAlignment" Value="Center" />
       <Setter Property="VerticalAlignment" Value="Center" />
@@ -33,57 +33,57 @@
       <Setter Property="Padding" Value="0" />
     </Style>
     <Style Selector="TabItem">
-	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
+      <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Margin" Value="0 0 4 4" />
     </Style>
-	<Style Selector="TabItem Border.tabHeader">
-	  <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
-	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
-	  <Setter Property="Padding" Value="10 4" />
-	  <Setter Property="Transitions">
-	  	<Transitions>
-	  	  <BrushTransition Property="Background" Duration="0:0:0.2" Easing="CubicEaseOut" />
-	  	</Transitions>
-	  </Setter>
-	</Style>
-	<Style Selector="TabItem:pointerover Border.tabHeader">
-	  <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
-	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
-	</Style>
-	<Style Selector="TabItem:selected Border.tabHeader">
-	  <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
-	  <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
-	</Style>
-	<Style Selector="TabItem Border.tabHeader TextBlock">
-	  <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-	  <Setter Property="FontSize" Value="13" />
-	  <Setter Property="FontWeight" Value="500" />
-	  <Setter Property="Transitions">
-	  	<Transitions>
-	  	  <BrushTransition Property="Foreground" Duration="0:0:0.2" Easing="CubicEaseOut" />
-	  	</Transitions>
-	  </Setter>
-	</Style>
-	<Style Selector="TabItem:selected Border.tabHeader TextBlock">
-	  <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
-	</Style>
+    <Style Selector="TabItem Border.tabHeader">
+      <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+      <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
+      <Setter Property="Padding" Value="10 4" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Background" Duration="0:0:0.2" Easing="CubicEaseOut" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="TabItem:pointerover Border.tabHeader">
+      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+      <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
+    </Style>
+    <Style Selector="TabItem:selected Border.tabHeader">
+      <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
+      <Setter Property="CornerRadius" Value="{DynamicResource TabItemCornerRadius}" />
+    </Style>
+    <Style Selector="TabItem Border.tabHeader TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="FontWeight" Value="500" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="Foreground" Duration="0:0:0.2" Easing="CubicEaseOut" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="TabItem:selected Border.tabHeader TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
+    </Style>
 
-	<Style Selector="TextBlock.introMessage">
-	  <Setter Property="Foreground" Value="{DynamicResource CreateNoteMessageForeground}" />
-	</Style>
-	  
-	<Style Selector="TextBox.editor">
-	  <Setter Property="BorderThickness" Value="{DynamicResource EditorBorderThickness}" />
-	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
-	  <Setter Property="CornerRadius" Value="{DynamicResource EditorCornerRadius}" />
-	</Style>
-	<Style Selector="TextBox.editor:pointerover /template/ Border#border">
-	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
-	</Style>
-	<Style Selector="TextBox.editor:focus /template/ Border#border">
-	  <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
-	</Style>
+    <Style Selector="TextBlock.introMessage">
+      <Setter Property="Foreground" Value="{DynamicResource CreateNoteMessageForeground}" />
+    </Style>
+
+    <Style Selector="TextBox.editor">
+      <Setter Property="BorderThickness" Value="{DynamicResource EditorBorderThickness}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
+      <Setter Property="CornerRadius" Value="{DynamicResource EditorCornerRadius}" />
+    </Style>
+    <Style Selector="TextBox.editor:pointerover /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
+    </Style>
+    <Style Selector="TextBox.editor:focus /template/ Border#border">
+      <Setter Property="BorderBrush" Value="{DynamicResource EditorBorderBrush}" />
+    </Style>
   </Window.Styles>
 
   <Design.DataContext>
@@ -96,7 +96,7 @@
       <Button Command="{Binding CtrlW}" HotKey="Ctrl+W" IsVisible="False"></Button>
       <Button Command="{Binding CtrlE}" HotKey="Ctrl+E" IsVisible="False"></Button>
       <Button Name="escapeButton" HotKey="Escape" IsVisible="False"></Button>
-      
+
       <Menu>
         <MenuItem Header="Notes">
           <MenuItem Name="newNoteMenuItem" Header="New                     (Ctrl+N)" HotKey="Ctrl+N" />
@@ -113,9 +113,9 @@
         </MenuItem>
       </Menu>
     </DockPanel>
-    
+
     <TextBlock IsVisible="{Binding ShowIntroMessage}" Classes="introMessage" Grid.Row="1">Ctrl+N to create a new note</TextBlock>
-    
+
     <TabControl Items="{Binding Notes}" SelectedItem="{Binding Selected}" SelectedIndex="{Binding SelectedIndex}" Grid.Row="1">
       <TabControl.ItemTemplate>
         <DataTemplate>
@@ -145,7 +145,7 @@
         </DataTemplate>
       </TabControl.ContentTemplate>
     </TabControl>
-    
+
   </Grid>
 
 </Window>

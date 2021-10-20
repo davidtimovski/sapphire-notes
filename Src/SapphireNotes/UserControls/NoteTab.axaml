@@ -9,5 +9,5 @@
 		   FontSize="{Binding FontSize}"
 		   FontFamily="{Binding FontFamily}"
 		   Classes="editor" />
-	
+
 </UserControl>

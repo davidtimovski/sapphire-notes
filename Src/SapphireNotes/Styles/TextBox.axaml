@@ -4,12 +4,12 @@
   <Style Selector="TextBox">
     <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
-	<Setter Property="CornerRadius" Value="{DynamicResource FormControlCornerRadius}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource FormControlCornerRadius}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
-	<Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorLight}" />
-    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
-    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorLight}" />
+    <Setter Property="FontFamily" Value="{DynamicResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource MainFontSize}" />
   </Style>
   <Style Selector="TextBox:pointerover /template/ Border#border">
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrushHover}" />
@@ -18,7 +18,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrushHover}" />
   </Style>
   <Style Selector="TextBox[IsReadOnly=True] /template/ Border#border">
-  	<Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FormControlBorderBrush}" />
   </Style>
 
 </Styles>
