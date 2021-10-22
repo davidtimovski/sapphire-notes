@@ -7,8 +7,8 @@
     <sys:Double x:Key="MainFontSize">14</sys:Double>
     <SolidColorBrush x:Key="MainForeground">White</SolidColorBrush>
 
-    <Color x:Key="PrimaryColor">#4171ff</Color>
-    <Color x:Key="PrimaryColorLight">#5181ff</Color>
+    <Color x:Key="PrimaryColor">#2181ff</Color>
+    <Color x:Key="PrimaryColorLight">#3191ff</Color>
     <Color x:Key="SuccessColor">#51aa61</Color>
     <Color x:Key="SuccessColorLight">#71aa81</Color>
     <Color x:Key="DangerColor">#aa6151</Color>

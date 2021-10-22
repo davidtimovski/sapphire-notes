@@ -14,9 +14,9 @@
     </Style>
 
     <Style Selector="Border.actionConfirmPrompt">
-      <Setter Property="Background" Value="#444171ff" />
+      <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="#4171ff" />
+      <Setter Property="BorderBrush" Value="#2181ff" />
       <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="7 5" />
       <Setter Property="Margin" Value="0 0 0 15" />
@@ -77,9 +77,9 @@
     </Style>
 
     <Style Selector="Border.noNotesAlert">
-      <Setter Property="Background" Value="#444171ff" />
+      <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="#4171ff" />
+      <Setter Property="BorderBrush" Value="#2181ff" />
       <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="15" />
     </Style>

@@ -34,8 +34,8 @@ namespace SapphireNotes
                 preferencesService.Updated += PreferencesUpdated;
 
                 bool notesDirectorySet = preferencesService.Load();
-                SetThemeOverrides(preferencesService.Preferences.Theme);
-                SetComponentStyles();
+                Styles.AddRange(ThemeManager.GetThemeStyles(preferencesService.Preferences.Theme));
+                Styles.AddRange(ThemeManager.ComponentStyles);
 
                 if (notesDirectorySet)
                 {
@@ -84,22 +84,11 @@ namespace SapphireNotes
         {
             if (e.NewTheme != null)
             {
-                var themeOverrides = Styles.Where(x => (x as StyleInclude).Source.AbsolutePath.StartsWith("/Styles/Themes")).ToArray();
-                Styles.RemoveAll(themeOverrides);
+                var currentThemeStyles = Styles.Where(x => (x as StyleInclude).Source.AbsolutePath.StartsWith("/Styles/Themes")).ToArray();
+                Styles.RemoveAll(currentThemeStyles);
 
-                SetThemeOverrides(e.NewTheme);
+                Styles.AddRange(ThemeManager.GetThemeStyles(e.NewTheme));
             }
-        }
-
-        private void SetComponentStyles()
-        {
-            Styles.AddRange(ThemeManager.ComponentStyles);
-        }
-
-        private void SetThemeOverrides(string theme)
-        {
-            var themeOverrides = ThemeManager.GetThemeOverrides(theme);
-            Styles.AddRange(themeOverrides);
         }
     }
 }

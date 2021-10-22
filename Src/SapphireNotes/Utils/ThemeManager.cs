@@ -33,7 +33,7 @@ namespace SapphireNotes.Utils
             new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Window.axaml") }
         };
 
-        public static List<StyleInclude> GetThemeOverrides(string theme)
+        public static List<StyleInclude> GetThemeStyles(string theme)
         {
             var result = new List<StyleInclude>()
             {

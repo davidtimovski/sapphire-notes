@@ -48,7 +48,7 @@
     <SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
 
     <!-- CheckBox -->
-    <SolidColorBrush x:Key="CheckBoxCheckMarkColor">#4171ff</SolidColorBrush>
+    <SolidColorBrush x:Key="CheckBoxCheckMarkColor">#2181ff</SolidColorBrush>
 
     <!-- ListBox -->
     <SolidColorBrush x:Key="ListBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
