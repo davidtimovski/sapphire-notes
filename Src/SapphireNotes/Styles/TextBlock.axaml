@@ -3,7 +3,7 @@
 
   <Style Selector="TextBlock">
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
-    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Setter Property="FontSize" Value="{DynamicResource MainFontSize}" />
   </Style>
 
 </Styles>

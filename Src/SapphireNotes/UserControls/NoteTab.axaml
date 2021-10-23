@@ -2,22 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="SapphireNotes.UserControls.NoteTab">
 
-  <UserControl.Styles>
-    <Style Selector="Border.editorContainer">
-      <Setter Property="Padding" Value="1" />
-    </Style>
+  <TextBox Name="editor"
+		   Text="{Binding Content}"
+		   AcceptsReturn="True"
+		   TextWrapping="Wrap"
+		   FontSize="{Binding FontSize}"
+		   FontFamily="{Binding FontFamily}"
+		   Classes="editor" />
 
-    <Style Selector="TextBox">
-      <Setter Property="BorderThickness" Value="0" />
-    </Style>
-  </UserControl.Styles>
-  
-  <Border Classes="editorContainer">
-    <TextBox Name="editor"
-             Text="{Binding Content}"
-             AcceptsReturn="True"
-             TextWrapping="Wrap"
-             FontSize="{Binding FontSize}"
-             FontFamily="{Binding FontFamily}" />
-  </Border>
 </UserControl>

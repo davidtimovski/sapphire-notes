@@ -1,0 +1,4 @@
+# Code files
+[*.axaml]
+indent_style = space
+indent_size = 2

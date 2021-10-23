@@ -5,10 +5,11 @@
 
   <Style Selector="MenuItem">
     <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource MainForeground}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Padding" Value="6 3" />
-    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
-    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource MainFontSize}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Name="root"
@@ -16,11 +17,11 @@
                 BorderThickness="{TemplateBinding BorderThickness}">
           <Grid>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="15"/>
               <ColumnDefinition Width="5"/>
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGT"/>
-              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="15"/>
             </Grid.ColumnDefinitions>
             <ContentPresenter Name="icon"
                               Content="{TemplateBinding Icon}"

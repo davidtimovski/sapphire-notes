@@ -5,12 +5,15 @@
         Title="Delete note">
 
   <Window.Styles>
+    <Style Selector="TextBlock">
+      <Setter Property="MaxWidth" Value="400" />
+    </Style>
+
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
-
-    <Style Selector="TextBlock">
-      <Setter Property="MaxWidth" Value="400" />
+    <Style Selector="Border.buttonsWrap DockPanel">
+      <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
     <Style Selector="Button.primary">
@@ -25,9 +28,9 @@
   <Border Classes="wrap">
     <StackPanel>
       <TextBlock Text="{Binding Text, Mode=OneTime}" TextWrapping="Wrap" />
-    
+
       <Border Classes="buttonsWrap">
-        <DockPanel HorizontalAlignment="Right">
+        <DockPanel>
           <Button Name="yesButton" Classes="button primary">Yes</Button>
           <Button Name="noButton" HotKey="Escape" Classes="button">No</Button>
         </DockPanel>

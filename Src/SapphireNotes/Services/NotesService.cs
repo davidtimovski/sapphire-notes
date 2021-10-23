@@ -244,7 +244,7 @@ namespace SapphireNotes.Services
             var fonts = _notesMetadataService.GetDistinctFonts();
             if (fonts.Length == 0)
             {
-                return Globals.DefaultFontFamily;
+                return Globals.DefaultNotesFontFamily;
             }
 
             if (fonts.Length == 1)
@@ -260,7 +260,7 @@ namespace SapphireNotes.Services
             var fontSizes = _notesMetadataService.GetDistinctFontSizes();
             if (fontSizes.Length == 0)
             {
-                return Globals.DefaultFontSize;
+                return Globals.DefaultNotesFontSize;
             }
 
             if (fontSizes.Length == 1)

@@ -10,12 +10,14 @@
     </Style>
 
     <Style Selector="Border.section">
-      <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
+      <Setter Property="Background" Value="{DynamicResource TipsSectionBackground}" />
+      <Setter Property="CornerRadius" Value="15 0 5 5" />
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
 
     <Style Selector="Border.header">
-      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+      <Setter Property="Background" Value="{DynamicResource TipsHeaderBackground}" />
+      <Setter Property="CornerRadius" Value="15 0 15 0" />
       <Setter Property="Padding" Value="0 8" />
     </Style>
     <Style Selector="Border.header TextBlock">
@@ -37,6 +39,9 @@
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
     </Style>
+    <Style Selector="Button#closeButton">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
   </Window.Styles>
 
   <Border Classes="wrap">
@@ -55,7 +60,7 @@
 
             <TextBlock Grid.Row="1" Grid.Column="0">Ctrl+E</TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1">Select next note</TextBlock>
-            
+
             <TextBlock Grid.Row="2" Grid.Column="0">Ctrl+N</TextBlock>
             <TextBlock Grid.Row="2" Grid.Column="1">Open New note window. Enter to create.</TextBlock>
 
@@ -93,9 +98,7 @@
 
 
       <Border Classes="buttonsWrap">
-        <DockPanel HorizontalAlignment="Right">
-          <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
-        </DockPanel>
+        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
     </StackPanel>
   </Border>

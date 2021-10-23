@@ -7,14 +7,15 @@
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="MinHeight" Value="20" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
-    <Setter Property="FontFamily" Value="{StaticResource MainFontFamily}" />
-    <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource MainFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource MainFontSize}" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Name="border"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}">
+                BorderThickness="{TemplateBinding BorderThickness}"
+				CornerRadius="{DynamicResource FormControlCornerRadius}">
           <Grid ColumnDefinitions="*,24">
             <TextBlock Name="PlaceholderTextBlock"
                        Grid.Column="0"
@@ -44,7 +45,8 @@
                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
                    PlacementTarget="{TemplateBinding}">
               <Border BorderBrush="{DynamicResource FormControlBorderBrush}"
-                      BorderThickness="1">
+                      BorderThickness="1"
+					  CornerRadius="{DynamicResource FormControlCornerRadius}">
                 <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                               VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                   <ItemsPresenter Name="PART_ItemsPresenter"
@@ -82,7 +84,7 @@
   </Style>
 
   <Style Selector="ComboBoxItem:selected TextBlock">
-  	<Setter Property="Foreground" Value="{DynamicResource ComboBoxItemSelectedForeground}" />
+    <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemSelectedForeground}" />
   </Style>
 
   <Style Selector="ComboBoxItem:selected:focus /template/ ContentPresenter">
@@ -90,7 +92,7 @@
   </Style>
 
   <Style Selector="ComboBoxItem:selected:focus TextBlock">
-  	<Setter Property="Foreground" Value="{DynamicResource ComboBoxItemSelectedForeground}" />
+    <Setter Property="Foreground" Value="{DynamicResource ComboBoxItemSelectedForeground}" />
   </Style>
 
   <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
@@ -103,9 +105,9 @@
 
 
   <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}"/>
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}"/>
   </Style>
   <Style Selector="ToggleButton:pressed /template/ ContentPresenter">
-  	<Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+    <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
   </Style>
 </Styles>

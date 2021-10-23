@@ -1,55 +1,87 @@
 ﻿<Style xmlns="https://github.com/avaloniaui"
-       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:sys="clr-namespace:System;assembly=netstandard">
 
   <Style.Resources>
-	<!-- WindowBackground and WindowOverlay are in Backgrounds -->
-	  
-	<!-- Button -->
-	<SolidColorBrush x:Key="ButtonBackground" Color="{DynamicResource ControlBackground}" />
-	<SolidColorBrush x:Key="ButtonBackgroundHover" Color="{DynamicResource ControlBackgroundHighlighted}" />
-	<SolidColorBrush x:Key="ButtonForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonBorderBrush">#3d3d43</SolidColorBrush>
-	<Thickness x:Key="ButtonBorderThickness">1</Thickness>
-	<Thickness x:Key="ButtonPadding">14 4</Thickness>
-	<SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
-	<SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
-	<SolidColorBrush x:Key="ButtonPrimaryBorderBrush" Color="{DynamicResource PrimaryColorBorderBrush}" />
-	<SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonSuccessBackground" Color="{DynamicResource SuccessColor}" />
-	<SolidColorBrush x:Key="ButtonSuccessBackgroundHover" Color="{DynamicResource SuccessColorLight}" />
-	<SolidColorBrush x:Key="ButtonSuccessBorderBrush">#219a31</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonDangerBackground" Color="{DynamicResource DangerColor}" />
-	<SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
-	<SolidColorBrush x:Key="ButtonDangerBorderBrush">#8a3121</SolidColorBrush>
-	<SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
-	  
-	<!-- Form Controls -->
-	<SolidColorBrush x:Key="FormControlBackground" Color="{DynamicResource ControlBackground}" />
-	<SolidColorBrush x:Key="FormControlForeground">#e8e8e8</SolidColorBrush>
-	<SolidColorBrush x:Key="FormControlBorderBrush">#3d3d43</SolidColorBrush>
-	<SolidColorBrush x:Key="FormControlBorderBrushHover" Color="{DynamicResource PrimaryColorBorderBrush}" />
+    <FontFamily x:Key="MainFontFamily">resm:SapphireNotes.Assets.Fonts?assembly=SapphireNotes#Open Sans</FontFamily>
+    <sys:Double x:Key="MainFontSize">14</sys:Double>
+    <SolidColorBrush x:Key="MainForeground">White</SolidColorBrush>
 
-	<!-- ComboBox -->
-	<SolidColorBrush x:Key="ComboBoxArrowColor">#e8e8e8</SolidColorBrush>
-	<SolidColorBrush x:Key="ComboBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
-	<SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
+    <Color x:Key="SuccessColor">#6641ff51</Color>
+    <Color x:Key="SuccessColorLight">#8861ff71</Color>
+    <Color x:Key="DangerColor">#66ff5141</Color>
+    <Color x:Key="DangerColorLight">#88ff7161</Color>
+    
+    <!-- WindowBackground and WindowOverlay are in Backgrounds -->
 
-	<!-- ListBox -->
-	<SolidColorBrush x:Key="ListBoxItemSelectedForeground">White</SolidColorBrush>
+    <!-- Button -->
+    <SolidColorBrush x:Key="ButtonBackground" Color="{DynamicResource ControlBackground}" />
+    <SolidColorBrush x:Key="ButtonBackgroundHover" Color="{DynamicResource ControlBackgroundHighlighted}" />
+    <SolidColorBrush x:Key="ButtonForeground">White</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonBorderBrush">#3d3d43</SolidColorBrush>
+    <Thickness x:Key="ButtonBorderThickness">1</Thickness>
+    <Thickness x:Key="ButtonPadding">14 4</Thickness>
+    <CornerRadius x:Key="ButtonCornerRadius">3</CornerRadius>
+    <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource PrimaryColor}" />
+    <SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource PrimaryColorLight}" />
+    <SolidColorBrush x:Key="ButtonPrimaryBorderBrush" Color="{DynamicResource PrimaryColorBorderBrush}" />
+    <SolidColorBrush x:Key="ButtonPrimaryForeground">White</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonSuccessBackground" Color="{DynamicResource SuccessColor}" />
+    <SolidColorBrush x:Key="ButtonSuccessBackgroundHover" Color="{DynamicResource SuccessColorLight}" />
+    <SolidColorBrush x:Key="ButtonSuccessBorderBrush">#219a31</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonSuccessForeground">White</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDangerBackground" Color="{DynamicResource DangerColor}" />
+    <SolidColorBrush x:Key="ButtonDangerBackgroundHover" Color="{DynamicResource DangerColorLight}" />
+    <SolidColorBrush x:Key="ButtonDangerBorderBrush">#8a3121</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDangerForeground">White</SolidColorBrush>
 
-	<!-- ContextMenu -->
-	<SolidColorBrush x:Key="ContextMenuBackground" Color="{DynamicResource ControlBackground}" />
+    <!-- Form Controls -->
+    <SolidColorBrush x:Key="FormControlBackground" Color="{DynamicResource ControlBackground}" />
+    <SolidColorBrush x:Key="FormControlForeground">#e8e8e8</SolidColorBrush>
+    <SolidColorBrush x:Key="FormControlBorderBrush">#3d3d43</SolidColorBrush>
+    <SolidColorBrush x:Key="FormControlBorderBrushHover" Color="{DynamicResource PrimaryColorBorderBrush}" />
+    <CornerRadius x:Key="FormControlCornerRadius">3</CornerRadius>
 
-	<!-- ScrollBar -->
-	<SolidColorBrush x:Key="ScrollBarBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
-	<SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />
-	<SolidColorBrush x:Key="ScrollBarThumbBackgroundHover" Color="{DynamicResource ScrollBarThumbBackgroundHoverColor}" />
-	<SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
-	  
-	<!-- Editor -->
-	<SolidColorBrush x:Key="EditorContainerBorderBackground">Transparent</SolidColorBrush>
-  
-</Style.Resources>
+    <!-- ComboBox -->
+    <SolidColorBrush x:Key="ComboBoxArrowColor">#e8e8e8</SolidColorBrush>
+    <SolidColorBrush x:Key="ComboBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
+    <SolidColorBrush x:Key="ComboBoxItemSelectedForeground">White</SolidColorBrush>
+
+    <!-- CheckBox -->
+    <SolidColorBrush x:Key="CheckBoxCheckMarkColor">#2181ff</SolidColorBrush>
+
+    <!-- ListBox -->
+    <SolidColorBrush x:Key="ListBoxItemHoverBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
+
+    <!-- ContextMenu -->
+    <SolidColorBrush x:Key="ContextMenuBackground" Color="{DynamicResource ControlBackground}" />
+
+    <!-- ScrollBar -->
+    <sys:Double x:Key="ScrollBarThickness">16</sys:Double>
+    <sys:Double x:Key="ScrollBarThumbThickness">8</sys:Double>
+    <SolidColorBrush x:Key="ScrollBarBackground" Color="{DynamicResource ControlBackgroundHighlighted}" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackground" Color="{DynamicResource ScrollBarThumbBackgroundColor}" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackgroundHover" Color="{DynamicResource ScrollBarThumbBackgroundHoverColor}" />
+    <SolidColorBrush x:Key="ScrollBarThumbBackgroundPressed" Color="{DynamicResource ScrollBarThumbBackgroundPressedColor}" />
+    <CornerRadius x:Key="ScrollBarCornerRadius">3</CornerRadius>
+
+    <!-- Editor -->
+    <SolidColorBrush x:Key="CreateNoteMessageForeground">#eee</SolidColorBrush>
+    <Thickness x:Key="EditorBorderThickness">0</Thickness>
+    <SolidColorBrush x:Key="EditorBorderBrush">Transparent</SolidColorBrush>
+    <CornerRadius x:Key="EditorCornerRadius">5</CornerRadius>
+
+    <!-- TabControl -->
+    <CornerRadius x:Key="TabItemCornerRadius">3</CornerRadius>
+    
+    <!-- Per Window Resources -->
+
+    <!-- ArchivedNotesWindow -->
+    <SolidColorBrush x:Key="ArchivedNotesHeaderBackground" Color="{DynamicResource PrimaryColor}" />
+
+    <!-- TipsWindow -->
+    <SolidColorBrush x:Key="TipsSectionBackground" Color="{DynamicResource ControlBackground}" />
+    <SolidColorBrush x:Key="TipsHeaderBackground" Color="{DynamicResource PrimaryColor}" />
+  </Style.Resources>
 
 </Style>

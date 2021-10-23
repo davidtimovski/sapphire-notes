@@ -1,2 +1,2 @@
-dpkg-deb --build sapphire-notes_0.6.0_amd64
-dpkg-deb --build sapphire-notes_0.6.0_armhf
+dpkg-deb --build sapphire-notes_0.6.1_amd64
+dpkg-deb --build sapphire-notes_0.6.1_armhf

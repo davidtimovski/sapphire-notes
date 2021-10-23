@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Sapphire Notes"
-#define MyAppVersion "0.6.0"
+#define MyAppVersion "0.6.1"
 #define MyAppPublisher "David Timovski"
 #define MyAppURL "https://www.davidtimovski.com/sapphire-notes"
 #define MyAppExeName "SapphireNotes.exe"
@@ -45,4 +45,3 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-

@@ -8,12 +8,14 @@
       <Setter Property="Background" Value="#55ff5141" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="BorderBrush" Value="#ff5141" />
+      <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="10 8" />
       <Setter Property="Margin" Value="0 0 0 15" />
     </Style>
 
     <Style Selector="TextBlock">
       <Setter Property="FontSize" Value="13" />
+      <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
   </UserControl.Styles>
 
@@ -22,6 +24,6 @@
   </Design.DataContext>
 
   <Border IsVisible="{Binding IsVisible}" MaxWidth="{Binding MaxWidth}">
-    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+    <TextBlock Text="{Binding Message}" />
   </Border>
 </UserControl>

@@ -14,9 +14,10 @@
     </Style>
 
     <Style Selector="Border.actionConfirmPrompt">
-      <Setter Property="Background" Value="#444171ff" />
+      <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="#4171ff" />
+      <Setter Property="BorderBrush" Value="#2181ff" />
+      <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="7 5" />
       <Setter Property="Margin" Value="0 0 0 15" />
     </Style>
@@ -29,7 +30,7 @@
       <Setter Property="Orientation" Value="Horizontal" />
       <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-    
+
     <Style Selector="StackPanel.actionButtons">
       <Setter Property="Orientation" Value="Horizontal" />
       <Setter Property="HorizontalAlignment" Value="Right" />
@@ -39,25 +40,30 @@
       <Setter Property="Margin" Value="0 0 5 0" />
     </Style>
 
-    <Style Selector="DockPanel.headers">
-      <Setter Property="Background" Value="{DynamicResource ButtonBackgroundHover}" />
+    <Style Selector="Border.header">
+      <Setter Property="Background" Value="{DynamicResource ArchivedNotesHeaderBackground}" />
+      <Setter Property="CornerRadius" Value="3" />
+      <Setter Property="Padding" Value="15 10" />
     </Style>
-    <Style Selector="DockPanel.headers Border">
-      <Setter Property="Padding" Value="10" />
+    <Style Selector="Border.header TextBlock">
+      <Setter Property="FontWeight" Value="500" />
     </Style>
-    
+
     <Style Selector="ListBox">
-      <Setter Property="Background" Value="{DynamicResource FormControlBackground}" />
+      <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
-      <Setter Property="Padding" Value="0" />
+      <Setter Property="Padding" Value="0 5" />
       <Setter Property="Margin" Value="0 0 0 10" />
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
     </Style>
 
     <Style Selector="ListBox ListBoxItem">
+      <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="5 2 5 2" />
     </Style>
     <Style Selector="ListBox ListBoxItem Border">
-      <!-- Somehow makes Border fully clickable -->
+      <!-- Somehow makes Border fully middle-mouse clickable -->
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="Padding" Value="10 5" />
     </Style>
@@ -65,12 +71,16 @@
     <Style Selector="TextBox">
       <Setter Property="MinHeight" Value="150" />
       <Setter Property="MaxHeight" Value="350" />
+      <Setter Property="IsReadOnly" Value="True" />
+      <Setter Property="AcceptsReturn" Value="True" />
+      <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style Selector="Border.noNotesAlert">
-      <Setter Property="Background" Value="#444171ff" />
+      <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="#4171ff" />
+      <Setter Property="BorderBrush" Value="#2181ff" />
+      <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="15" />
     </Style>
     <Style Selector="Border.noNotesAlert TextBlock">
@@ -79,6 +89,9 @@
 
     <Style Selector="Border.buttonsWrap">
       <Setter Property="Margin" Value="0 15 0 0" />
+    </Style>
+    <Style Selector="Button#closeButton">
+      <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
   </Window.Styles>
 
@@ -115,16 +128,14 @@
           </StackPanel>
         </StackPanel>
 
-        <DockPanel Classes="headers" Grid.Row="1">
-          <Border>
+        <Border Grid.Row="1" Classes="header">
+          <DockPanel>
             <TextBlock>Note</TextBlock>
-          </Border>
-          <Border HorizontalAlignment="Right">
-            <TextBlock>Archived</TextBlock>
-          </Border>
-        </DockPanel>
+            <TextBlock HorizontalAlignment="Right">Archived</TextBlock>
+          </DockPanel>
+        </Border>
 
-        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
+        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">
@@ -137,15 +148,11 @@
           </ListBox.ItemTemplate>
         </ListBox>
 
-        <Border Grid.Row="3">
-          <TextBox DataContext="{Binding Selected}"
-                  Text="{Binding Content}"
-                  IsReadOnly="True"
-                  FontSize="{Binding FontSize}"
-                  FontFamily="{Binding FontFamily}"
-                  AcceptsReturn="True"
-                  TextWrapping="Wrap" />
-        </Border>
+        <TextBox Grid.Row="3"
+				 DataContext="{Binding Selected}"
+                 Text="{Binding Content}"
+                 FontSize="{Binding FontSize}"
+                 FontFamily="{Binding FontFamily}" />
       </Grid>
 
       <Border IsVisible="{Binding !ArchivedNotesExist}" Classes="noNotesAlert">
@@ -153,7 +160,7 @@
       </Border>
 
       <Border Classes="buttonsWrap">
-        <Button Name="closeButton" HorizontalAlignment="Right" HotKey="Escape" Classes="button">Close</Button>
+        <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
     </StackPanel>
   </Border>

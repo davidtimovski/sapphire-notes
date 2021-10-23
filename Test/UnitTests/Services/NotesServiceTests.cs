@@ -229,7 +229,7 @@ namespace UnitTests.Services
 
             string font = _sut.GetFontThatAllNotesUse();
 
-            Assert.Equal(Globals.DefaultFontFamily, font);
+            Assert.Equal(Globals.DefaultNotesFontFamily, font);
         }
 
         [Fact]
@@ -260,7 +260,7 @@ namespace UnitTests.Services
 
             int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
-            Assert.Equal(Globals.DefaultFontSize, fontSize);
+            Assert.Equal(Globals.DefaultNotesFontSize, fontSize);
         }
 
         [Fact]

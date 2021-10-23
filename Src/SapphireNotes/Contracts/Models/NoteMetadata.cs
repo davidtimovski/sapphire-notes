@@ -4,15 +4,15 @@ namespace SapphireNotes.Contracts.Models
 {
     public class NoteMetadata
     {
-        public NoteMetadata() : this(Globals.DefaultFontFamily, Globals.DefaultFontSize, 0, null)
+        public NoteMetadata() : this(Globals.DefaultNotesFontFamily, Globals.DefaultNotesFontSize, 0, null)
         {
         }
 
-        public NoteMetadata(int caretPosition) : this(Globals.DefaultFontFamily, Globals.DefaultFontSize, caretPosition, null)
+        public NoteMetadata(int caretPosition) : this(Globals.DefaultNotesFontFamily, Globals.DefaultNotesFontSize, caretPosition, null)
         {
         }
 
-        public NoteMetadata(DateTime archived) : this(Globals.DefaultFontFamily, Globals.DefaultFontSize, 0, archived)
+        public NoteMetadata(DateTime archived) : this(Globals.DefaultNotesFontFamily, Globals.DefaultNotesFontSize, 0, archived)
         {
         }
 
