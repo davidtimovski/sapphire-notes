@@ -27,7 +27,7 @@ namespace SapphireNotes.Repositories
         public void Create(string name)
         {
             var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
-            File.Create(path);
+            File.Create(path).Dispose();
         }
 
         public string Create(string name, string content)

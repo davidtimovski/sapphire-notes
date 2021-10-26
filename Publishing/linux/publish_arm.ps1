@@ -1,4 +1,4 @@
-$Version = "0.6.1"
+$Version = "0.6.2"
 
 cd "C:\Users\david\source\repos\sapphire-notes\Publishing\linux"
 
