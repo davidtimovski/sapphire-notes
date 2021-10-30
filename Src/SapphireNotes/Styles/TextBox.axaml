@@ -7,6 +7,7 @@
     <Setter Property="CornerRadius" Value="{DynamicResource FormControlCornerRadius}" />
     <Setter Property="Padding" Value="8 6" />
     <Setter Property="Foreground" Value="{DynamicResource FormControlForeground}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource FormControlForeground}" />
     <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColorLight}" />
     <Setter Property="FontFamily" Value="{DynamicResource MainFontFamily}" />
     <Setter Property="FontSize" Value="{DynamicResource MainFontSize}" />
