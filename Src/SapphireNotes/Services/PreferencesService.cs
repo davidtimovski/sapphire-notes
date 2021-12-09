@@ -72,6 +72,8 @@ namespace SapphireNotes.Services
             writer.Write(Preferences.NotesDirectory);
             writer.Write(Preferences.AutoSaveInterval);
             writer.Write(Preferences.Theme);
+            writer.Write(Preferences.NotesFontFamily);
+            writer.Write(Preferences.NotesFontSize);
             writer.Write(Preferences.Window.Width);
             writer.Write(Preferences.Window.Height);
             writer.Write(Preferences.Window.PositionX);
@@ -107,6 +109,8 @@ namespace SapphireNotes.Services
                 NotesDirectory = reader.ReadString(),
                 AutoSaveInterval = reader.ReadInt16(),
                 Theme = reader.ReadString(),
+                NotesFontFamily = reader.ReadString(),
+                NotesFontSize = reader.ReadInt32(),
                 Window = new WindowPreferences
                 {
                     Width = reader.ReadInt32(),

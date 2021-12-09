@@ -8,10 +8,6 @@ namespace SapphireNotes.Contracts.Models
         {
         }
 
-        public NoteMetadata(int caretPosition) : this(Globals.DefaultNotesFontFamily, Globals.DefaultNotesFontSize, caretPosition, null)
-        {
-        }
-
         public NoteMetadata(DateTime archived) : this(Globals.DefaultNotesFontFamily, Globals.DefaultNotesFontSize, 0, archived)
         {
         }

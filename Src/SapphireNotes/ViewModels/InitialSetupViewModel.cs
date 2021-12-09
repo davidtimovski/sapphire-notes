@@ -12,18 +12,21 @@ namespace SapphireNotes.ViewModels
             _preferencesService = preferencesService;
         }
 
-        public void SetNotesDirectory(string directory)
+        public void SelectNotesDirectory(string directory)
         {
             if (directory == string.Empty) return;
-            
+
+            NotesDirectory = directory;
             DirectoryTextBoxVisible = true;
 
-            _preferencesService.Preferences.NotesDirectory = directory;
-            _preferencesService.SavePreferences();
-
-            NotesDirectory = _preferencesService.Preferences.NotesDirectory;
             SelectButtonLabel = "Change storage folder";
             StartButtonVisible = true;
+        }
+
+        public void SaveNotesDirectory()
+        {
+            _preferencesService.Preferences.NotesDirectory = NotesDirectory;
+            _preferencesService.SavePreferences();
         }
 
         private bool directoryTextBoxVisible;
@@ -47,7 +50,7 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref notesDirectory, value);
         }
 
-        private string selectButtonLabel = "Choose storage folder";
+        private string selectButtonLabel = "Select storage folder";
         private string SelectButtonLabel
         {
             get => selectButtonLabel;

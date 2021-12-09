@@ -27,11 +27,14 @@ namespace SapphireNotes.Views
             var directory = await new OpenFolderDialog().ShowAsync(this);
 
             var vm = (InitialSetupViewModel)DataContext;
-            vm.SetNotesDirectory(directory);
+            vm.SelectNotesDirectory(directory);
         }
 
         private void StartButtonClicked()
         {
+            var vm = (InitialSetupViewModel)DataContext;
+            vm.SaveNotesDirectory();
+
             Started.Invoke(this, null);
             Close();
         }

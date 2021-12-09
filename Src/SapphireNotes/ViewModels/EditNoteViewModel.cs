@@ -10,26 +10,29 @@ namespace SapphireNotes.ViewModels
     public class EditNoteViewModel : ViewModelBase
     {
         private readonly INotesService _notesService;
+        private readonly IPreferencesService _preferencesService;
         private readonly Note _editNote;
 
         public EditNoteViewModel() {}
-        public EditNoteViewModel(INotesService notesService)
+        public EditNoteViewModel(INotesService notesService, IPreferencesService preferencesService)
         {
             _notesService = notesService;
+            _preferencesService = preferencesService;
 
             title = "New note";
             saveButtonLabel = "Create";
             isNew = true;
             name = string.Empty;
 
-            selectedFontIndex = Array.IndexOf(availableFonts, Globals.DefaultNotesFontFamily);
+            selectedFontIndex = Array.IndexOf(availableFonts, _preferencesService.Preferences.NotesFontFamily);
             availableFontSizes = Globals.AvailableFontSizes;
-            selectedFontSizeIndex = Array.IndexOf(availableFontSizes, Globals.DefaultNotesFontSize);
+            selectedFontSizeIndex = Array.IndexOf(availableFontSizes, _preferencesService.Preferences.NotesFontSize);
         }
 
-        public EditNoteViewModel(INotesService notesService, Note note)
+        public EditNoteViewModel(INotesService notesService, IPreferencesService preferencesService, Note note)
         {
             _notesService = notesService;
+            _preferencesService = preferencesService;
 
             title = "Edit note";
             saveButtonLabel = "Save";
@@ -48,6 +51,8 @@ namespace SapphireNotes.ViewModels
 
             try
             {
+                UpdatePreferences(fontFamily, fontSize);
+
                 _notesService.Create(name, fontFamily, fontSize);
             }
             catch (ValidationException ex)
@@ -66,6 +71,8 @@ namespace SapphireNotes.ViewModels
 
             try
             {
+                UpdatePreferences(_editNote.Metadata.FontFamily, _editNote.Metadata.FontSize);
+
                 _notesService.Update(name, _editNote);
             }
             catch (ValidationException ex)
@@ -75,6 +82,13 @@ namespace SapphireNotes.ViewModels
             }
 
             return true;
+        }
+
+        private void UpdatePreferences(string fontFamily, int fontSize)
+        {
+            _preferencesService.Preferences.NotesFontFamily = fontFamily;
+            _preferencesService.Preferences.NotesFontSize = fontSize;
+            _preferencesService.SavePreferences();
         }
 
         private string title;

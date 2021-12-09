@@ -92,14 +92,20 @@ namespace SapphireNotes.ViewModels
 
                 if (selectedFontIndex != _initialFontIndex)
                 {
-                    preferences.NewFontFamily = availableFonts[selectedFontIndex];
-                    _notesService.SetFontForAll(preferences.NewFontFamily);
+                    var fontFamily = availableFonts[selectedFontIndex];
+
+                    _preferencesService.Preferences.NotesFontFamily = fontFamily;
+                    preferences.NewFontFamily = fontFamily;
+                    _notesService.SetFontForAll(fontFamily);
                 }
 
                 if (selectedFontSizeIndex != _initialFontSizeIndex)
                 {
-                    preferences.NewFontSize = int.Parse(availableFontSizes[selectedFontSizeIndex]);
-                    _notesService.SetFontSizeForAll(preferences.NewFontSize.Value);
+                    var fontSize = int.Parse(availableFontSizes[selectedFontSizeIndex]);
+
+                    _preferencesService.Preferences.NotesFontSize = fontSize;
+                    preferences.NewFontSize = fontSize;
+                    _notesService.SetFontSizeForAll(fontSize);
                 }
 
                 _preferencesService.UpdatePreferences(preferences);

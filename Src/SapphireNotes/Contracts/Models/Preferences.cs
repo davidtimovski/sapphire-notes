@@ -8,6 +8,8 @@
         public string NotesDirectory { get; set; } = string.Empty;
         public short AutoSaveInterval { get; set; } = 10;
         public string Theme { get; set; } = "Dark";
+        public string NotesFontFamily { get; set; } = Globals.DefaultNotesFontFamily;
+        public int NotesFontSize { get; set; } = Globals.DefaultNotesFontSize;
         public WindowPreferences Window { get; set; } = new WindowPreferences();
     }
 

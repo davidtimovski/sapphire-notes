@@ -68,7 +68,7 @@ namespace UnitTests.Services
             _sut.Created += (object sender, CreatedNoteEventArgs e)
                 => eventInvoked = true;
 
-            _sut.CreateQuick("dummy content");
+            _sut.CreateQuick("dummy content", It.IsAny<string>(), It.IsAny<int>());
 
             Assert.True(eventInvoked);
         }

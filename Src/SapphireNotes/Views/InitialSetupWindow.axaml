@@ -5,29 +5,30 @@
         Title="Let's set things up">
 
   <Window.Styles>
-    <Style Selector="TextBlock">
-      <Setter Property="MaxWidth" Value="450" />
-      <Setter Property="TextWrapping" Value="Wrap" />
-    </Style>
-
     <Style Selector="Border.welcome">
-      <Setter Property="Margin" Value="0 0 0 15" />
+      <Setter Property="Margin" Value="0 0 0 20" />
     </Style>
 
     <Style Selector="Border.welcome TextBlock">
       <Setter Property="FontSize" Value="16" />
     </Style>
 
+    <Style Selector="TextBlock.beforeYouBegin">
+      <Setter Property="MaxWidth" Value="450" />
+      <Setter Property="LineHeight" Value="22" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
     <Style Selector="Border.directory">
       <Setter Property="Margin" Value="0 15" />
     </Style>
 
-    <Style Selector="TextBox">
-      <Setter Property="Width" Value="450" />
+    <Style Selector="Border.directory TextBox">
+      <Setter Property="MaxWidth" Value="423" />
       <Setter Property="IsReadOnly" Value="True" />
     </Style>
 
-    <Style Selector="DockPanel">
+    <Style Selector="DockPanel.buttonsWrap">
       <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -43,16 +44,16 @@
   <Border Classes="wrap">
     <StackPanel>
       <Border Classes="welcome">
-        <TextBlock>Welcome to Sapphire Notes.</TextBlock>
+        <TextBlock>Welcome to Sapphire Notes</TextBlock>
       </Border>
 
-      <TextBlock>Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
+      <TextBlock Classes="beforeYouBegin">Before you begin, please choose the folder where you want your notes to be stored. You can change this later if you wish.</TextBlock>
 
       <Border Classes="directory">
         <TextBox Text="{Binding NotesDirectory}" IsVisible="{Binding DirectoryTextBoxVisible}" />
       </Border>
 
-      <DockPanel>
+      <DockPanel Classes="buttonsWrap">
         <Button Name="selectButton" Content="{Binding SelectButtonLabel}" Classes="button" />
         <Button Name="startButton" IsVisible="{Binding StartButtonVisible}" Classes="button primary">Start</Button>
       </DockPanel>

@@ -33,6 +33,7 @@
       <Setter Property="Padding" Value="15 10" />
     </Style>
     <Style Selector="Border.description TextBlock">
+      <Setter Property="HorizontalAlignment" Value="Center" />
       <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
@@ -86,16 +87,10 @@
           </Border>
 
           <Border Classes="description">
-            <StackPanel>
-              <TextBlock Margin="0 0 0 10">- When done on the note name (tab) in the main window it archives the note.</TextBlock>
-
-              <TextBlock>- When done on a note in the Archived notes window it restores the note.</TextBlock>
-            </StackPanel>
+            <TextBlock>When done on a tab in the main window it archives that note.</TextBlock>
           </Border>
         </StackPanel>
       </Border>
-
-
 
       <Border Classes="buttonsWrap">
         <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace SapphireNotes.Utils
 {
@@ -48,7 +49,12 @@ namespace SapphireNotes.Utils
                 return $"{Math.Ceiling((double) dayDiff / 7)} weeks ago";
             }
 
-            return dateTime.ToString();
+            if (dateTime.Year == DateTime.Now.Year)
+            {
+                return dateTime.ToString("MMM-dd HH:mm", CultureInfo.InvariantCulture);
+            }
+
+            return dateTime.ToString("yyyy-MMM-dd HH:mm", CultureInfo.InvariantCulture);
         }
     }
 }

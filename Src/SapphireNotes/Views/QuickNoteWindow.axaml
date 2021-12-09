@@ -29,7 +29,12 @@
 
   <Border Classes="wrap">
     <StackPanel>
-      <TextBox Text="{Binding Content}" AcceptsReturn="True" TextWrapping="Wrap" be:FocusBehavior.InitialFocus="True" />
+      <TextBox Text="{Binding Content}"
+               AcceptsReturn="True" 
+               TextWrapping="Wrap"
+               FontSize="{Binding FontSize}"
+		       FontFamily="{Binding FontFamily}"
+               be:FocusBehavior.InitialFocus="True" />
 
       <Border Classes="buttonsWrap">
         <DockPanel>

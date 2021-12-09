@@ -1,7 +1,6 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
-        xmlns:be="clr-namespace:SapphireNotes.Behaviors"
         x:Class="SapphireNotes.Views.ArchivedNotesWindow"
         Title="Archived notes">
 
@@ -63,8 +62,6 @@
       <Setter Property="Margin" Value="5 2 5 2" />
     </Style>
     <Style Selector="ListBox ListBoxItem Border">
-      <!-- Somehow makes Border fully middle-mouse clickable -->
-      <Setter Property="Background" Value="Transparent" />
       <Setter Property="Padding" Value="10 5" />
     </Style>
 
@@ -105,7 +102,7 @@
         <Grid.RowDefinitions>
           <RowDefinition />
           <RowDefinition />
-          <RowDefinition MaxHeight="300" />
+          <RowDefinition Height="200" />
           <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -138,7 +135,7 @@
         <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" Grid.Row="2">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
-              <Border be:MiddleClickBehavior.Command="{Binding OnMiddleClickCommand}">
+              <Border>
                 <DockPanel>
                   <TextBlock Text="{Binding Name}" />
                   <TextBlock Text="{Binding ArchivedDate}" TextAlignment="Right" />

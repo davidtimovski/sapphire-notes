@@ -11,7 +11,7 @@ namespace SapphireNotes.Services
     public interface INotesService
     {
         void Create(string name, string fontFamily, int fontSize);
-        void CreateQuick(string content);
+        void CreateQuick(string content, string fontFamily, int fontSize);
         void Update(string newName, Note note);
         void Archive(Note note);
         void Restore(Note note);
@@ -77,11 +77,11 @@ namespace SapphireNotes.Services
             });
         }
 
-        public void CreateQuick(string content)
+        public void CreateQuick(string content, string fontFamily, int fontSize)
         {
             string name = _notesRepository.Create("Quick note", content);
 
-            var note = new Note(name, content, DateTime.Now, new NoteMetadata(content.Length));
+            var note = new Note(name, content, DateTime.Now, new NoteMetadata(fontFamily, fontSize, content.Length));
 
             _notesMetadataService.Add(note.Name, note.Metadata);
             _notesMetadataService.Save();

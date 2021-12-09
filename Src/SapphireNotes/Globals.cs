@@ -21,7 +21,7 @@ namespace SapphireNotes
         }
 
         public const string ApplicationName = "Sapphire Notes";
-        public const string Version = "0.6.2";
+        public const string Version = "0.6.3";
         public const string ArchivePrefix = "archive";
         public const string DefaultNotesFontFamily = "Open Sans";
         public const int DefaultNotesFontSize = 15;

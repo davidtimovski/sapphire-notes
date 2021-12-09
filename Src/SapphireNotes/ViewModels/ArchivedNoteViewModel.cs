@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reactive;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using ReactiveUI;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.Utils;
@@ -12,7 +10,6 @@ namespace SapphireNotes.ViewModels
         public ArchivedNoteViewModel(Note note)
         {
             Note = note;
-            OnMiddleClickCommand = ReactiveCommand.Create(() => MiddleMouseClicked.Invoke(this, null));
 
             name = note.Name;
             content = note.Content;
@@ -22,8 +19,6 @@ namespace SapphireNotes.ViewModels
         }
 
         public Note Note { get; }
-
-        public event EventHandler<EventArgs> MiddleMouseClicked;
 
         private string name;
         public string Name
@@ -59,7 +54,5 @@ namespace SapphireNotes.ViewModels
             get => archivedDate;
             set => this.RaiseAndSetIfChanged(ref archivedDate, value);
         }
-
-        private ReactiveCommand<Unit, Unit> OnMiddleClickCommand { get; }
     }
 }
