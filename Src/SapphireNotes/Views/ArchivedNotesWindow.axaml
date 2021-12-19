@@ -8,35 +8,44 @@
     <Style Selector="Window">
       <Setter Property="Width" Value="600" />
       <Setter Property="MinWidth" Value="600" />
-      <Setter Property="MinHeight" Value="127" />
+      <Setter Property="MinHeight" Value="550" />
       <Setter Property="SizeToContent" Value="Height" />
     </Style>
 
-    <Style Selector="Border.actionConfirmPrompt">
+    <Style Selector="StackPanel.actions">
+      <Setter Property="Height" Value="29" />
+      <Setter Property="Margin" Value="0 5 0 15" />
+    </Style>
+    
+    <Style Selector="Border.promptText">
       <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="BorderBrush" Value="#2181ff" />
       <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="7 5" />
-      <Setter Property="Margin" Value="0 0 0 15" />
+      <Setter Property="Margin" Value="0 0 10 0" />
     </Style>
-
-    <Style Selector="Border.promptText">
-      <Setter Property="Padding" Value="5" />
-    </Style>
-
-    <Style Selector="StackPanel.promptButtons">
-      <Setter Property="Orientation" Value="Horizontal" />
-      <Setter Property="HorizontalAlignment" Value="Right" />
-    </Style>
-
-    <Style Selector="StackPanel.actionButtons">
-      <Setter Property="Orientation" Value="Horizontal" />
-      <Setter Property="HorizontalAlignment" Value="Right" />
-      <Setter Property="Margin" Value="0 5 0 10" />
+    <Style Selector="Border.promptText TextBlock">
+      <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
     <Style Selector="Button.leftButton">
       <Setter Property="Margin" Value="0 0 5 0" />
+    </Style>
+    <Style Selector="DockPanel.restoreDeleteButtons">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style Selector="Panel.searchMenu">
+      <Setter Property="Margin" Value="0 0 0 15" />
+    </Style>
+    <Style Selector="Panel.searchMenu TextBox">
+      <Setter Property="Margin" Value="0 0 38 0" />
+    </Style>
+    <Style Selector="Panel.searchMenu Button">
+      <Setter Property="Width" Value="33" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="CornerRadius" Value="{DynamicResource FormControlCornerRadius}" />
+      <Setter Property="Padding" Value="2" />
     </Style>
 
     <Style Selector="Border.header">
@@ -49,13 +58,13 @@
     </Style>
 
     <Style Selector="ListBox">
+      <Setter Property="Height" Value="175" />
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Padding" Value="0 5" />
       <Setter Property="Margin" Value="0 0 0 10" />
       <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
     </Style>
-
     <Style Selector="ListBox ListBoxItem">
       <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="0" />
@@ -65,23 +74,22 @@
       <Setter Property="Padding" Value="10 5" />
     </Style>
 
-    <Style Selector="TextBox">
-      <Setter Property="MinHeight" Value="150" />
-      <Setter Property="MaxHeight" Value="350" />
-      <Setter Property="IsReadOnly" Value="True" />
-      <Setter Property="AcceptsReturn" Value="True" />
-      <Setter Property="TextWrapping" Value="Wrap" />
-    </Style>
-
     <Style Selector="Border.noNotesAlert">
       <Setter Property="Background" Value="#442181ff" />
       <Setter Property="BorderThickness" Value="1" />
       <Setter Property="BorderBrush" Value="#2181ff" />
       <Setter Property="CornerRadius" Value="3" />
       <Setter Property="Padding" Value="15" />
+      <Setter Property="Margin" Value="0 10 0 0" />
     </Style>
     <Style Selector="Border.noNotesAlert TextBlock">
       <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="TextBox.contentPreview">
+      <Setter Property="IsReadOnly" Value="True" />
+      <Setter Property="AcceptsReturn" Value="True" />
+      <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style Selector="Border.buttonsWrap">
@@ -97,42 +105,50 @@
   </Design.DataContext>
 
   <Border Classes="wrap">
-    <StackPanel>
-      <Grid IsVisible="{Binding ArchivedNotesExist}">
-        <Grid.RowDefinitions>
-          <RowDefinition />
-          <RowDefinition />
-          <RowDefinition Height="200" />
-          <RowDefinition />
-        </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="315" />
+        <RowDefinition />
+        <RowDefinition Height="44" />
+      </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-          <Border IsVisible="{Binding ConfirmPromptVisible}" Opacity="{Binding ConfirmPromptOpacity}" Classes="actionConfirmPrompt">
-            <DockPanel>
-              <Border Classes="promptText">
-                <TextBlock Text="{Binding ConfirmPromptText}" />
-              </Border>
-              <StackPanel Classes="promptButtons">
-                <Button Command="{Binding OnConfirmCommand}" Classes="button primary leftButton">Yes</Button>
-                <Button Command="{Binding OnCancelCommand}" Classes="button">No</Button>
-              </StackPanel>
+      <StackPanel Grid.Row="0">
+        <StackPanel Classes="actions">
+          <Grid IsVisible="{Binding ConfirmPromptVisible}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition Width="109" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Classes="promptText">
+              <TextBlock>Are you sure you wish to delete the selected note?</TextBlock>
+            </Border>
+
+            <DockPanel Grid.Column="1">
+              <Button Command="{Binding OnConfirmCommand}" Classes="button primary leftButton">Yes</Button>
+              <Button Command="{Binding OnCancelCommand}" Classes="button">No</Button>
             </DockPanel>
-          </Border>
-
-          <StackPanel Classes="actionButtons">
+          </Grid>
+          
+          <DockPanel IsVisible="{Binding !ConfirmPromptVisible}" Classes="restoreDeleteButtons">
             <Button Command="{Binding OnRestoreCommand}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button success leftButton">Restore</Button>
             <Button Command="{Binding OnDeleteCommand}" IsEnabled="{Binding ActionButtonsEnabled}" Classes="button danger">Delete</Button>
-          </StackPanel>
+          </DockPanel>
         </StackPanel>
 
-        <Border Grid.Row="1" Classes="header">
+        <Panel Classes="searchMenu">
+          <TextBox Name="searchTextBox" Text="{Binding SearchText}" IsEnabled="{Binding SearchFieldEnabled}" Watermark="Search" />
+          <Button Command="{Binding OnClearSearchCommand}" IsEnabled="{Binding ClearSearchEnabled}" Classes="button">x</Button>
+        </Panel>
+
+        <Border Classes="header">
           <DockPanel>
             <TextBlock>Note</TextBlock>
             <TextBlock HorizontalAlignment="Right">Archived</TextBlock>
           </DockPanel>
         </Border>
 
-        <ListBox Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}" Grid.Row="2">
+        <ListBox IsVisible="{Binding ArchivedNotesExist}" Items="{Binding ArchivedNotes}" SelectedItem="{Binding Selected}">
           <ListBox.ItemTemplate>
             <DataTemplate DataType="vm:ArchivedNoteViewModel">
               <Border>
@@ -145,21 +161,23 @@
           </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBox Grid.Row="3"
-				 DataContext="{Binding Selected}"
-                 Text="{Binding Content}"
-                 FontSize="{Binding FontSize}"
-                 FontFamily="{Binding FontFamily}" />
-      </Grid>
+        <Border IsVisible="{Binding !ArchivedNotesExist}" Classes="noNotesAlert">
+          <TextBlock>You don't have any archived notes.</TextBlock>
+        </Border>
+      </StackPanel>
 
-      <Border IsVisible="{Binding !ArchivedNotesExist}" Classes="noNotesAlert">
-        <TextBlock>You don't have any archived notes.</TextBlock>
-      </Border>
+      <TextBox Grid.Row="1"
+               DataContext="{Binding Selected}"
+               Text="{Binding Content}"
+               FontSize="{Binding FontSize}"
+               FontFamily="{Binding FontFamily}"
+               Classes="contentPreview" />
 
-      <Border Classes="buttonsWrap">
+      <Border Grid.Row="2" Classes="buttonsWrap">
         <Button Name="closeButton" HotKey="Escape" Classes="button">Close</Button>
       </Border>
-    </StackPanel>
+    </Grid>
+
   </Border>
 
 </Window>

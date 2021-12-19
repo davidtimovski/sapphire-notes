@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using DynamicData;
@@ -7,10 +9,12 @@ using SapphireNotes.Services;
 
 namespace SapphireNotes.ViewModels
 {
-    public class ArchivedNotesViewModel : ViewModelBase
+    public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
     {
         private readonly INotesService _notesService;
-        
+        private readonly List<ArchivedNoteViewModel> shadowNotes;
+        private string previousSearchText = string.Empty;
+
         public  ArchivedNotesViewModel() {}
 
         public ArchivedNotesViewModel(INotesService notesService)
@@ -22,28 +26,81 @@ namespace SapphireNotes.ViewModels
 
             var archived = _notesService.LoadArchived();
             archivedNotesExist = archived.Any();
+            searchFieldEnabled = archived.Length > 1;
 
             var viewModels = archived.Select(x => new ArchivedNoteViewModel(x));
             ArchivedNotes.AddRange(viewModels);
+
+            shadowNotes = viewModels.ToList();
 
             OnRestoreCommand = ReactiveCommand.Create(RestoreSelectedNote);
             OnDeleteCommand = ReactiveCommand.Create(DeleteSelectedNote);
             OnConfirmCommand = ReactiveCommand.Create(ConfirmDelete);
             OnCancelCommand = ReactiveCommand.Create(CancelDelete);
+            OnClearSearchCommand = ReactiveCommand.Create(ClearSearch);
+        }
+
+        public void SearchTextChanged()
+        {
+            var searchText = SearchText.Trim().ToLowerInvariant();
+
+            if (searchText != previousSearchText)
+            {
+                FilterNotes(searchText);
+            }
+
+            previousSearchText = searchText;
+        }
+
+        private void FilterNotes(string searchText)
+        {
+            ArchivedNotes.Clear();
+
+            if (searchText == string.Empty)
+            {
+                ArchivedNotes.AddRange(shadowNotes.OrderByDescending(x => x.ArchivedDate));
+            }
+            else
+            {
+                var matches = shadowNotes.Select(x =>
+                {
+                    short score = 0;
+                    if (x.Name.ToLowerInvariant().Contains(searchText))
+                    {
+                        score += 2;
+                    }
+                    if (x.Content.ToLowerInvariant().Contains(searchText))
+                    {
+                        score += 1;
+                    }
+
+                    return new { Score = score, Note = x };
+                })
+                    .Where(x => x.Score > 0)
+                    .OrderByDescending(x => x.Score)
+                    .ThenByDescending(x => x.Note.ArchivedDate)
+                    .Select(x => x.Note);
+
+                ArchivedNotes.AddRange(matches);
+            }
         }
 
         private ReactiveCommand<Unit, Unit> OnRestoreCommand { get; }
         private ReactiveCommand<Unit, Unit> OnDeleteCommand { get; }
         private ReactiveCommand<Unit, Unit> OnConfirmCommand { get; }
         private ReactiveCommand<Unit, Unit> OnCancelCommand { get; }
+        private ReactiveCommand<Unit, Unit> OnClearSearchCommand { get; }
 
         private void NoteArchived(object sender, ArchivedNoteEventArgs e)
         {
             var archivedNoteVm = new ArchivedNoteViewModel(e.ArchivedNote);
 
-            ArchivedNotes.Insert(0, archivedNoteVm);
+            shadowNotes.Add(archivedNoteVm);
+
+            FilterNotes(SearchText.Trim().ToLowerInvariant());
 
             ArchivedNotesExist = true;
+            SearchFieldEnabled = shadowNotes.Count > 1;
         }
 
         private void NoteRestored(object sender, RestoredNoteEventArgs e)
@@ -74,34 +131,40 @@ namespace SapphireNotes.ViewModels
                 return;
             }
 
-            ShowConfirmPrompt("Are you sure you wish to delete the selected note?");
+            SearchFieldEnabled = false;
+            ConfirmPromptVisible = true;
         }
 
         private void ConfirmDelete()
         {
             _notesService.Delete(selected.Note);
 
-            HideConfirmPrompt();
+            HideConfirmDeletePrompt();
             Selected = null;
         }
 
         private void CancelDelete()
         {
-            HideConfirmPrompt();
+            HideConfirmDeletePrompt();
             ActionButtonsEnabled = true;
         }
 
-        private void HideConfirmPrompt()
+        private void ClearSearch()
         {
-            ConfirmPromptOpacity = 0;
-            ConfirmPromptVisible = false;
-            ConfirmPromptText = null;
+            SearchText = string.Empty;
+
+            ArchivedNotes.Clear();
+            ArchivedNotes.AddRange(shadowNotes.OrderByDescending(x => x.ArchivedDate));
+
+            previousSearchText = string.Empty;
         }
 
         private void RemoveNote(ArchivedNoteViewModel archivedNoteVm)
         {
+            shadowNotes.RemoveAll(x => x.Name == archivedNoteVm.Name);
             ArchivedNotes.Remove(archivedNoteVm);
-            ArchivedNotesExist = ArchivedNotes.Any();
+            ArchivedNotesExist = shadowNotes.Any();
+            SearchFieldEnabled = shadowNotes.Count > 1;
         }
 
         private bool archivedNotesExist;
@@ -118,6 +181,31 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref actionButtonsEnabled, value);
         }
 
+        private string searchText = string.Empty;
+        private string SearchText
+        {
+            get => searchText;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref searchText, value);
+                ClearSearchEnabled = searchText.Trim().Length > 0;
+            }
+        }
+
+        private bool searchFieldEnabled;
+        private bool SearchFieldEnabled
+        {
+            get => searchFieldEnabled;
+            set => this.RaiseAndSetIfChanged(ref searchFieldEnabled, value);
+        }
+
+        private bool clearSearchEnabled;
+        private bool ClearSearchEnabled
+        {
+            get => clearSearchEnabled;
+            set => this.RaiseAndSetIfChanged(ref clearSearchEnabled, value);
+        }
+
         private ObservableCollection<ArchivedNoteViewModel> ArchivedNotes { get; } = new ObservableCollection<ArchivedNoteViewModel>();
 
         private ArchivedNoteViewModel selected;
@@ -131,7 +219,7 @@ namespace SapphireNotes.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
                 ActionButtonsEnabled = value != null;
-                HideConfirmPrompt();
+                HideConfirmDeletePrompt();
             }
         }
 
@@ -149,19 +237,18 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref confirmPromptText, value);
         }
 
-        private double confirmPromptOpacity;
-        private double ConfirmPromptOpacity
+        private void HideConfirmDeletePrompt()
         {
-            get => confirmPromptOpacity;
-            set => this.RaiseAndSetIfChanged(ref confirmPromptOpacity, value);
+            ConfirmPromptVisible = false;
+            ConfirmPromptText = null;
+            SearchFieldEnabled = shadowNotes.Count > 1;
         }
 
-        private void ShowConfirmPrompt(string text)
+        public void Dispose()
         {
-            ActionButtonsEnabled = false;
-            ConfirmPromptText = text;
-            ConfirmPromptVisible = true;
-            ConfirmPromptOpacity = 1;
+            _notesService.Archived -= NoteArchived;
+            _notesService.Restored -= NoteRestored;
+            _notesService.Deleted -= NoteDeleted;
         }
     }
 }

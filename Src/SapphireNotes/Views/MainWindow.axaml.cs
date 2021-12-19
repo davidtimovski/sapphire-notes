@@ -111,8 +111,7 @@ namespace SapphireNotes.Views
             var window = new QuickNoteWindow
             {
                 DataContext = new QuickNoteViewModel(_notesService, _preferencesService),
-                Topmost = true,
-                CanResize = false
+                Topmost = true
             };
             window.Show();
             window.Activate();

@@ -6,15 +6,13 @@
         Title="Quick note">
 
   <Window.Styles>
-    <Style Selector="TextBox">
-      <Setter Property="Width" Value="500" />
-      <Setter Property="Height" Value="200" />
+    <Style Selector="Window">
+      <Setter Property="MinWidth" Value="500" />
+      <Setter Property="MinHeight" Value="250" />
     </Style>
 
-    <Style Selector="Border.buttonsWrap">
+    <Style Selector="DockPanel.buttonsWrap">
       <Setter Property="Margin" Value="0 20 0 0" />
-    </Style>
-    <Style Selector="Border.buttonsWrap DockPanel">
       <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -28,21 +26,25 @@
   </Design.DataContext>
 
   <Border Classes="wrap">
-    <StackPanel>
-      <TextBox Text="{Binding Content}"
-               AcceptsReturn="True" 
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition Height="49" />
+      </Grid.RowDefinitions>
+
+      <TextBox Grid.Row="0"
+               Text="{Binding Content}"
+               AcceptsReturn="True"
                TextWrapping="Wrap"
                FontSize="{Binding FontSize}"
 		       FontFamily="{Binding FontFamily}"
                be:FocusBehavior.InitialFocus="True" />
 
-      <Border Classes="buttonsWrap">
-        <DockPanel>
-          <Button Name="createButton" HotKey="Ctrl+Enter" Classes="button primary">Create</Button>
-          <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
-        </DockPanel>
-      </Border>
-    </StackPanel>
+      <DockPanel Grid.Row="1" Classes="buttonsWrap">
+        <Button Name="createButton" HotKey="Ctrl+Enter" Classes="button primary">Create</Button>
+        <Button Name="cancelButton" HotKey="Escape" Classes="button">Cancel</Button>
+      </DockPanel>
+    </Grid>
   </Border>
 
 </Window>

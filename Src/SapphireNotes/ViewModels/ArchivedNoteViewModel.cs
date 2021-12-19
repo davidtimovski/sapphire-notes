@@ -28,7 +28,7 @@ namespace SapphireNotes.ViewModels
         }
 
         private string content;
-        private string Content
+        public string Content
         {
             get => content;
             set => this.RaiseAndSetIfChanged(ref content, value);
@@ -49,7 +49,7 @@ namespace SapphireNotes.ViewModels
         }
 
         private string archivedDate;
-        private string ArchivedDate
+        public string ArchivedDate
         {
             get => archivedDate;
             set => this.RaiseAndSetIfChanged(ref archivedDate, value);
