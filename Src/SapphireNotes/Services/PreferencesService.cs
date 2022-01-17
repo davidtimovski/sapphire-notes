@@ -36,6 +36,11 @@ namespace SapphireNotes.Services
             {
                 appDataDirectory = $"/home/{Environment.UserName}/Documents/{Globals.ApplicationName}";
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                appDataDirectory = $"/Users/{Environment.UserName}/Documents/{Globals.ApplicationName}";
+            }
+
 
             if (!Directory.Exists(appDataDirectory))
             {
