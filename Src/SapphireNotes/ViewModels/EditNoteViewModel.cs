@@ -98,7 +98,7 @@ namespace SapphireNotes.ViewModels
             set => this.RaiseAndSetIfChanged(ref title, value);
         }
 
-        private AlertViewModel alert = new(250);
+        private AlertViewModel alert = new(300);
         private AlertViewModel Alert
         {
             get => alert;

@@ -134,7 +134,7 @@
               </ContextMenu>
             </Border.ContextMenu>
 
-            <TextBlock Text="{Binding Name}" />
+            <TextBlock Text="{Binding ShortenedName}" />
           </Border>
         </DataTemplate>
       </TabControl.ItemTemplate>

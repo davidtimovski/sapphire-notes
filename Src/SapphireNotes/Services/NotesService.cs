@@ -37,6 +37,7 @@ namespace SapphireNotes.Services
     {
         private readonly INotesMetadataService _notesMetadataService;
         private readonly INotesRepository _notesRepository;
+        private readonly char[] _nameForbiddenChars = new char[] { '/', '\\', '<', '>', ':', '"', '|', '?', '*' };
 
         public event EventHandler<CreatedNoteEventArgs> Created;
         public event EventHandler<UpdatedNoteEventArgs> Updated;
@@ -57,6 +58,11 @@ namespace SapphireNotes.Services
             if (name.Length == 0)
             {
                 throw new ValidationException("Name is required.");
+            }
+
+            if (_nameForbiddenChars.Any(x => name.Contains(x)))
+            {
+                throw new ValidationException("Name cannot contain any of the following characters: /, \\, <, >, :, \", |, ?, *");
             }
 
             if (_notesRepository.Exists(name))
@@ -100,6 +106,11 @@ namespace SapphireNotes.Services
             if (newName.Length == 0)
             {
                 throw new ValidationException("Name is required.");
+            }
+
+            if (_nameForbiddenChars.Any(x => newName.Contains(x)))
+            {
+                throw new ValidationException("Name cannot contain any of the following characters: /, \\, <, >, :, \", |, ?, *");
             }
 
             var fileName = newName + ".txt";
