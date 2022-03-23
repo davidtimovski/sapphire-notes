@@ -17,27 +17,27 @@ namespace SapphireNotes.Utils
         private static readonly Random Random = new();
 
         public static string[] Themes => ThemeBackgroundCount.Keys.ToArray();
-        public static readonly StyleInclude[] ComponentStyles = new StyleInclude[]
+        public static readonly StyleInclude[] ComponentStyles = 
         {
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Accents.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Button.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/CheckBox.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/ComboBox.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/ContextMenu.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Global.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/ListBox.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Menu.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/ScrollBar.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/TextBlock.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/TextBox.axaml") },
-            new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Window.axaml") }
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/Accents.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/Button.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/CheckBox.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/ComboBox.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/ContextMenu.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/Global.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/ListBox.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/Menu.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/ScrollBar.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/TextBlock.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/TextBox.axaml") },
+            new(StyleIncludeBaseUri) { Source = new Uri("avares://SapphireNotes/Styles/Window.axaml") }
         };
 
-        public static List<StyleInclude> GetThemeStyles(string theme)
+        public static IEnumerable<StyleInclude> GetThemeStyles(string theme)
         {
-            var result = new List<StyleInclude>()
+            var result = new List<StyleInclude>
             {
-                new StyleInclude(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Resources.axaml") }
+                new(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Resources.axaml") }
             };
 
             int backgrounds = ThemeBackgroundCount[theme];

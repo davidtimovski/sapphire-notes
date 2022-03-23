@@ -15,41 +15,29 @@ namespace SapphireNotes.ViewModels
             _notesService = notesService;
             _preferencesService = preferencesService;
 
-            fontFamily = _preferencesService.Preferences.NotesFontFamily;
-            fontSize = _preferencesService.Preferences.NotesFontSize;
+            _fontFamily = _preferencesService.Preferences.NotesFontFamily;
+            _fontSize = _preferencesService.Preferences.NotesFontSize;
         }
 
         public void Create()
         {
-            var fontFamily = _preferencesService.Preferences.NotesFontFamily;
-            var fontSize = _preferencesService.Preferences.NotesFontSize;
+            var noteFontFamily = _preferencesService.Preferences.NotesFontFamily;
+            var noteFontSize = _preferencesService.Preferences.NotesFontSize;
 
-            _notesService.CreateQuick(content, fontFamily, fontSize);
+            _notesService.CreateQuick(content, noteFontFamily, noteFontSize);
         }
 
         private string content = string.Empty;
         private string Content
         {
-            get
-            {
-                return content;
-            }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref content, value);
-            }
+            get => content;
+            set => this.RaiseAndSetIfChanged(ref content, value);
         }
 
-        private readonly FontFamily fontFamily;
-        public FontFamily FontFamily
-        {
-            get => fontFamily;
-        }
+        private readonly FontFamily _fontFamily;
+        public FontFamily FontFamily => _fontFamily;
 
-        private readonly int fontSize;
-        public int FontSize
-        {
-            get => fontSize;
-        }
+        private readonly int _fontSize;
+        public int FontSize => _fontSize;
     }
 }

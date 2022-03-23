@@ -213,7 +213,7 @@ namespace SapphireNotes.ViewModels
             dirtyNotesVMs.ForEach(x => x.SetPristine());
         }
 
-        private ObservableCollection<NoteViewModel> Notes { get; } = new ObservableCollection<NoteViewModel>();
+        private ObservableCollection<NoteViewModel> Notes { get; } = new();
 
         private bool showIntroMessage;
         public bool ShowIntroMessage

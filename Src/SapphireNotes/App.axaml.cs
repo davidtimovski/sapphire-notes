@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
-using Avalonia.Styling;
 using SapphireNotes.Contracts.Models;
 using SapphireNotes.DependencyInjection;
 using SapphireNotes.Services;

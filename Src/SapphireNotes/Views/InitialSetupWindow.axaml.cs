@@ -22,7 +22,7 @@ namespace SapphireNotes.Views
 
         public event EventHandler<EventArgs> Started;
 
-        public async Task SelectButtonClicked()
+        private async Task SelectButtonClicked()
         {
             var directory = await new OpenFolderDialog().ShowAsync(this);
 

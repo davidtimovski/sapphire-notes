@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Sapphire Notes"
-#define MyAppVersion "0.7.1"
+#define MyAppVersion "0.8.0"
 #define MyAppPublisher "David Timovski"
 #define MyAppURL "https://www.davidtimovski.com/sapphire-notes"
 #define MyAppExeName "SapphireNotes.exe"
@@ -36,7 +36,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\david\source\repos\sapphire-notes\Src\SapphireNotes\bin\Release\net5.0\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\david\source\repos\sapphire-notes\Src\SapphireNotes\bin\Release\net6.0\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

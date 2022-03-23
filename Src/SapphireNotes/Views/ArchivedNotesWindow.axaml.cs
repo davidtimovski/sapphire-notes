@@ -26,7 +26,7 @@ namespace SapphireNotes.Views
 
         private void SearchTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            _debounceTimer.Debounce(100, (p) =>
+            _debounceTimer.Debounce(100, _ =>
             {
                 var vm = (ArchivedNotesViewModel)DataContext;
                 vm.SearchTextChanged();

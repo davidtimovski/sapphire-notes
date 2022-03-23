@@ -25,7 +25,7 @@ namespace SapphireNotes.Contracts.Models
             CaretPosition = caretPosition;
         }
 
-        public NoteMetadata(string fontFamily, int fontSize, int caretPosition, DateTime? archived)
+        private NoteMetadata(string fontFamily, int fontSize, int caretPosition, DateTime? archived)
         {
             FontFamily = fontFamily;
             FontSize = fontSize;

@@ -12,7 +12,7 @@ namespace SapphireNotes.ViewModels
     public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
     {
         private readonly INotesService _notesService;
-        private readonly List<ArchivedNoteViewModel> shadowNotes;
+        private readonly List<ArchivedNoteViewModel> _shadowNotes;
         private string previousSearchText = string.Empty;
 
         public  ArchivedNotesViewModel() {}
@@ -28,10 +28,10 @@ namespace SapphireNotes.ViewModels
             archivedNotesExist = archived.Any();
             searchFieldEnabled = archived.Length > 1;
 
-            var viewModels = archived.Select(x => new ArchivedNoteViewModel(x));
+            var viewModels = archived.Select(x => new ArchivedNoteViewModel(x)).ToList();
             ArchivedNotes.AddRange(viewModels);
 
-            shadowNotes = viewModels.ToList();
+            _shadowNotes = viewModels;
 
             OnRestoreCommand = ReactiveCommand.Create(RestoreSelectedNote);
             OnDeleteCommand = ReactiveCommand.Create(DeleteSelectedNote);
@@ -42,14 +42,14 @@ namespace SapphireNotes.ViewModels
 
         public void SearchTextChanged()
         {
-            var searchText = SearchText.Trim().ToLowerInvariant();
+            var searchedText = SearchText.Trim().ToLowerInvariant();
 
-            if (searchText != previousSearchText)
+            if (searchedText != previousSearchText)
             {
-                FilterNotes(searchText);
+                FilterNotes(searchedText);
             }
 
-            previousSearchText = searchText;
+            previousSearchText = searchedText;
         }
 
         private void FilterNotes(string searchText)
@@ -58,11 +58,11 @@ namespace SapphireNotes.ViewModels
 
             if (searchText == string.Empty)
             {
-                ArchivedNotes.AddRange(shadowNotes.OrderByDescending(x => x.ArchivedDate));
+                ArchivedNotes.AddRange(_shadowNotes.OrderByDescending(x => x.ArchivedDate));
             }
             else
             {
-                var matches = shadowNotes.Select(x =>
+                var matches = _shadowNotes.Select(x =>
                 {
                     short score = 0;
                     if (x.Name.ToLowerInvariant().Contains(searchText))
@@ -95,12 +95,12 @@ namespace SapphireNotes.ViewModels
         {
             var archivedNoteVm = new ArchivedNoteViewModel(e.ArchivedNote);
 
-            shadowNotes.Add(archivedNoteVm);
+            _shadowNotes.Add(archivedNoteVm);
 
             FilterNotes(SearchText.Trim().ToLowerInvariant());
 
             ArchivedNotesExist = true;
-            SearchFieldEnabled = shadowNotes.Count > 1;
+            SearchFieldEnabled = _shadowNotes.Count > 1;
         }
 
         private void NoteRestored(object sender, RestoredNoteEventArgs e)
@@ -154,17 +154,17 @@ namespace SapphireNotes.ViewModels
             SearchText = string.Empty;
 
             ArchivedNotes.Clear();
-            ArchivedNotes.AddRange(shadowNotes.OrderByDescending(x => x.ArchivedDate));
+            ArchivedNotes.AddRange(_shadowNotes.OrderByDescending(x => x.ArchivedDate));
 
             previousSearchText = string.Empty;
         }
 
         private void RemoveNote(ArchivedNoteViewModel archivedNoteVm)
         {
-            shadowNotes.RemoveAll(x => x.Name == archivedNoteVm.Name);
+            _shadowNotes.RemoveAll(x => x.Name == archivedNoteVm.Name);
             ArchivedNotes.Remove(archivedNoteVm);
-            ArchivedNotesExist = shadowNotes.Any();
-            SearchFieldEnabled = shadowNotes.Count > 1;
+            ArchivedNotesExist = _shadowNotes.Any();
+            SearchFieldEnabled = _shadowNotes.Count > 1;
         }
 
         private bool archivedNotesExist;
@@ -241,7 +241,7 @@ namespace SapphireNotes.ViewModels
         {
             ConfirmPromptVisible = false;
             ConfirmPromptText = null;
-            SearchFieldEnabled = shadowNotes.Count > 1;
+            SearchFieldEnabled = _shadowNotes.Count > 1;
         }
 
         public void Dispose()
