@@ -59,11 +59,6 @@ namespace SapphireNotes.ViewModels.UserControls
             set => this.RaiseAndSetIfChanged(ref shortenedName, value);
         }
 
-        public string ShortenedName
-        {
-            get => name.Length > 30 ? $"{name[..28]}.." : name;
-        }
-
         private string content;
         public string Content
         {
