@@ -2,6 +2,6 @@
 {
     public class AboutViewModel : ViewModelBase
     {
-        private string Version { get; } = $"Version: {Globals.Version}";
+        private string Version => $"Version: {Globals.Version}";
     }
 }

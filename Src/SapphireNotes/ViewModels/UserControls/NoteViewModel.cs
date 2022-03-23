@@ -25,6 +25,8 @@ namespace SapphireNotes.ViewModels.UserControls
             fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
             fontSize = note.Metadata.FontSize;
             caretPosition = note.Metadata.CaretPosition;
+
+            SetShortenedName();
         }
 
         public event EventHandler<EventArgs> EditClicked;
@@ -43,21 +45,24 @@ namespace SapphireNotes.ViewModels.UserControls
         public string Name
         {
             get => name;
-            set => this.RaiseAndSetIfChanged(ref name, value);
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref name, value);
+                SetShortenedName();
+            }
         }
 
+        private string shortenedName;
         public string ShortenedName
         {
-            get => name.Length > 30 ? $"{name[..28]}.." : name;
+            get => shortenedName;
+            set => this.RaiseAndSetIfChanged(ref shortenedName, value);
         }
 
         private string content;
         public string Content
         {
-            get
-            {
-                return content;
-            }
+            get => content;
             set
             {
                 this.RaiseAndSetIfChanged(ref content, value);
@@ -100,5 +105,10 @@ namespace SapphireNotes.ViewModels.UserControls
         private ReactiveCommand<Unit, Unit> OnArchiveCommand { get; }
         private ReactiveCommand<Unit, Unit> OnDeleteCommand { get; }
         private ReactiveCommand<Unit, Unit> OnMiddleClickCommand { get; }
+
+        private void SetShortenedName()
+        {
+            ShortenedName = name.Length > 35 ? $"{name[..33]}.." : name;
+        }
     }
 }

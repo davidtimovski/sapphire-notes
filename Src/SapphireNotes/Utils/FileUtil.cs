@@ -12,14 +12,14 @@ namespace SapphireNotes.Utils
             if (!File.Exists(path))
                 return path;
 
-            return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path)), NumberPattern));
+            return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path), StringComparison.Ordinal), NumberPattern));
         }
 
         private static string GetNextFilename(string pattern)
         {
             string tmp = string.Format(pattern, 1);
             if (tmp == pattern)
-                throw new ArgumentException("The pattern must include an index place-holder", "pattern");
+                throw new ArgumentException("The pattern must include an index place-holder", nameof(pattern));
 
             if (!File.Exists(tmp))
                 return tmp; // short-circuit if no matches

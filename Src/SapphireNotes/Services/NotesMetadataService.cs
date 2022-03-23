@@ -163,13 +163,13 @@ namespace SapphireNotes.Services
 
             writer.Write(_notesMetadata.Count);
 
-            foreach (var kvp in _notesMetadata)
+            foreach (var (key, value) in _notesMetadata)
             {
-                writer.Write(kvp.Key);
-                writer.Write(kvp.Value.FontFamily);
-                writer.Write(kvp.Value.FontSize);
-                writer.Write(kvp.Value.CaretPosition);
-                writer.Write(kvp.Value.Archived.HasValue ? kvp.Value.Archived.Value.Ticks : 0);
+                writer.Write(key);
+                writer.Write(value.FontFamily);
+                writer.Write(value.FontSize);
+                writer.Write(value.CaretPosition);
+                writer.Write(value.Archived?.Ticks ?? 0);
             }
         }
 
@@ -181,7 +181,7 @@ namespace SapphireNotes.Services
                 _notesMetadata.Remove(noteName);
             }
 
-            IEnumerable<string> addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.Keys.Contains(k));
+            IEnumerable<string> addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.ContainsKey(k));
             foreach (string noteName in addedNotes)
             {
                 if (noteName.Contains(Globals.ArchivePrefix + "/"))

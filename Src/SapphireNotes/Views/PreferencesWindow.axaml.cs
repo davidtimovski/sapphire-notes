@@ -22,7 +22,7 @@ namespace SapphireNotes.Views
             closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
         }
 
-        public async Task ChangeNotesDirectoryButtonClicked()
+        private async Task ChangeNotesDirectoryButtonClicked()
         {
             var directory = await new OpenFolderDialog().ShowAsync(this);
 

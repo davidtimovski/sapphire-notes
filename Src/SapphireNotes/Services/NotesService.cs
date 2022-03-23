@@ -37,7 +37,7 @@ namespace SapphireNotes.Services
     {
         private readonly INotesMetadataService _notesMetadataService;
         private readonly INotesRepository _notesRepository;
-        private readonly char[] _nameForbiddenChars = new char[] { '/', '\\', '<', '>', ':', '"', '|', '?', '*' };
+        private readonly char[] _nameForbiddenChars = { '/', '\\', '<', '>', ':', '"', '|', '?', '*' };
 
         public event EventHandler<CreatedNoteEventArgs> Created;
         public event EventHandler<UpdatedNoteEventArgs> Updated;
@@ -113,7 +113,6 @@ namespace SapphireNotes.Services
                 throw new ValidationException("Name cannot contain any of the following characters: /, \\, <, >, :, \", |, ?, *");
             }
 
-            var fileName = newName + ".txt";
             if (!string.Equals(originalName, newName, StringComparison.InvariantCultureIgnoreCase) && _notesRepository.Exists(newName))
             {
                 throw new ValidationException("A note with the same name already exists.");
@@ -295,27 +294,27 @@ namespace SapphireNotes.Services
 
     public class CreatedNoteEventArgs : EventArgs
     {
-        public Note CreatedNote { get; set; }
+        public Note CreatedNote { get; init; }
     }
 
     public class UpdatedNoteEventArgs : EventArgs
     {
-        public string OriginalName { get; set; }
-        public Note UpdatedNote { get; set; }
+        public string OriginalName { get; init; }
+        public Note UpdatedNote { get; init; }
     }
 
     public class DeletedNoteEventArgs : EventArgs
     {
-        public Note DeletedNote { get; set; }
+        public Note DeletedNote { get; init; }
     }
 
     public class ArchivedNoteEventArgs : EventArgs
     {
-        public Note ArchivedNote { get; set; }
+        public Note ArchivedNote { get; init; }
     }
 
     public class RestoredNoteEventArgs : EventArgs
     {
-        public Note RestoredNote { get; set; }
+        public Note RestoredNote { get; init; }
     }
 }

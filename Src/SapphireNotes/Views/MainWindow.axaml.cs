@@ -53,7 +53,6 @@ namespace SapphireNotes.Views
                 DataContext = new EditNoteViewModel(_notesService, _preferencesService, (sender as NoteViewModel).ToNote()),
                 Width = 300,
                 Height = 98,
-                Topmost = true,
                 CanResize = false
             };
             window.Show();
@@ -67,7 +66,6 @@ namespace SapphireNotes.Views
             var window = new DeleteNoteWindow
             {
                 DataContext = new DeleteNoteViewModel(_notesService, (sender as NoteViewModel).ToNote()),
-                Topmost = true,
                 CanResize = false
             };
             window.Show();
@@ -97,7 +95,6 @@ namespace SapphireNotes.Views
             var window = new EditNoteWindow
             {
                 DataContext = new EditNoteViewModel(_notesService, _preferencesService),
-                Topmost = true,
                 CanResize = false
             };
             window.Show();
@@ -110,8 +107,7 @@ namespace SapphireNotes.Views
         {
             var window = new QuickNoteWindow
             {
-                DataContext = new QuickNoteViewModel(_notesService, _preferencesService),
-                Topmost = true
+                DataContext = new QuickNoteViewModel(_notesService, _preferencesService)
             };
             window.Show();
             window.Activate();
@@ -123,8 +119,7 @@ namespace SapphireNotes.Views
         {
             var window = new ArchivedNotesWindow
             {
-                DataContext = new ArchivedNotesViewModel(_notesService),
-                Topmost = true
+                DataContext = new ArchivedNotesViewModel(_notesService)
             };
             window.Show();
             window.Activate();
@@ -140,7 +135,6 @@ namespace SapphireNotes.Views
             var window = new PreferencesWindow
             {
                 DataContext = new PreferencesViewModel(Locator.Current.GetService<IPreferencesService>(), _notesService),
-                Topmost = true,
                 CanResize = false
             };
             window.Show();
@@ -153,7 +147,6 @@ namespace SapphireNotes.Views
         {
             var window = new TipsWindow
             {
-                Topmost = true,
                 CanResize = false
             };
             window.Show();
@@ -167,7 +160,6 @@ namespace SapphireNotes.Views
             var window = new AboutWindow
             {
                 DataContext = new AboutViewModel(),
-                Topmost = true,
                 CanResize = false
             };
             window.Show();

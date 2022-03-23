@@ -1,4 +1,4 @@
-$Version = "0.7.1"
+$Version = "0.8.0"
 
 cd "C:\Users\david\source\repos\sapphire-notes\Publishing\linux"
 
@@ -7,4 +7,4 @@ Copy-Item -Path "C:\Users\david\source\repos\sapphire-notes\Publishing\linux\tem
 
 Copy-Item "C:\Users\david\source\repos\sapphire-notes\Publishing\linux\template_64\DEBIAN\control" -Destination "C:\Users\david\source\repos\sapphire-notes\Publishing\linux\output\sapphire-notes_${Version}_amd64\DEBIAN\control"
 
-Copy-Item "C:\Users\david\source\repos\sapphire-notes\Src\SapphireNotes\bin\Release\net5.0\publish\SapphireNotes" -Destination "C:\Users\david\source\repos\sapphire-notes\Publishing\linux\output\sapphire-notes_${Version}_amd64\usr\bin\sapphire-notes"
+Copy-Item "C:\Users\david\source\repos\sapphire-notes\Src\SapphireNotes\bin\Release\net6.0\publish\SapphireNotes" -Destination "C:\Users\david\source\repos\sapphire-notes\Publishing\linux\output\sapphire-notes_${Version}_amd64\usr\bin\sapphire-notes"
