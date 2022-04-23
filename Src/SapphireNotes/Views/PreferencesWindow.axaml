@@ -1,7 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
-        xmlns:local="clr-namespace:SapphireNotes.UserControls"
+        xmlns:vm="using:SapphireNotes.ViewModels"
+        xmlns:local="using:SapphireNotes.UserControls"
         x:Class="SapphireNotes.Views.PreferencesWindow"
         Title="Preferences">
 

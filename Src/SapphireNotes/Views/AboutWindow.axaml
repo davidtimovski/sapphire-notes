@@ -1,6 +1,6 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SapphireNotes.ViewModels;assembly=SapphireNotes"
+        xmlns:vm="using:SapphireNotes.ViewModels"
         x:Class="SapphireNotes.Views.AboutWindow"
         Title="About">
 
@@ -35,7 +35,7 @@
     <StackPanel>
       <TextBlock Classes="applicationName">Sapphire Notes</TextBlock>
 
-      <TextBlock Text="{Binding Version}" />
+      <TextBlock>Version: 0.8.1</TextBlock>
       <TextBlock>Website: www.davidtimovski.com/sapphire-notes</TextBlock>
 
       <TextBlock Classes="developer">Developed by David Timovski.</TextBlock>

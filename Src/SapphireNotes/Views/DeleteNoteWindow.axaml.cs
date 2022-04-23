@@ -3,37 +3,36 @@ using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
 
-namespace SapphireNotes.Views
+namespace SapphireNotes.Views;
+
+public class DeleteNoteWindow : Window
 {
-    public class DeleteNoteWindow : Window
+    public DeleteNoteWindow()
     {
-        public DeleteNoteWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            var yesButton = this.FindControl<Button>("yesButton");
-            yesButton.Command = ReactiveCommand.Create(YesButtonClicked);
+        var yesButton = this.FindControl<Button>("yesButton");
+        yesButton.Command = ReactiveCommand.Create(YesButtonClicked);
 
-            var noButton = this.FindControl<Button>("noButton");
-            noButton.Command = ReactiveCommand.Create(NoButtonClicked);
-        }
+        var noButton = this.FindControl<Button>("noButton");
+        noButton.Command = ReactiveCommand.Create(NoButtonClicked);
+    }
 
-        private void YesButtonClicked()
-        {
-            var vm = (DeleteNoteViewModel)DataContext;
-            vm.Delete();
+    private void YesButtonClicked()
+    {
+        var vm = (DeleteNoteViewModel)DataContext;
+        vm.Delete();
 
-            Close();
-        }
+        Close();
+    }
 
-        private void NoButtonClicked()
-        {
-            Close();
-        }
+    private void NoButtonClicked()
+    {
+        Close();
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

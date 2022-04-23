@@ -1,23 +1,22 @@
-﻿namespace SapphireNotes.Contracts.Models
+﻿namespace SapphireNotes.Contracts.Models;
+
+public class Preferences
 {
-    public class Preferences
-    {
-        public const int WindowMinWidth = 380;
-        public const int WindowMinHeight = 180;
+    public const int WindowMinWidth = 380;
+    public const int WindowMinHeight = 180;
 
-        public string NotesDirectory { get; set; } = string.Empty;
-        public short AutoSaveInterval { get; set; } = 10;
-        public string Theme { get; set; } = "Dark";
-        public string NotesFontFamily { get; set; } = Globals.DefaultNotesFontFamily;
-        public int NotesFontSize { get; set; } = Globals.DefaultNotesFontSize;
-        public WindowPreferences Window { get; set; } = new();
-    }
+    public string NotesDirectory { get; set; } = string.Empty;
+    public short AutoSaveInterval { get; set; } = 10;
+    public string Theme { get; set; } = "Dark";
+    public string NotesFontFamily { get; set; } = Globals.DefaultNotesFontFamily;
+    public int NotesFontSize { get; set; } = Globals.DefaultNotesFontSize;
+    public WindowPreferences Window { get; set; } = new();
+}
 
-    public class WindowPreferences
-    {
-        public int Width { get; set; } = 960;
-        public int Height { get; set; } = 540;
-        public int PositionX { get; set; } = 640;
-        public int PositionY { get; set; } = 360;
-    }
+public class WindowPreferences
+{
+    public int Width { get; set; } = 960;
+    public int Height { get; set; } = 540;
+    public int PositionX { get; set; } = 640;
+    public int PositionY { get; set; } = 360;
 }

@@ -3,37 +3,36 @@ using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
 
-namespace SapphireNotes.Views
+namespace SapphireNotes.Views;
+
+public class QuickNoteWindow : Window
 {
-    public class QuickNoteWindow : Window
+    public QuickNoteWindow()
     {
-        public QuickNoteWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            var createButton = this.FindControl<Button>("createButton");
-            createButton.Command = ReactiveCommand.Create(CreateButtonClicked);
+        var createButton = this.FindControl<Button>("createButton");
+        createButton.Command = ReactiveCommand.Create(CreateButtonClicked);
 
-            var cancelButton = this.FindControl<Button>("cancelButton");
-            cancelButton.Command = ReactiveCommand.Create(CancelButtonClicked);
-        }
+        var cancelButton = this.FindControl<Button>("cancelButton");
+        cancelButton.Command = ReactiveCommand.Create(CancelButtonClicked);
+    }
 
-        private void CreateButtonClicked()
-        {
-            var vm = (QuickNoteViewModel)DataContext;
-            vm.Create();
+    private void CreateButtonClicked()
+    {
+        var vm = (QuickNoteViewModel)DataContext;
+        vm.Create();
 
-            Close();
-        }
+        Close();
+    }
 
-        private void CancelButtonClicked()
-        {
-            Close();
-        }
+    private void CancelButtonClicked()
+    {
+        Close();
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

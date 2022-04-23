@@ -1,8 +1,7 @@
 ﻿using ReactiveUI;
 
-namespace SapphireNotes.ViewModels
+namespace SapphireNotes.ViewModels;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

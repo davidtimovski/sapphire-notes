@@ -8,280 +8,279 @@ using SapphireNotes.Exceptions;
 using SapphireNotes.Services;
 using Xunit;
 
-namespace UnitTests.Services
+namespace UnitTests.Services;
+
+public class NotesServiceTests
 {
-    public class NotesServiceTests
+    private readonly Mock<INotesMetadataService> _notesMetadataServiceMock = new();
+    private readonly Mock<INotesRepository> _notesRepositoryMock = new();
+    private readonly INotesService _sut;
+
+    public NotesServiceTests()
     {
-        private readonly Mock<INotesMetadataService> _notesMetadataServiceMock = new();
-        private readonly Mock<INotesRepository> _notesRepositoryMock = new();
-        private readonly INotesService _sut;
+        _sut = new NotesService(_notesMetadataServiceMock.Object, _notesRepositoryMock.Object);
+    }
 
-        public NotesServiceTests()
+    [Fact]
+    public void CreateTrimsName()
+    {
+        string createdNoteName = null;
+        _sut.Created += (object sender, CreatedNoteEventArgs e)
+            => createdNoteName = e.CreatedNote.Name;
+
+        _sut.Create(" name ", It.IsAny<string>(), It.IsAny<int>());
+
+        Assert.Equal("name", createdNoteName);
+    }
+
+    [Fact]
+    public void CreateThrowsIfNameMissing()
+    {
+        Assert.Throws<ValidationException>(() => _sut.Create("", It.IsAny<string>(), It.IsAny<int>()));
+    }
+
+    [Fact]
+    public void CreateThrowsIfNoteWithSameNameExists()
+    {
+        _notesRepositoryMock
+            .Setup(x => x.Exists(It.IsAny<string>()))
+            .Returns(true);
+
+        Assert.Throws<ValidationException>(() => _sut.Create("dummy name", It.IsAny<string>(), It.IsAny<int>()));
+    }
+
+    [Fact]
+    public void CreateInvokesCreatedEvent()
+    {
+        bool eventInvoked = false;
+        _sut.Created += (object sender, CreatedNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.Create("dummy name", It.IsAny<string>(), It.IsAny<int>());
+
+        Assert.True(eventInvoked);
+    }
+
+    [Fact]
+    public void CreateQuickInvokesCreatedEvent()
+    {
+        bool eventInvoked = false;
+        _sut.Created += (object sender, CreatedNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.CreateQuick("dummy content", It.IsAny<string>(), It.IsAny<int>());
+
+        Assert.True(eventInvoked);
+    }
+
+    [Fact]
+    public void UpdateTrimsName()
+    {
+        string updatedNoteName = null;
+        _sut.Updated += (object sender, UpdatedNoteEventArgs e)
+            => updatedNoteName = e.UpdatedNote.Name;
+
+        _sut.Update(" name ", new Note("dummy name"));
+
+        Assert.Equal("name", updatedNoteName);
+    }
+
+    [Fact]
+    public void UpdateThrowsIfNameMissing()
+    {
+        Assert.Throws<ValidationException>(() => _sut.Update("", new Note("dummy name")));
+    }
+
+    [Fact]
+    public void UpdateThrowsIfNoteWithSameNameExists()
+    {
+        _notesRepositoryMock
+            .Setup(x => x.Exists(It.IsAny<string>()))
+            .Returns(true);
+
+        Assert.Throws<ValidationException>(() => _sut.Update("", new Note("dummy name")));
+    }
+
+    [Fact]
+    public void UpdateInvokesUpdatedEvent()
+    {
+        bool eventInvoked = false;
+        _sut.Updated += (object sender, UpdatedNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.Update("dummy name", new Note("dummy name"));
+
+        Assert.True(eventInvoked);
+    }
+
+    [Fact]
+    public void ArchiveInvokesArchivedEvent()
+    {
+        _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
+
+        bool eventInvoked = false;
+        _sut.Archived += (object sender, ArchivedNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.Archive(new Note("dummy name"));
+
+        Assert.True(eventInvoked);
+    }
+
+    [Fact]
+    public void RestoreInvokesRestoredEvent()
+    {
+        _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
+
+        bool eventInvoked = false;
+        _sut.Restored += (object sender, RestoredNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.Restore(new Note("dummy name"));
+
+        Assert.True(eventInvoked);
+    }
+
+    [Fact]
+    public void DeleteInvokesDeletedEvent()
+    {
+        bool eventInvoked = false;
+        _sut.Deleted += (object sender, DeletedNoteEventArgs e)
+            => eventInvoked = true;
+
+        _sut.Delete(new Note("dummy name")
         {
-            _sut = new NotesService(_notesMetadataServiceMock.Object, _notesRepositoryMock.Object);
-        }
+            Metadata = new NoteMetadata()
+        });
 
-        [Fact]
-        public void CreateTrimsName()
-        {
-            string createdNoteName = null;
-            _sut.Created += (object sender, CreatedNoteEventArgs e)
-                => createdNoteName = e.CreatedNote.Name;
+        Assert.True(eventInvoked);
+    }
 
-            _sut.Create(" name ", It.IsAny<string>(), It.IsAny<int>());
+    [Fact]
+    public void LoadReturnsOnlyNonArchivedNotes()
+    {
+        const string nonArchivedName = "non archived name";
 
-            Assert.Equal("name", createdNoteName);
-        }
-
-        [Fact]
-        public void CreateThrowsIfNameMissing()
-        {
-            Assert.Throws<ValidationException>(() => _sut.Create("", It.IsAny<string>(), It.IsAny<int>()));
-        }
-
-        [Fact]
-        public void CreateThrowsIfNoteWithSameNameExists()
-        {
-            _notesRepositoryMock
-                .Setup(x => x.Exists(It.IsAny<string>()))
-                .Returns(true);
-
-            Assert.Throws<ValidationException>(() => _sut.Create("dummy name", It.IsAny<string>(), It.IsAny<int>()));
-        }
-
-        [Fact]
-        public void CreateInvokesCreatedEvent()
-        {
-            bool eventInvoked = false;
-            _sut.Created += (object sender, CreatedNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.Create("dummy name", It.IsAny<string>(), It.IsAny<int>());
-
-            Assert.True(eventInvoked);
-        }
-
-        [Fact]
-        public void CreateQuickInvokesCreatedEvent()
-        {
-            bool eventInvoked = false;
-            _sut.Created += (object sender, CreatedNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.CreateQuick("dummy content", It.IsAny<string>(), It.IsAny<int>());
-
-            Assert.True(eventInvoked);
-        }
-
-        [Fact]
-        public void UpdateTrimsName()
-        {
-            string updatedNoteName = null;
-            _sut.Updated += (object sender, UpdatedNoteEventArgs e)
-                => updatedNoteName = e.UpdatedNote.Name;
-
-            _sut.Update(" name ", new Note("dummy name"));
-
-            Assert.Equal("name", updatedNoteName);
-        }
-
-        [Fact]
-        public void UpdateThrowsIfNameMissing()
-        {
-            Assert.Throws<ValidationException>(() => _sut.Update("", new Note("dummy name")));
-        }
-
-        [Fact]
-        public void UpdateThrowsIfNoteWithSameNameExists()
-        {
-            _notesRepositoryMock
-                .Setup(x => x.Exists(It.IsAny<string>()))
-                .Returns(true);
-
-            Assert.Throws<ValidationException>(() => _sut.Update("", new Note("dummy name")));
-        }
-
-        [Fact]
-        public void UpdateInvokesUpdatedEvent()
-        {
-            bool eventInvoked = false;
-            _sut.Updated += (object sender, UpdatedNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.Update("dummy name", new Note("dummy name"));
-
-            Assert.True(eventInvoked);
-        }
-
-        [Fact]
-        public void ArchiveInvokesArchivedEvent()
-        {
-            _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
-
-            bool eventInvoked = false;
-            _sut.Archived += (object sender, ArchivedNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.Archive(new Note("dummy name"));
-
-            Assert.True(eventInvoked);
-        }
-
-        [Fact]
-        public void RestoreInvokesRestoredEvent()
-        {
-            _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
-
-            bool eventInvoked = false;
-            _sut.Restored += (object sender, RestoredNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.Restore(new Note("dummy name"));
-
-            Assert.True(eventInvoked);
-        }
-
-        [Fact]
-        public void DeleteInvokesDeletedEvent()
-        {
-            bool eventInvoked = false;
-            _sut.Deleted += (object sender, DeletedNoteEventArgs e)
-                => eventInvoked = true;
-
-            _sut.Delete(new Note("dummy name")
-            {
-                Metadata = new NoteMetadata()
+        _notesRepositoryMock
+            .Setup(x => x.GetAll())
+            .Returns(new List<Note> {
+                new Note(nonArchivedName),
+                new Note(Globals.ArchivePrefix + "/" + "archived name")
             });
 
-            Assert.True(eventInvoked);
-        }
+        Note[] notes = _sut.Load();
 
-        [Fact]
-        public void LoadReturnsOnlyNonArchivedNotes()
+        Assert.Single(notes);
+        Assert.Equal(nonArchivedName, notes[0].Name);
+    }
+
+    [Fact]
+    public void LoadReturnsNotesWithMetadata()
+    {
+        _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
+
+        _notesRepositoryMock
+            .Setup(x => x.GetAll())
+            .Returns(new List<Note> {
+                new Note("dummy name"),
+                new Note("dummy name 2")
+            });
+
+        Note[] notes = _sut.Load();
+
+        foreach (Note note in notes)
         {
-            const string nonArchivedName = "non archived name";
-
-            _notesRepositoryMock
-                .Setup(x => x.GetAll())
-                .Returns(new List<Note> {
-                    new Note(nonArchivedName),
-                    new Note(Globals.ArchivePrefix + "/" + "archived name")
-                });
-
-            Note[] notes = _sut.Load();
-
-            Assert.Single(notes);
-            Assert.Equal(nonArchivedName, notes[0].Name);
+            Assert.NotNull(note.Metadata);
         }
+    }
 
-        [Fact]
-        public void LoadReturnsNotesWithMetadata()
+    [Fact]
+    public void LoadArchivedReturnsOnlyArchivedNotes()
+    {
+        Note[] notes = _sut.LoadArchived();
+
+        _notesRepositoryMock.Verify(x => x.GetAllArchived());
+    }
+
+    [Fact]
+    public void LoadArchivedReturnsNotesWithMetadata()
+    {
+        _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
+
+        _notesRepositoryMock
+            .Setup(x => x.GetAllArchived())
+            .Returns(new List<Note> {
+                new Note(Globals.ArchivePrefix + "/dummy name"),
+                new Note(Globals.ArchivePrefix + "/dummy name 2")
+            });
+
+        Note[] notes = _sut.LoadArchived();
+
+        foreach (Note note in notes)
         {
-            _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
-
-            _notesRepositoryMock
-                .Setup(x => x.GetAll())
-                .Returns(new List<Note> {
-                    new Note("dummy name"),
-                    new Note("dummy name 2")
-                });
-
-            Note[] notes = _sut.Load();
-
-            foreach (Note note in notes)
-            {
-                Assert.NotNull(note.Metadata);
-            }
+            Assert.NotNull(note.Metadata);
         }
+    }
 
-        [Fact]
-        public void LoadArchivedReturnsOnlyArchivedNotes()
-        {
-            Note[] notes = _sut.LoadArchived();
+    [Fact]
+    public void GetFontThatAllNotesUseReturnsDefaultIfNoNotes()
+    {
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(Array.Empty<string>());
 
-            _notesRepositoryMock.Verify(x => x.GetAllArchived());
-        }
+        string font = _sut.GetFontThatAllNotesUse();
 
-        [Fact]
-        public void LoadArchivedReturnsNotesWithMetadata()
-        {
-            _notesMetadataServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(new NoteMetadata());
+        Assert.Equal(Globals.DefaultNotesFontFamily, font);
+    }
 
-            _notesRepositoryMock
-                .Setup(x => x.GetAllArchived())
-                .Returns(new List<Note> {
-                    new Note(Globals.ArchivePrefix + "/dummy name"),
-                    new Note(Globals.ArchivePrefix + "/dummy name 2")
-                });
+    [Fact]
+    public void GetFontThatAllNotesUseReturnsFirstIfOneNote()
+    {
+        const string singleFontName = "single font";
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { singleFontName });
 
-            Note[] notes = _sut.LoadArchived();
+        string font = _sut.GetFontThatAllNotesUse();
 
-            foreach (Note note in notes)
-            {
-                Assert.NotNull(note.Metadata);
-            }
-        }
+        Assert.Equal(singleFontName, font);
+    }
 
-        [Fact]
-        public void GetFontThatAllNotesUseReturnsDefaultIfNoNotes()
-        {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(Array.Empty<string>());
+    [Fact]
+    public void GetFontThatAllNotesUseReturnsNullIfMultipleNotes()
+    {
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { "font one", "font two" });
 
-            string font = _sut.GetFontThatAllNotesUse();
+        string font = _sut.GetFontThatAllNotesUse();
 
-            Assert.Equal(Globals.DefaultNotesFontFamily, font);
-        }
+        Assert.Null(font);
+    }
 
-        [Fact]
-        public void GetFontThatAllNotesUseReturnsFirstIfOneNote()
-        {
-            const string singleFontName = "single font";
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { singleFontName });
+    [Fact]
+    public void GetFontSizeThatAllNotesUseReturnsDefaultIfNoNotes()
+    {
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(Array.Empty<int>());
 
-            string font = _sut.GetFontThatAllNotesUse();
+        int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
-            Assert.Equal(singleFontName, font);
-        }
+        Assert.Equal(Globals.DefaultNotesFontSize, fontSize);
+    }
 
-        [Fact]
-        public void GetFontThatAllNotesUseReturnsNullIfMultipleNotes()
-        {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFonts()).Returns(new[] { "font one", "font two" });
+    [Fact]
+    public void GetFontSizeThatAllNotesUseReturnsFirstIfOneNote()
+    {
+        const int singleFontSize = 16;
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { singleFontSize });
 
-            string font = _sut.GetFontThatAllNotesUse();
+        int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
-            Assert.Null(font);
-        }
+        Assert.Equal(singleFontSize, fontSize);
+    }
 
-        [Fact]
-        public void GetFontSizeThatAllNotesUseReturnsDefaultIfNoNotes()
-        {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(Array.Empty<int>());
+    [Fact]
+    public void GetFontSizeThatAllNotesUseReturnsNullIfMultipleNotes()
+    {
+        _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { 16, 22 });
 
-            int? fontSize = _sut.GetFontSizeThatAllNotesUse();
+        int? fontSize = _sut.GetFontSizeThatAllNotesUse();
 
-            Assert.Equal(Globals.DefaultNotesFontSize, fontSize);
-        }
-
-        [Fact]
-        public void GetFontSizeThatAllNotesUseReturnsFirstIfOneNote()
-        {
-            const int singleFontSize = 16;
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { singleFontSize });
-
-            int? fontSize = _sut.GetFontSizeThatAllNotesUse();
-
-            Assert.Equal(singleFontSize, fontSize);
-        }
-
-        [Fact]
-        public void GetFontSizeThatAllNotesUseReturnsNullIfMultipleNotes()
-        {
-            _notesMetadataServiceMock.Setup(x => x.GetDistinctFontSizes()).Returns(new[] { 16, 22 });
-
-            int? fontSize = _sut.GetFontSizeThatAllNotesUse();
-
-            Assert.Null(fontSize);
-        }
+        Assert.Null(fontSize);
     }
 }
