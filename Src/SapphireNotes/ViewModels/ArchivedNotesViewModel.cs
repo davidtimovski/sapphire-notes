@@ -13,7 +13,7 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
 {
     private readonly INotesService _notesService;
     private readonly List<ArchivedNoteViewModel> _shadowNotes;
-    private string previousSearchText = string.Empty;
+    private string _previousSearchText = string.Empty;
 
     public  ArchivedNotesViewModel() {}
 
@@ -25,8 +25,8 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
         _notesService.Deleted += NoteDeleted;
 
         var archived = _notesService.LoadArchived();
-        archivedNotesExist = archived.Any();
-        searchFieldEnabled = archived.Length > 1;
+        _archivedNotesExist = archived.Any();
+        _searchFieldEnabled = archived.Length > 1;
 
         var viewModels = archived.Select(x => new ArchivedNoteViewModel(x)).ToList();
         ArchivedNotes.AddRange(viewModels);
@@ -44,12 +44,12 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
     {
         var searchedText = SearchText.Trim().ToLowerInvariant();
 
-        if (searchedText != previousSearchText)
+        if (searchedText != _previousSearchText)
         {
             FilterNotes(searchedText);
         }
 
-        previousSearchText = searchedText;
+        _previousSearchText = searchedText;
     }
 
     private void FilterNotes(string searchText)
@@ -111,7 +111,7 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
 
     private void NoteDeleted(object sender, DeletedNoteEventArgs e)
     {
-        ArchivedNoteViewModel deletedVm = ArchivedNotes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+        var deletedVm = ArchivedNotes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
         if (deletedVm != null)
         {
             RemoveNote(deletedVm);
@@ -120,13 +120,13 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
 
     private void RestoreSelectedNote()
     {
-        _notesService.Restore(selected.Note);
+        _notesService.Restore(_selected.Note);
         Selected = null;
     }
 
     private void DeleteSelectedNote()
     {
-        if (selected == null)
+        if (_selected == null)
         {
             return;
         }
@@ -137,7 +137,7 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
 
     private void ConfirmDelete()
     {
-        _notesService.Delete(selected.Note);
+        _notesService.Delete(_selected.Note);
 
         HideConfirmDeletePrompt();
         Selected = null;
@@ -156,7 +156,7 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
         ArchivedNotes.Clear();
         ArchivedNotes.AddRange(_shadowNotes.OrderByDescending(x => x.ArchivedDate));
 
-        previousSearchText = string.Empty;
+        _previousSearchText = string.Empty;
     }
 
     private void RemoveNote(ArchivedNoteViewModel archivedNoteVm)
@@ -167,74 +167,71 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
         SearchFieldEnabled = _shadowNotes.Count > 1;
     }
 
-    private bool archivedNotesExist;
+    private bool _archivedNotesExist;
     private bool ArchivedNotesExist
     {
-        get => archivedNotesExist;
-        set => this.RaiseAndSetIfChanged(ref archivedNotesExist, value);
+        get => _archivedNotesExist;
+        set => this.RaiseAndSetIfChanged(ref _archivedNotesExist, value);
     }
 
-    private bool actionButtonsEnabled;
+    private bool _actionButtonsEnabled;
     private bool ActionButtonsEnabled
     {
-        get => actionButtonsEnabled;
-        set => this.RaiseAndSetIfChanged(ref actionButtonsEnabled, value);
+        get => _actionButtonsEnabled;
+        set => this.RaiseAndSetIfChanged(ref _actionButtonsEnabled, value);
     }
 
-    private string searchText = string.Empty;
+    private string _searchText = string.Empty;
     private string SearchText
     {
-        get => searchText;
+        get => _searchText;
         set
         {
-            this.RaiseAndSetIfChanged(ref searchText, value);
-            ClearSearchEnabled = searchText.Trim().Length > 0;
+            this.RaiseAndSetIfChanged(ref _searchText, value);
+            ClearSearchEnabled = _searchText.Trim().Length > 0;
         }
     }
 
-    private bool searchFieldEnabled;
+    private bool _searchFieldEnabled;
     private bool SearchFieldEnabled
     {
-        get => searchFieldEnabled;
-        set => this.RaiseAndSetIfChanged(ref searchFieldEnabled, value);
+        get => _searchFieldEnabled;
+        set => this.RaiseAndSetIfChanged(ref _searchFieldEnabled, value);
     }
 
-    private bool clearSearchEnabled;
+    private bool _clearSearchEnabled;
     private bool ClearSearchEnabled
     {
-        get => clearSearchEnabled;
-        set => this.RaiseAndSetIfChanged(ref clearSearchEnabled, value);
+        get => _clearSearchEnabled;
+        set => this.RaiseAndSetIfChanged(ref _clearSearchEnabled, value);
     }
 
     private ObservableCollection<ArchivedNoteViewModel> ArchivedNotes { get; } = new ObservableCollection<ArchivedNoteViewModel>();
 
-    private ArchivedNoteViewModel selected;
+    private ArchivedNoteViewModel _selected;
     private ArchivedNoteViewModel Selected
     {
-        get
-        {
-            return selected;
-        }
+        get => _selected;
         set
         {
-            this.RaiseAndSetIfChanged(ref selected, value);
+            this.RaiseAndSetIfChanged(ref _selected, value);
             ActionButtonsEnabled = value != null;
             HideConfirmDeletePrompt();
         }
     }
 
-    private bool confirmPromptVisible;
+    private bool _confirmPromptVisible;
     private bool ConfirmPromptVisible
     {
-        get => confirmPromptVisible;
-        set => this.RaiseAndSetIfChanged(ref confirmPromptVisible, value);
+        get => _confirmPromptVisible;
+        set => this.RaiseAndSetIfChanged(ref _confirmPromptVisible, value);
     }
 
-    private string confirmPromptText;
+    private string _confirmPromptText;
     private string ConfirmPromptText
     {
-        get => confirmPromptText;
-        set => this.RaiseAndSetIfChanged(ref confirmPromptText, value);
+        get => _confirmPromptText;
+        set => this.RaiseAndSetIfChanged(ref _confirmPromptText, value);
     }
 
     private void HideConfirmDeletePrompt()

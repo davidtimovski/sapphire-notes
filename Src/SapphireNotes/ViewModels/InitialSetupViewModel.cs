@@ -29,31 +29,31 @@ public class InitialSetupViewModel : ViewModelBase
         _preferencesService.SavePreferences();
     }
 
-    private bool directoryTextBoxVisible;
+    private bool _directoryTextBoxVisible;
     private bool DirectoryTextBoxVisible
     {
-        get => directoryTextBoxVisible;
-        set => this.RaiseAndSetIfChanged(ref directoryTextBoxVisible, value);
+        get => _directoryTextBoxVisible;
+        set => this.RaiseAndSetIfChanged(ref _directoryTextBoxVisible, value);
     }
 
-    private bool startButtonVisible;
+    private bool _startButtonVisible;
     private bool StartButtonVisible
     {
-        get => startButtonVisible;
-        set => this.RaiseAndSetIfChanged(ref startButtonVisible, value);
+        get => _startButtonVisible;
+        set => this.RaiseAndSetIfChanged(ref _startButtonVisible, value);
     }
 
-    private string notesDirectory;
+    private string _notesDirectory;
     private string NotesDirectory
     {
-        get => notesDirectory;
-        set => this.RaiseAndSetIfChanged(ref notesDirectory, value);
+        get => _notesDirectory;
+        set => this.RaiseAndSetIfChanged(ref _notesDirectory, value);
     }
 
-    private string selectButtonLabel = "Select storage folder";
+    private string _selectButtonLabel = "Select storage folder";
     private string SelectButtonLabel
     {
-        get => selectButtonLabel;
-        set => this.RaiseAndSetIfChanged(ref selectButtonLabel, value);
+        get => _selectButtonLabel;
+        set => this.RaiseAndSetIfChanged(ref _selectButtonLabel, value);
     }
 }

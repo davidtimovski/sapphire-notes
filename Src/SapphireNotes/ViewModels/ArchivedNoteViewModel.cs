@@ -11,47 +11,47 @@ public class ArchivedNoteViewModel : ViewModelBase
     {
         Note = note;
 
-        name = note.Name;
-        content = note.Content;
-        fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
-        fontSize = note.Metadata.FontSize;
-        archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
+        _name = note.Name;
+        _content = note.Content;
+        _fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
+        _fontSize = note.Metadata.FontSize;
+        if (note.Metadata.Archived != null) _archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
     }
 
     public Note Note { get; }
 
-    private string name;
+    private string _name;
     public string Name
     {
-        get => name;
-        set => this.RaiseAndSetIfChanged(ref name, value);
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
     }
 
-    private string content;
+    private string _content;
     public string Content
     {
-        get => content;
-        set => this.RaiseAndSetIfChanged(ref content, value);
+        get => _content;
+        set => this.RaiseAndSetIfChanged(ref _content, value);
     }
 
-    private FontFamily fontFamily;
+    private FontFamily _fontFamily;
     public FontFamily FontFamily
     {
-        get => fontFamily;
-        set => this.RaiseAndSetIfChanged(ref fontFamily, value);
+        get => _fontFamily;
+        set => this.RaiseAndSetIfChanged(ref _fontFamily, value);
     }
 
-    private int fontSize;
+    private int _fontSize;
     public int FontSize
     {
-        get => fontSize;
-        set => this.RaiseAndSetIfChanged(ref fontSize, value);
+        get => _fontSize;
+        set => this.RaiseAndSetIfChanged(ref _fontSize, value);
     }
 
-    private string archivedDate;
+    private string _archivedDate;
     public string ArchivedDate
     {
-        get => archivedDate;
-        set => this.RaiseAndSetIfChanged(ref archivedDate, value);
+        get => _archivedDate;
+        set => this.RaiseAndSetIfChanged(ref _archivedDate, value);
     }
 }

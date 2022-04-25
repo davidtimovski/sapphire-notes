@@ -14,7 +14,7 @@ public class DeleteNoteViewModel : ViewModelBase
     {
         _notesService = notesService;
 
-        text = $"Are you sure you wish to delete \"{note.Name}\"?";
+        _text = $"Are you sure you wish to delete \"{note.Name}\"?";
         _note = note;
     }
 
@@ -23,10 +23,10 @@ public class DeleteNoteViewModel : ViewModelBase
         _notesService.Delete(_note);
     }
 
-    private string text;
+    private string _text;
     private string Text
     {
-        get => text;
-        set => this.RaiseAndSetIfChanged(ref text, value);
+        get => _text;
+        set => this.RaiseAndSetIfChanged(ref _text, value);
     }
 }

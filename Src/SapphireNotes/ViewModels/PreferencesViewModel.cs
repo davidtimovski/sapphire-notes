@@ -31,33 +31,33 @@ public class PreferencesViewModel : ViewModelBase
         _preferencesService = preferencesService;
         _notesService = notesService;
 
-        notesDirectory = preferencesService.Preferences.NotesDirectory;
+        _notesDirectory = preferencesService.Preferences.NotesDirectory;
 
-        selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
+        _selectedAutoSaveIntervalIndex = Array.IndexOf(_autoSaveIntervalValues, preferencesService.Preferences.AutoSaveInterval);
 
-        availableThemes = ThemeManager.Themes;
-        _initialThemeIndex = selectedThemeIndex = Array.IndexOf(availableThemes, preferencesService.Preferences.Theme);
+        _availableThemes = ThemeManager.Themes;
+        _initialThemeIndex = _selectedThemeIndex = Array.IndexOf(_availableThemes, preferencesService.Preferences.Theme);
 
-        string globalFont = _notesService.GetFontThatAllNotesUse();
+        var globalFont = _notesService.GetFontThatAllNotesUse();
         if (globalFont != null)
         {
-            availableFonts = Globals.AvailableFonts;
-            _initialFontIndex = selectedFontIndex = Array.IndexOf(availableFonts, globalFont);
+            _availableFonts = Globals.AvailableFonts;
+            _initialFontIndex = _selectedFontIndex = Array.IndexOf(_availableFonts, globalFont);
         }
         else
         {
-            availableFonts = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFonts, CustomLabel);
+            _availableFonts = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFonts, CustomLabel);
         }
 
-        int? globalFontSize = _notesService.GetFontSizeThatAllNotesUse();
+        var globalFontSize = _notesService.GetFontSizeThatAllNotesUse();
         if (globalFontSize.HasValue)
         {
-            availableFontSizes = Globals.AvailableFontSizes.Select(x => x.ToString()).ToArray();
-            _initialFontSizeIndex = selectedFontSizeIndex = Array.IndexOf(availableFontSizes, globalFontSize.Value.ToString());
+            _availableFontSizes = Globals.AvailableFontSizes.Select(x => x.ToString()).ToArray();
+            _initialFontSizeIndex = _selectedFontSizeIndex = Array.IndexOf(_availableFontSizes, globalFontSize.Value.ToString());
         }
         else
         {
-            availableFontSizes = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFontSizes, CustomLabel);
+            _availableFontSizes = DropdownUtil.GetOptionsWithFirst(Globals.AvailableFontSizes, CustomLabel);
         }
     }
 
@@ -66,34 +66,34 @@ public class PreferencesViewModel : ViewModelBase
         try
         {
             var preferences =
-                new UpdatedPreferencesEventArgs(notesDirectory != _preferencesService.Preferences.NotesDirectory);
+                new UpdatedPreferencesEventArgs(_notesDirectory != _preferencesService.Preferences.NotesDirectory);
 
-            if (preferences.NotesDirectoryChanged && moveNotes)
+            if (preferences.NotesDirectoryChanged && _moveNotes)
             {
-                _notesService.MoveAll(notesDirectory);
+                _notesService.MoveAll(_notesDirectory);
             }
 
-            _preferencesService.Preferences.NotesDirectory = notesDirectory;
-            _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[selectedAutoSaveIntervalIndex];
-            _preferencesService.Preferences.Theme = availableThemes[selectedThemeIndex];
+            _preferencesService.Preferences.NotesDirectory = _notesDirectory;
+            _preferencesService.Preferences.AutoSaveInterval = _autoSaveIntervalValues[_selectedAutoSaveIntervalIndex];
+            _preferencesService.Preferences.Theme = _availableThemes[_selectedThemeIndex];
 
-            if (selectedThemeIndex != _initialThemeIndex)
+            if (_selectedThemeIndex != _initialThemeIndex)
             {
                 preferences.NewTheme = _preferencesService.Preferences.Theme;
             }
 
-            if (selectedFontIndex != _initialFontIndex)
+            if (_selectedFontIndex != _initialFontIndex)
             {
-                var fontFamily = availableFonts[selectedFontIndex];
+                var fontFamily = _availableFonts[_selectedFontIndex];
 
                 _preferencesService.Preferences.NotesFontFamily = fontFamily;
                 preferences.NewFontFamily = fontFamily;
                 _notesService.SetFontForAll(fontFamily);
             }
 
-            if (selectedFontSizeIndex != _initialFontSizeIndex)
+            if (_selectedFontSizeIndex != _initialFontSizeIndex)
             {
-                var fontSize = int.Parse(availableFontSizes[selectedFontSizeIndex]);
+                var fontSize = int.Parse(_availableFontSizes[_selectedFontSizeIndex]);
 
                 _preferencesService.Preferences.NotesFontSize = fontSize;
                 preferences.NewFontSize = fontSize;
@@ -104,26 +104,26 @@ public class PreferencesViewModel : ViewModelBase
         }
         catch (MoveNotesException ex)
         {
-            alert.Show(ex.Message);
+            _alert.Show(ex.Message);
         }
     }
 
-    private AlertViewModel alert = new(450);
+    private AlertViewModel _alert = new(450);
     private AlertViewModel Alert
     {
-        get => alert;
-        set => this.RaiseAndSetIfChanged(ref alert, value);
+        get => _alert;
+        set => this.RaiseAndSetIfChanged(ref _alert, value);
     }
 
-    private string notesDirectory;
+    private string _notesDirectory;
     public string NotesDirectory
     {
-        get => notesDirectory;
+        get => _notesDirectory;
         set
         {
-            this.RaiseAndSetIfChanged(ref notesDirectory, value);
+            this.RaiseAndSetIfChanged(ref _notesDirectory, value);
 
-            if (notesDirectory == _preferencesService.Preferences.NotesDirectory)
+            if (_notesDirectory == _preferencesService.Preferences.NotesDirectory)
             {
                 MoveNotes = false;
                 MoveNotesCheckBoxVisible = false;
@@ -137,21 +137,21 @@ public class PreferencesViewModel : ViewModelBase
         }
     }
 
-    private bool moveNotesCheckBoxVisible;
+    private bool _moveNotesCheckBoxVisible;
     private bool MoveNotesCheckBoxVisible
     {
-        get => moveNotesCheckBoxVisible;
-        set => this.RaiseAndSetIfChanged(ref moveNotesCheckBoxVisible, value);
+        get => _moveNotesCheckBoxVisible;
+        set => this.RaiseAndSetIfChanged(ref _moveNotesCheckBoxVisible, value);
     }
 
-    private bool moveNotes;
+    private bool _moveNotes;
     private bool MoveNotes
     {
-        get => moveNotes;
-        set => this.RaiseAndSetIfChanged(ref moveNotes, value);
+        get => _moveNotes;
+        set => this.RaiseAndSetIfChanged(ref _moveNotes, value);
     }
 
-    private string[] autoSaveIntervalLabels = {
+    private string[] _autoSaveIntervalLabels = {
         "Never",
         "Every second",
         "Every 5 seconds",
@@ -161,79 +161,79 @@ public class PreferencesViewModel : ViewModelBase
     };
     private string[] AutoSaveIntervalLabels
     {
-        get => autoSaveIntervalLabels;
-        set => this.RaiseAndSetIfChanged(ref autoSaveIntervalLabels, value);
+        get => _autoSaveIntervalLabels;
+        set => this.RaiseAndSetIfChanged(ref _autoSaveIntervalLabels, value);
     }
 
-    private int selectedAutoSaveIntervalIndex;
+    private int _selectedAutoSaveIntervalIndex;
     private int SelectedAutoSaveIntervalIndex
     {
-        get => selectedAutoSaveIntervalIndex;
+        get => _selectedAutoSaveIntervalIndex;
         set
         {
-            this.RaiseAndSetIfChanged(ref selectedAutoSaveIntervalIndex, value);
+            this.RaiseAndSetIfChanged(ref _selectedAutoSaveIntervalIndex, value);
             ApplyEnabled = true;
         }
     }
 
-    private string[] availableThemes;
+    private string[] _availableThemes;
     private string[] AvailableThemes
     {
-        get => availableThemes;
-        set => this.RaiseAndSetIfChanged(ref availableThemes, value);
+        get => _availableThemes;
+        set => this.RaiseAndSetIfChanged(ref _availableThemes, value);
     }
 
-    private int selectedThemeIndex;
+    private int _selectedThemeIndex;
     private int SelectedThemeIndex
     {
-        get => selectedThemeIndex;
+        get => _selectedThemeIndex;
         set
         {
-            this.RaiseAndSetIfChanged(ref selectedThemeIndex, value);
+            this.RaiseAndSetIfChanged(ref _selectedThemeIndex, value);
             ApplyEnabled = true;
         }
     }
 
-    private string[] availableFonts;
+    private string[] _availableFonts;
     private string[] AvailableFonts
     {
-        get => availableFonts;
-        set => this.RaiseAndSetIfChanged(ref availableFonts, value);
+        get => _availableFonts;
+        set => this.RaiseAndSetIfChanged(ref _availableFonts, value);
     }
 
-    private int selectedFontIndex;
+    private int _selectedFontIndex;
     private int SelectedFontIndex
     {
-        get => selectedFontIndex;
+        get => _selectedFontIndex;
         set
         {
-            this.RaiseAndSetIfChanged(ref selectedFontIndex, value);
+            this.RaiseAndSetIfChanged(ref _selectedFontIndex, value);
             ApplyEnabled = true;
         }
     }
 
-    private string[] availableFontSizes;
+    private string[] _availableFontSizes;
     private string[] AvailableFontSizes
     {
-        get => availableFontSizes;
-        set => this.RaiseAndSetIfChanged(ref availableFontSizes, value);
+        get => _availableFontSizes;
+        set => this.RaiseAndSetIfChanged(ref _availableFontSizes, value);
     }
 
-    private int selectedFontSizeIndex;
+    private int _selectedFontSizeIndex;
     private int SelectedFontSizeIndex
     {
-        get => selectedFontSizeIndex;
+        get => _selectedFontSizeIndex;
         set
         {
-            this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);
+            this.RaiseAndSetIfChanged(ref _selectedFontSizeIndex, value);
             ApplyEnabled = true;
         }
     }
 
-    private bool applyEnabled;
+    private bool _applyEnabled;
     private bool ApplyEnabled
     {
-        get => applyEnabled;
-        set => this.RaiseAndSetIfChanged(ref applyEnabled, value);
+        get => _applyEnabled;
+        set => this.RaiseAndSetIfChanged(ref _applyEnabled, value);
     }
 }
