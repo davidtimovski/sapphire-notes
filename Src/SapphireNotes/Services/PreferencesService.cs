@@ -26,7 +26,7 @@ public class PreferencesService : IPreferencesService
 
     public bool Load()
     {
-        string appDataDirectory = string.Empty;
+        var appDataDirectory = string.Empty;
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
@@ -68,7 +68,7 @@ public class PreferencesService : IPreferencesService
     public void UpdatePreferences(UpdatedPreferencesEventArgs args)
     {
         SavePreferences();
-        Updated.Invoke(this, args);
+        Updated?.Invoke(this, args);
     }
 
     public void SavePreferences()
