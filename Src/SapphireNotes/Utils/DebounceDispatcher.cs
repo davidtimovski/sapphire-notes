@@ -16,8 +16,8 @@ namespace SapphireNotes.Utils;
 /// </summary>
 public class DebounceDispatcher
 {
-    private DispatcherTimer timer;
-    private DateTime timerStarted = DateTime.UtcNow.AddYears(-1);
+    private DispatcherTimer _timer;
+    private DateTime _timerStarted = DateTime.UtcNow.AddYears(-1);
 
     /// <summary>
     /// Debounce an event by resetting the event timeout every time the event is 
@@ -41,23 +41,23 @@ public class DebounceDispatcher
         DispatcherPriority priority = DispatcherPriority.ApplicationIdle)
     {
         // kill pending timer and pending ticks
-        timer?.Stop();
-        timer = null;
+        _timer?.Stop();
+        _timer = null;
 
         // timer is recreated for each event and effectively
         // resets the timeout. Action only fires after timeout has fully
         // elapsed without other events firing in between
-        timer = new DispatcherTimer(TimeSpan.FromMilliseconds(interval), priority, (s, e) =>
+        _timer = new DispatcherTimer(TimeSpan.FromMilliseconds(interval), priority, (s, e) =>
         {
-            if (timer == null)
+            if (_timer == null)
                 return;
 
-            timer?.Stop();
-            timer = null;
+            _timer?.Stop();
+            _timer = null;
             action.Invoke(param);
         });
 
-        timer.Start();
+        _timer.Start();
     }
 
     /// <summary>
@@ -77,27 +77,27 @@ public class DebounceDispatcher
         DispatcherPriority priority = DispatcherPriority.ApplicationIdle)
     {
         // kill pending timer and pending ticks
-        timer?.Stop();
-        timer = null;
+        _timer?.Stop();
+        _timer = null;
 
         var curTime = DateTime.UtcNow;
 
         // if timeout is not up yet - adjust timeout to fire 
         // with potentially new Action parameters           
-        if (curTime.Subtract(timerStarted).TotalMilliseconds < interval)
-            interval -= (int)curTime.Subtract(timerStarted).TotalMilliseconds;
+        if (curTime.Subtract(_timerStarted).TotalMilliseconds < interval)
+            interval -= (int)curTime.Subtract(_timerStarted).TotalMilliseconds;
 
-        timer = new DispatcherTimer(TimeSpan.FromMilliseconds(interval), priority, (s, e) =>
+        _timer = new DispatcherTimer(TimeSpan.FromMilliseconds(interval), priority, (s, e) =>
         {
-            if (timer == null)
+            if (_timer == null)
                 return;
 
-            timer?.Stop();
-            timer = null;
+            _timer?.Stop();
+            _timer = null;
             action.Invoke(param);
         });
 
-        timer.Start();
-        timerStarted = curTime;
+        _timer.Start();
+        _timerStarted = curTime;
     }
 }

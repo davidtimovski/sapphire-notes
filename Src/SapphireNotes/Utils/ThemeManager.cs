@@ -40,10 +40,10 @@ public static class ThemeManager
             new(StyleIncludeBaseUri) { Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Resources.axaml") }
         };
 
-        int backgrounds = ThemeBackgroundCount[theme];
+        var backgrounds = ThemeBackgroundCount[theme];
         if (backgrounds > 0)
         {
-            int backgroundIndex = Random.Next(0, backgrounds);
+            var backgroundIndex = Random.Next(0, backgrounds);
             result.Add(new StyleInclude(StyleIncludeBaseUri)
             {
                 Source = new Uri($"avares://SapphireNotes/Styles/Themes/{theme}/Backgrounds/{backgroundIndex}.axaml")
