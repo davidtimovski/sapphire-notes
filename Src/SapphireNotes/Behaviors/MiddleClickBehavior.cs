@@ -17,7 +17,7 @@ public class MiddleClickBehavior : AvaloniaObject
     {
         CommandProperty.Changed.Subscribe(Observer.Create<AvaloniaPropertyChangedEventArgs>(e => {
             var element = e.Sender as Border;
-            element?.AddHandler(InputElement.PointerReleasedEvent, Handler);
+            element.AddHandler(InputElement.PointerReleasedEvent, Handler);
 
             void Handler(object s, PointerReleasedEventArgs pointerReleasedEvent)
             {

@@ -35,7 +35,7 @@ public class FileSystemRepository : IFileSystemRepository
         var path = Path.Combine(_preferencesService.Preferences.NotesDirectory, name + Extension);
         path = FileUtil.NextAvailableFileName(path);
 
-        using var sw = File.CreateText(path);
+        using StreamWriter sw = File.CreateText(path);
         sw.Write(content);
 
         return Path.GetFileNameWithoutExtension(path);
@@ -74,7 +74,7 @@ public class FileSystemRepository : IFileSystemRepository
 
     public string Archive(string name)
     {
-        var archiveDirectory = GetArchiveDirectory();
+        string archiveDirectory = GetArchiveDirectory();
 
         if (!Directory.Exists(archiveDirectory))
         {
@@ -111,24 +111,24 @@ public class FileSystemRepository : IFileSystemRepository
             return Array.Empty<Note>();
         }
 
-        var textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
+        string[] textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
         var notes = new List<Note>(textFiles.Length);
-        foreach (var filePath in textFiles)
+        foreach (string filePath in textFiles)
         {
-            var name = Path.GetFileNameWithoutExtension(filePath);
-            var contents = File.ReadAllText(filePath);
-            var lastWriteTime = File.GetLastWriteTime(filePath);
+            string name = Path.GetFileNameWithoutExtension(filePath);
+            string contents = File.ReadAllText(filePath);
+            DateTime lastWriteTime = File.GetLastWriteTime(filePath);
 
             notes.Add(new Note(name, contents, lastWriteTime));
         }
 
-        var archiveDirectory = GetArchiveDirectory();
+        string archiveDirectory = GetArchiveDirectory();
         if (Directory.Exists(archiveDirectory))
         {
-            var archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
-            foreach (var filePath in archivedTextFiles)
+            string[] archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
+            foreach (string filePath in archivedTextFiles)
             {
-                var name = Path.GetFileNameWithoutExtension(filePath);
+                string name = Path.GetFileNameWithoutExtension(filePath);
                 notes.Add(new Note(Globals.ArchivePrefix + "/" + name));
             }
         }
@@ -138,23 +138,23 @@ public class FileSystemRepository : IFileSystemRepository
 
     public IEnumerable<Note> GetAllArchived()
     {
-        var archiveDirectory = GetArchiveDirectory();
+        string archiveDirectory = GetArchiveDirectory();
         if (!Directory.Exists(archiveDirectory))
         {
             return Array.Empty<Note>();
         }
 
-        var textFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
+        string[] textFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
         if (textFiles.Length == 0)
         {
             return Array.Empty<Note>();
         }
 
-        var notes = new List<Note>(textFiles.Length);
-        foreach (var filePath in textFiles)
+        List<Note> notes = new List<Note>(textFiles.Length);
+        foreach (string filePath in textFiles)
         {
-            var name = Path.GetFileNameWithoutExtension(filePath);
-            var contents = File.ReadAllText(filePath);
+            string name = Path.GetFileNameWithoutExtension(filePath);
+            string contents = File.ReadAllText(filePath);
 
             notes.Add(new Note(name, contents));
         }
@@ -164,10 +164,10 @@ public class FileSystemRepository : IFileSystemRepository
 
     public void MoveAll(string newDirectory)
     {
-        var textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
+        string[] textFiles = Directory.GetFiles(_preferencesService.Preferences.NotesDirectory, "*" + Extension);
 
         var fromTo = new Dictionary<string, string>();
-        foreach (var filePath in textFiles)
+        foreach (string filePath in textFiles)
         {
             var newPath = Path.Combine(newDirectory, Path.GetFileName(filePath));
             if (!File.Exists(newPath))
@@ -181,14 +181,14 @@ public class FileSystemRepository : IFileSystemRepository
             }
         }
 
-        var archiveDirectory = GetArchiveDirectory();
-        var oldArchiveExists = Directory.Exists(archiveDirectory);
+        string archiveDirectory = GetArchiveDirectory();
+        bool oldArchiveExists = Directory.Exists(archiveDirectory);
         if (oldArchiveExists)
         {
-            var archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
+            string[] archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
             if (archivedTextFiles.Length > 0)
             {
-                var newArchivePath = Path.Combine(newDirectory, Globals.ArchivePrefix);
+                string newArchivePath = Path.Combine(newDirectory, Globals.ArchivePrefix);
                 if (!Directory.Exists(newArchivePath))
                 {
                     Directory.CreateDirectory(newArchivePath);

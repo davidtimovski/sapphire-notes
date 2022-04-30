@@ -77,7 +77,7 @@ public class NotesService : INotesService
         _notesMetadataService.Add(note.Name, note.Metadata);
         _notesMetadataService.Save();
 
-        Created?.Invoke(this, new CreatedNoteEventArgs
+        Created.Invoke(this, new CreatedNoteEventArgs
         {
             CreatedNote = note
         });
@@ -92,7 +92,7 @@ public class NotesService : INotesService
         _notesMetadataService.Add(note.Name, note.Metadata);
         _notesMetadataService.Save();
 
-        Created?.Invoke(this, new CreatedNoteEventArgs
+        Created.Invoke(this, new CreatedNoteEventArgs
         {
             CreatedNote = note
         });
@@ -100,7 +100,7 @@ public class NotesService : INotesService
 
     public void Update(string newName, Note note)
     {
-        var originalName = note.Name;
+        string originalName = note.Name;
         newName = newName.Trim();
 
         if (newName.Length == 0)
@@ -126,7 +126,7 @@ public class NotesService : INotesService
 
         note.Name = newName;
 
-        Updated?.Invoke(this, new UpdatedNoteEventArgs
+        Updated.Invoke(this, new UpdatedNoteEventArgs
         {
             OriginalName = originalName,
             UpdatedNote = note
@@ -139,7 +139,7 @@ public class NotesService : INotesService
 
         var newName = _notesRepository.Archive(note.Name);
 
-        var metadata = _notesMetadataService.Get(note.Name);
+        NoteMetadata metadata = _notesMetadataService.Get(note.Name);
         metadata.Archived = DateTime.Now;
 
         _notesMetadataService.Remove(note.Name);
@@ -147,7 +147,7 @@ public class NotesService : INotesService
 
         _notesMetadataService.Save();
 
-        Archived?.Invoke(this, new ArchivedNoteEventArgs
+        Archived.Invoke(this, new ArchivedNoteEventArgs
         {
             ArchivedNote = note
         });
@@ -157,7 +157,7 @@ public class NotesService : INotesService
     {
         var newName = _notesRepository.Restore(note.Name);
 
-        var metadata = _notesMetadataService.Get(Globals.ArchivePrefix + "/" + note.Name);
+        NoteMetadata metadata = _notesMetadataService.Get(Globals.ArchivePrefix + "/" + note.Name);
         metadata.Archived = null;
 
         _notesMetadataService.Remove(Globals.ArchivePrefix + "/" + note.Name);
@@ -167,7 +167,7 @@ public class NotesService : INotesService
 
         note.Name = newName;
 
-        Restored?.Invoke(this, new RestoredNoteEventArgs
+        Restored.Invoke(this, new RestoredNoteEventArgs
         {
             RestoredNote = note
         });
@@ -187,7 +187,7 @@ public class NotesService : INotesService
         _notesMetadataService.Remove(note.Name);
         _notesMetadataService.Save();
 
-        Deleted?.Invoke(this, new DeletedNoteEventArgs
+        Deleted.Invoke(this, new DeletedNoteEventArgs
         {
             DeletedNote = note
         });
@@ -203,7 +203,7 @@ public class NotesService : INotesService
 
     public void SaveAllWithMetadata(IEnumerable<Note> notes)
     {
-        foreach (var note in notes)
+        foreach (Note note in notes)
         {
             if (note.IsDirty)
             {
@@ -218,11 +218,11 @@ public class NotesService : INotesService
 
     public Note[] Load()
     {
-        var notes = _notesRepository.GetAll();
+        IEnumerable<Note> notes = _notesRepository.GetAll();
         _notesMetadataService.Initialize(notes.Select(x => x.Name));
         notes = notes.Where(x => !x.Name.StartsWith(Globals.ArchivePrefix + "/"));
         
-        foreach (var note in notes)
+        foreach (Note note in notes)
         {
             note.Metadata = _notesMetadataService.Get(note.Name);
         }
@@ -232,9 +232,9 @@ public class NotesService : INotesService
 
     public Note[] LoadArchived()
     {
-        var notes = _notesRepository.GetAllArchived();
+        IEnumerable<Note> notes = _notesRepository.GetAllArchived();
 
-        foreach (var note in notes)
+        foreach (Note note in notes)
         {
             note.Metadata = _notesMetadataService.Get(Globals.ArchivePrefix + "/" + note.Name);
         }

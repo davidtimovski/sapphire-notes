@@ -19,14 +19,14 @@ public class EditNoteViewModel : ViewModelBase
         _notesService = notesService;
         _preferencesService = preferencesService;
 
-        _title = "New note";
-        _saveButtonLabel = "Create";
-        _isNew = true;
-        _name = string.Empty;
+        title = "New note";
+        saveButtonLabel = "Create";
+        isNew = true;
+        name = string.Empty;
 
-        _selectedFontIndex = Array.IndexOf(_availableFonts, _preferencesService.Preferences.NotesFontFamily);
-        _availableFontSizes = Globals.AvailableFontSizes;
-        _selectedFontSizeIndex = Array.IndexOf(_availableFontSizes, _preferencesService.Preferences.NotesFontSize);
+        selectedFontIndex = Array.IndexOf(_availableFonts, _preferencesService.Preferences.NotesFontFamily);
+        availableFontSizes = Globals.AvailableFontSizes;
+        selectedFontSizeIndex = Array.IndexOf(availableFontSizes, _preferencesService.Preferences.NotesFontSize);
     }
 
     public EditNoteViewModel(INotesService notesService, IPreferencesService preferencesService, Note note)
@@ -34,30 +34,30 @@ public class EditNoteViewModel : ViewModelBase
         _notesService = notesService;
         _preferencesService = preferencesService;
 
-        _title = "Edit note";
-        _saveButtonLabel = "Save";
-        _name = note.Name;
+        title = "Edit note";
+        saveButtonLabel = "Save";
+        name = note.Name;
         _editNote = note;
 
-        _selectedFontIndex = Array.IndexOf(_availableFonts, note.Metadata.FontFamily);
-        _availableFontSizes = Globals.AvailableFontSizes;
-        _selectedFontSizeIndex = Array.IndexOf(_availableFontSizes, note.Metadata.FontSize);
+        selectedFontIndex = Array.IndexOf(_availableFonts, note.Metadata.FontFamily);
+        availableFontSizes = Globals.AvailableFontSizes;
+        selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
     }
 
     public bool Create()
     {
-        var fontFamily = _availableFonts[_selectedFontIndex];
-        var fontSize = _availableFontSizes[_selectedFontSizeIndex];
+        string fontFamily = _availableFonts[selectedFontIndex];
+        int fontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
         {
             UpdatePreferences(fontFamily, fontSize);
 
-            _notesService.Create(_name, fontFamily, fontSize);
+            _notesService.Create(name, fontFamily, fontSize);
         }
         catch (ValidationException ex)
         {
-            _alert.Show(ex.Message);
+            alert.Show(ex.Message);
             return false;
         }
 
@@ -66,18 +66,18 @@ public class EditNoteViewModel : ViewModelBase
 
     public bool Update()
     {
-        _editNote.Metadata.FontFamily = _availableFonts[_selectedFontIndex];
-        _editNote.Metadata.FontSize = _availableFontSizes[_selectedFontSizeIndex];
+        _editNote.Metadata.FontFamily = _availableFonts[selectedFontIndex];
+        _editNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
         {
             UpdatePreferences(_editNote.Metadata.FontFamily, _editNote.Metadata.FontSize);
 
-            _notesService.Update(_name, _editNote);
+            _notesService.Update(name, _editNote);
         }
         catch (ValidationException ex)
         {
-            _alert.Show(ex.Message);
+            alert.Show(ex.Message);
             return false;
         }
 
@@ -91,42 +91,42 @@ public class EditNoteViewModel : ViewModelBase
         _preferencesService.SavePreferences();
     }
 
-    private string _title;
+    private string title;
     private string Title
     {
-        get => _title;
-        set => this.RaiseAndSetIfChanged(ref _title, value);
+        get => title;
+        set => this.RaiseAndSetIfChanged(ref title, value);
     }
 
-    private AlertViewModel _alert = new(300);
+    private AlertViewModel alert = new(300);
     private AlertViewModel Alert
     {
-        get => _alert;
-        set => this.RaiseAndSetIfChanged(ref _alert, value);
+        get => alert;
+        set => this.RaiseAndSetIfChanged(ref alert, value);
     }
 
-    private string _saveButtonLabel;
+    private string saveButtonLabel;
     private string SaveButtonLabel
     {
-        get => _saveButtonLabel;
-        set => this.RaiseAndSetIfChanged(ref _saveButtonLabel, value);
+        get => saveButtonLabel;
+        set => this.RaiseAndSetIfChanged(ref saveButtonLabel, value);
     }
 
-    private bool _isNew;
+    private bool isNew;
     public bool IsNew
     {
-        get => _isNew;
-        set => this.RaiseAndSetIfChanged(ref _isNew, value);
+        get => isNew;
+        set => this.RaiseAndSetIfChanged(ref isNew, value);
     }
 
-    private string _name;
+    private string name;
     private string Name
     {
-        get => _name;
+        get => name;
         set
         {
-            this.RaiseAndSetIfChanged(ref _name, value);
-            _alert.Hide();
+            this.RaiseAndSetIfChanged(ref name, value);
+            alert.Hide();
         }
     }
 
@@ -137,24 +137,24 @@ public class EditNoteViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _availableFonts, value);
     }
 
-    private int _selectedFontIndex;
+    private int selectedFontIndex;
     private int SelectedFontIndex
     {
-        get => _selectedFontIndex;
-        set => this.RaiseAndSetIfChanged(ref _selectedFontIndex, value);
+        get => selectedFontIndex;
+        set => this.RaiseAndSetIfChanged(ref selectedFontIndex, value);
     }
 
-    private int[] _availableFontSizes;
+    private int[] availableFontSizes;
     private int[] AvailableFontSizes
     {
-        get => _availableFontSizes;
-        set => this.RaiseAndSetIfChanged(ref _availableFontSizes, value);
+        get => availableFontSizes;
+        set => this.RaiseAndSetIfChanged(ref availableFontSizes, value);
     }
 
-    private int _selectedFontSizeIndex;
+    private int selectedFontSizeIndex;
     private int SelectedFontSizeIndex
     {
-        get => _selectedFontSizeIndex;
-        set => this.RaiseAndSetIfChanged(ref _selectedFontSizeIndex, value);
+        get => selectedFontSizeIndex;
+        set => this.RaiseAndSetIfChanged(ref selectedFontSizeIndex, value);
     }
 }

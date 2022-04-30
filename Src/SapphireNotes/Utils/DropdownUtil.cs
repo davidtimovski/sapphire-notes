@@ -7,7 +7,7 @@ public static class DropdownUtil
         var result = new string[options.Length + 1];
         result[0] = firstOption;
 
-        for (var i = 0; i < options.Length; i++)
+        for (int i = 0; i < options.Length; i++)
         {
             result[i + 1] = options[i].ToString();
         }

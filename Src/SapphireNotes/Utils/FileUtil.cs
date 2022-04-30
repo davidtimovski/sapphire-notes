@@ -18,7 +18,7 @@ public static class FileUtil
 
     private static string GetNextFilename(string pattern)
     {
-        var tmp = string.Format(pattern, 1);
+        string tmp = string.Format(pattern, 1);
         if (tmp == pattern)
             throw new ArgumentException("The pattern must include an index place-holder", nameof(pattern));
 
@@ -35,7 +35,7 @@ public static class FileUtil
 
         while (max != min + 1)
         {
-            var pivot = (max + min) / 2;
+            int pivot = (max + min) / 2;
             if (File.Exists(string.Format(pattern, pivot)))
                 min = pivot;
             else

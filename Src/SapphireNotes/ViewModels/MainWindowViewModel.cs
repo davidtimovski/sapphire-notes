@@ -114,7 +114,7 @@ public class MainWindowViewModel : ViewModelBase
 
             if (e.NewFontSize.HasValue)
             {
-                foreach (var noteVm in Notes)
+                foreach (NoteViewModel noteVm in Notes)
                 {
                     noteVm.FontSize = e.NewFontSize.Value;
                 }
@@ -129,7 +129,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void NoteUpdated(object sender, UpdatedNoteEventArgs e)
     {
-        var noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
+        NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.OriginalName);
         if (noteVm != null)
         {
             noteVm.Name = e.UpdatedNote.Name;
@@ -140,7 +140,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void NoteDeleted(object sender, DeletedNoteEventArgs e)
     {
-        var noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
+        NoteViewModel noteVm = Notes.FirstOrDefault(x => x.Name == e.DeletedNote.Name);
         if (noteVm != null)
         {
             Notes.Remove(noteVm);
@@ -156,7 +156,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void LoadNotes()
     {
-        var notes = _notesService.Load();
+        Note[] notes = _notesService.Load();
         foreach (var note in notes)
         {
             AddNote(note);
@@ -178,7 +178,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void Note_EditClicked(object sender, EventArgs e)
     {
-        NoteEditClicked?.Invoke(sender, e);
+        NoteEditClicked.Invoke(sender, e);
     }
 
     private void Note_ArchiveClicked(object sender, EventArgs e)
@@ -188,7 +188,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void Note_DeleteClicked(object sender, EventArgs e)
     {
-        NoteDeleteClicked?.Invoke(sender, e);
+        NoteDeleteClicked.Invoke(sender, e);
     }
 
     private void Note_MiddleMouseClicked(object sender, EventArgs e)
@@ -206,7 +206,7 @@ public class MainWindowViewModel : ViewModelBase
 
     private void SaveDirtyNotes(object sender, EventArgs e)
     {
-        var dirtyNotesVMs = Notes.Where(x => x.IsDirty).ToList();
+        List<NoteViewModel> dirtyNotesVMs = Notes.Where(x => x.IsDirty).ToList();
 
         _notesService.SaveAll(dirtyNotesVMs.Select(x => x.ToNote()));
 
@@ -215,24 +215,24 @@ public class MainWindowViewModel : ViewModelBase
 
     private ObservableCollection<NoteViewModel> Notes { get; } = new();
 
-    private bool _showIntroMessage;
+    private bool showIntroMessage;
     public bool ShowIntroMessage
     {
-        get => _showIntroMessage;
-        set => this.RaiseAndSetIfChanged(ref _showIntroMessage, value);
+        get => showIntroMessage;
+        set => this.RaiseAndSetIfChanged(ref showIntroMessage, value);
     }
     
-    private NoteViewModel _selected;
+    private NoteViewModel selected;
     public NoteViewModel Selected
     {
-        get => _selected;
-        set => this.RaiseAndSetIfChanged(ref _selected, value);
+        get => selected;
+        set => this.RaiseAndSetIfChanged(ref selected, value);
     }
 
-    private int _selectedIndex;
+    private int selectedIndex;
     public int SelectedIndex
     {
-        get => _selectedIndex;
-        set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+        get => selectedIndex;
+        set => this.RaiseAndSetIfChanged(ref selectedIndex, value);
     }
 }

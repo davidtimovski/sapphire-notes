@@ -30,7 +30,7 @@ public class NotesMetadataService : INotesMetadataService
 
     public NotesMetadataService()
     {
-        var appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
+        string appDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Globals.ApplicationName);
         if (!Directory.Exists(appDataDirectory))
         {
             Directory.CreateDirectory(appDataDirectory);
@@ -126,7 +126,7 @@ public class NotesMetadataService : INotesMetadataService
                     caretPosition: reader.ReadInt32()
                 );
 
-                var archivedTicks = reader.ReadInt64();
+                long archivedTicks = reader.ReadInt64();
                 if (archivedTicks != 0)
                 {
                     metadata.Archived = new DateTime(archivedTicks);
@@ -141,7 +141,7 @@ public class NotesMetadataService : INotesMetadataService
         {
             _notesMetadata = new Dictionary<string, NoteMetadata>(notesOnFileSystem.Count());
 
-            foreach (var noteName in notesOnFileSystem)
+            foreach (string noteName in notesOnFileSystem)
             {
                 _notesMetadata.Add(noteName,
                     noteName.Contains(Globals.ArchivePrefix + "/")
@@ -171,14 +171,14 @@ public class NotesMetadataService : INotesMetadataService
 
     private void SynchronizeWithFileSystem(IEnumerable<string> notesOnFileSystem)
     {
-        var deletedNotes = _notesMetadata.Keys.Where(k => !notesOnFileSystem.Contains(k));
-        foreach (var noteName in deletedNotes)
+        IEnumerable<string> deletedNotes = _notesMetadata.Keys.Where(k => !notesOnFileSystem.Contains(k));
+        foreach (string noteName in deletedNotes)
         {
             _notesMetadata.Remove(noteName);
         }
 
-        var addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.ContainsKey(k));
-        foreach (var noteName in addedNotes)
+        IEnumerable<string> addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.ContainsKey(k));
+        foreach (string noteName in addedNotes)
         {
             _notesMetadata.Add(noteName,
                 noteName.Contains(Globals.ArchivePrefix + "/") 

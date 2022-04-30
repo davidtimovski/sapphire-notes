@@ -7,9 +7,9 @@ public static class DateTimeUtil
 {
     public static string GetRelativeDate(DateTime dateTime)
     {
-        var timeSpan = DateTime.Now.Subtract(dateTime);
-        var dayDiff = (int)timeSpan.TotalDays;
-        var secDiff = (int)timeSpan.TotalSeconds;
+        TimeSpan timeSpan = DateTime.Now.Subtract(dateTime);
+        int dayDiff = (int)timeSpan.TotalDays;
+        int secDiff = (int)timeSpan.TotalSeconds;
         
         switch (dayDiff)
         {
