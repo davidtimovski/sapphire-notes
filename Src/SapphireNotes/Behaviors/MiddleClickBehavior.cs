@@ -21,13 +21,12 @@ public class MiddleClickBehavior : AvaloniaObject
 
             void Handler(object s, PointerReleasedEventArgs pointerReleasedEvent)
             {
-                if (pointerReleasedEvent.GetCurrentPoint(element).Properties.PointerUpdateKind == PointerUpdateKind.MiddleButtonReleased)
+                if (pointerReleasedEvent.GetCurrentPoint(element).Properties.PointerUpdateKind !=
+                    PointerUpdateKind.MiddleButtonReleased) return;
+                var commandValue = e.NewValue as ICommand;
+                if (commandValue?.CanExecute(null) == true)
                 {
-                    var commandValue = e.NewValue as ICommand;
-                    if (commandValue?.CanExecute(null) == true)
-                    {
-                        commandValue.Execute(null);
-                    }
+                    commandValue.Execute(null);
                 }
             }
         }));

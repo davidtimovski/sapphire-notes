@@ -15,7 +15,7 @@ public class ArchivedNoteViewModel : ViewModelBase
         content = note.Content;
         fontFamily = FontFamilyUtil.FontFamilyFromFont(note.Metadata.FontFamily);
         fontSize = note.Metadata.FontSize;
-        archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
+        if (note.Metadata.Archived != null) archivedDate = DateTimeUtil.GetRelativeDate(note.Metadata.Archived.Value);
     }
 
     public Note Note { get; }

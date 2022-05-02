@@ -150,7 +150,7 @@ public class FileSystemRepository : IFileSystemRepository
             return Array.Empty<Note>();
         }
 
-        var notes = new List<Note>(textFiles.Length);
+        List<Note> notes = new List<Note>(textFiles.Length);
         foreach (string filePath in textFiles)
         {
             string name = Path.GetFileNameWithoutExtension(filePath);
@@ -176,7 +176,8 @@ public class FileSystemRepository : IFileSystemRepository
             }
             else
             {
-                throw new MoveNotesException("Couldn't move the notes. Make sure there aren't any existing notes with identical names in the chosen directory.");
+                throw new MoveNotesException("Couldn't move the notes. " +
+                                             "Make sure there aren't any existing notes with identical names in the chosen directory.");
             }
         }
 
@@ -187,13 +188,13 @@ public class FileSystemRepository : IFileSystemRepository
             string[] archivedTextFiles = Directory.GetFiles(archiveDirectory, "*" + Extension);
             if (archivedTextFiles.Length > 0)
             {
-                var newArchivePath = Path.Combine(newDirectory, Globals.ArchivePrefix);
+                string newArchivePath = Path.Combine(newDirectory, Globals.ArchivePrefix);
                 if (!Directory.Exists(newArchivePath))
                 {
                     Directory.CreateDirectory(newArchivePath);
                 }
 
-                foreach (string filePath in archivedTextFiles)
+                foreach (var filePath in archivedTextFiles)
                 {
                     var newPath = Path.Combine(newArchivePath, Path.GetFileName(filePath));
                     if (!File.Exists(newPath))
@@ -202,7 +203,9 @@ public class FileSystemRepository : IFileSystemRepository
                     }
                     else
                     {
-                        throw new MoveNotesException($"Couldn't move the archived notes. Make sure there aren't any existing notes with identical names in the chosen directory's '{Globals.ArchivePrefix}' folder.");
+                        throw new MoveNotesException("Couldn't move the archived notes. " +
+                                                     "Make sure there aren't any existing notes with identical names in the chosen directory's " +
+                                                     $"'{Globals.ArchivePrefix}' folder.");
                     }
                 }
             }

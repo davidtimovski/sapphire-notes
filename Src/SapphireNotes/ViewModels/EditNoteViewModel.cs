@@ -24,7 +24,7 @@ public class EditNoteViewModel : ViewModelBase
         isNew = true;
         name = string.Empty;
 
-        selectedFontIndex = Array.IndexOf(availableFonts, _preferencesService.Preferences.NotesFontFamily);
+        selectedFontIndex = Array.IndexOf(_availableFonts, _preferencesService.Preferences.NotesFontFamily);
         availableFontSizes = Globals.AvailableFontSizes;
         selectedFontSizeIndex = Array.IndexOf(availableFontSizes, _preferencesService.Preferences.NotesFontSize);
     }
@@ -39,14 +39,14 @@ public class EditNoteViewModel : ViewModelBase
         name = note.Name;
         _editNote = note;
 
-        selectedFontIndex = Array.IndexOf(availableFonts, note.Metadata.FontFamily);
+        selectedFontIndex = Array.IndexOf(_availableFonts, note.Metadata.FontFamily);
         availableFontSizes = Globals.AvailableFontSizes;
         selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
     }
 
     public bool Create()
     {
-        string fontFamily = availableFonts[selectedFontIndex];
+        string fontFamily = _availableFonts[selectedFontIndex];
         int fontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
@@ -66,7 +66,7 @@ public class EditNoteViewModel : ViewModelBase
 
     public bool Update()
     {
-        _editNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
+        _editNote.Metadata.FontFamily = _availableFonts[selectedFontIndex];
         _editNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
@@ -122,10 +122,7 @@ public class EditNoteViewModel : ViewModelBase
     private string name;
     private string Name
     {
-        get
-        {
-            return name;
-        }
+        get => name;
         set
         {
             this.RaiseAndSetIfChanged(ref name, value);
@@ -133,11 +130,11 @@ public class EditNoteViewModel : ViewModelBase
         }
     }
 
-    private string[] availableFonts = Globals.AvailableFonts;
+    private string[] _availableFonts = Globals.AvailableFonts;
     private string[] AvailableFonts
     {
-        get => availableFonts;
-        set => this.RaiseAndSetIfChanged(ref availableFonts, value);
+        get => _availableFonts;
+        set => this.RaiseAndSetIfChanged(ref _availableFonts, value);
     }
 
     private int selectedFontIndex;

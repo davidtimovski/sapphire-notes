@@ -8,7 +8,9 @@ public class QuickNoteViewModel : ViewModelBase
 {
     private readonly INotesService _notesService;
     private readonly IPreferencesService _preferencesService;
-
+    private readonly FontFamily _fontFamily;
+    private readonly int _fontSize;
+    
     public QuickNoteViewModel() {}
     public QuickNoteViewModel(INotesService notesService, IPreferencesService preferencesService)
     {
@@ -26,17 +28,15 @@ public class QuickNoteViewModel : ViewModelBase
 
         _notesService.CreateQuick(content, noteFontFamily, noteFontSize);
     }
-
+    
     private string content = string.Empty;
     private string Content
     {
         get => content;
         set => this.RaiseAndSetIfChanged(ref content, value);
     }
-
-    private readonly FontFamily _fontFamily;
+    
     public FontFamily FontFamily => _fontFamily;
-
-    private readonly int _fontSize;
+    
     public int FontSize => _fontSize;
 }

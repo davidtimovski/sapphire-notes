@@ -211,10 +211,7 @@ public sealed class ArchivedNotesViewModel : ViewModelBase, IDisposable
     private ArchivedNoteViewModel selected;
     private ArchivedNoteViewModel Selected
     {
-        get
-        {
-            return selected;
-        }
+        get => selected;
         set
         {
             this.RaiseAndSetIfChanged(ref selected, value);

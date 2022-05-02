@@ -9,10 +9,11 @@ public static class FileUtil
 
     public static string NextAvailableFileName(string path)
     {
-        if (!File.Exists(path))
-            return path;
-
-        return GetNextFilename(path.Insert(path.LastIndexOf(Path.GetExtension(path), StringComparison.Ordinal), NumberPattern));
+        return !File.Exists(path) 
+            ? path 
+            : GetNextFilename(path
+                .Insert(path.LastIndexOf(Path.GetExtension(path), 
+                StringComparison.Ordinal), NumberPattern));
     }
 
     private static string GetNextFilename(string pattern)

@@ -143,14 +143,10 @@ public class NotesMetadataService : INotesMetadataService
 
             foreach (string noteName in notesOnFileSystem)
             {
-                if (noteName.Contains(Globals.ArchivePrefix + "/"))
-                {
-                    _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
-                }
-                else
-                {
-                    _notesMetadata.Add(noteName, new NoteMetadata());
-                }
+                _notesMetadata.Add(noteName,
+                    noteName.Contains(Globals.ArchivePrefix + "/")
+                        ? new NoteMetadata(DateTime.Now)
+                        : new NoteMetadata());
             }
 
             Save();
@@ -184,14 +180,10 @@ public class NotesMetadataService : INotesMetadataService
         IEnumerable<string> addedNotes = notesOnFileSystem.Where(k => !_notesMetadata.ContainsKey(k));
         foreach (string noteName in addedNotes)
         {
-            if (noteName.Contains(Globals.ArchivePrefix + "/"))
-            {
-                _notesMetadata.Add(noteName, new NoteMetadata(DateTime.Now));
-            }
-            else
-            {
-                _notesMetadata.Add(noteName, new NoteMetadata());
-            }
+            _notesMetadata.Add(noteName,
+                noteName.Contains(Globals.ArchivePrefix + "/") 
+                    ? new NoteMetadata(DateTime.Now) 
+                    : new NoteMetadata());
         }
     }
 }

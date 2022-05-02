@@ -147,7 +147,7 @@ public class NotesService : INotesService
 
         _notesMetadataService.Save();
 
-        Archived?.Invoke(this, new ArchivedNoteEventArgs
+        Archived.Invoke(this, new ArchivedNoteEventArgs
         {
             ArchivedNote = note
         });
@@ -219,10 +219,9 @@ public class NotesService : INotesService
     public Note[] Load()
     {
         IEnumerable<Note> notes = _notesRepository.GetAll();
-
         _notesMetadataService.Initialize(notes.Select(x => x.Name));
-
         notes = notes.Where(x => !x.Name.StartsWith(Globals.ArchivePrefix + "/"));
+        
         foreach (Note note in notes)
         {
             note.Metadata = _notesMetadataService.Get(note.Name);
@@ -252,33 +251,23 @@ public class NotesService : INotesService
     public string GetFontThatAllNotesUse()
     {
         var fonts = _notesMetadataService.GetDistinctFonts();
-        if (fonts.Length == 0)
+        return fonts.Length switch
         {
-            return Globals.DefaultNotesFontFamily;
-        }
-
-        if (fonts.Length == 1)
-        {
-            return fonts[0];
-        }
-
-        return null;
+            0 => Globals.DefaultNotesFontFamily,
+            1 => fonts[0],
+            _ => null
+        };
     }
 
     public int? GetFontSizeThatAllNotesUse()
     {
         var fontSizes = _notesMetadataService.GetDistinctFontSizes();
-        if (fontSizes.Length == 0)
+        return fontSizes.Length switch
         {
-            return Globals.DefaultNotesFontSize;
-        }
-
-        if (fontSizes.Length == 1)
-        {
-            return fontSizes[0];
-        }
-
-        return null;
+            0 => Globals.DefaultNotesFontSize,
+            1 => fontSizes[0],
+            _ => null
+        };
     }
 
     public void SetFontForAll(string font)
