@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace SapphireNotes.Exceptions
+namespace SapphireNotes.Exceptions;
+
+public class MoveNotesException : Exception
 {
-    public class MoveNotesException : Exception
-    {
-        public MoveNotesException(string message) : base(message) { }
-    }
+    public MoveNotesException(string message) : base(message) { }
 }

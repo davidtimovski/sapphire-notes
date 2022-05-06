@@ -4,48 +4,50 @@ using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
 
-namespace SapphireNotes.Views
+namespace SapphireNotes.Views;
+
+public class PreferencesWindow : Window
 {
-    public class PreferencesWindow : Window
+    public PreferencesWindow()
     {
-        public PreferencesWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            var changeNotesDirectoryButton = this.FindControl<Button>("changeNotesDirectoryButton");
-            changeNotesDirectoryButton.Command = ReactiveCommand.Create(ChangeNotesDirectoryButtonClicked);
+        var changeNotesDirectoryButton = this.FindControl<Button>("changeNotesDirectoryButton");
+        changeNotesDirectoryButton.Command = ReactiveCommand.Create(ChangeNotesDirectoryButtonClicked);
 
-            var applyButton = this.FindControl<Button>("applyButton");
-            applyButton.Command = ReactiveCommand.Create(ApplyButtonClicked);
+        var applyButton = this.FindControl<Button>("applyButton");
+        applyButton.Command = ReactiveCommand.Create(ApplyButtonClicked);
 
-            var closeButton = this.FindControl<Button>("closeButton");
-            closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
-        }
+        var closeButton = this.FindControl<Button>("closeButton");
+        closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
+    }
 
-        private async Task ChangeNotesDirectoryButtonClicked()
-        {
-            var directory = await new OpenFolderDialog().ShowAsync(this);
+    private async Task ChangeNotesDirectoryButtonClicked()
+    {
+        var directory = await new OpenFolderDialog().ShowAsync(this);
 
-            var vm = (PreferencesViewModel)DataContext;
-            vm.SetNotesDirectory(directory);
-        }
-
-        private void ApplyButtonClicked()
+        if (!string.IsNullOrEmpty(directory))
         {
             var vm = (PreferencesViewModel)DataContext;
-            vm.Save();
-
-            Close();
+            vm.NotesDirectory = directory;
         }
+    }
 
-        private void CloseButtonClicked()
-        {
-            Close();
-        }
+    private void ApplyButtonClicked()
+    {
+        var vm = (PreferencesViewModel)DataContext;
+        vm.Save();
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+        Close();
+    }
+
+    private void CloseButtonClicked()
+    {
+        Close();
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

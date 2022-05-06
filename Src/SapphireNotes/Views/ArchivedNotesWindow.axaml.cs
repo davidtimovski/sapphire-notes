@@ -5,48 +5,47 @@ using ReactiveUI;
 using SapphireNotes.Utils;
 using SapphireNotes.ViewModels;
 
-namespace SapphireNotes.Views
+namespace SapphireNotes.Views;
+
+public class ArchivedNotesWindow : Window
 {
-    public class ArchivedNotesWindow : Window
+    private readonly DebounceDispatcher _debounceDispatcher = new();
+
+    public ArchivedNotesWindow()
     {
-        private readonly DebounceDispatcher _debounceTimer = new();
+        InitializeComponent();
 
-        public ArchivedNotesWindow()
-        {
-            InitializeComponent();
+        var searchTextBox = this.FindControl<TextBox>("searchTextBox");
+        searchTextBox.KeyUp += SearchTextBox_KeyUp;
 
-            var searchTextBox = this.FindControl<TextBox>("searchTextBox");
-            searchTextBox.KeyUp += SearchTextBox_KeyUp;
+        var closeButton = this.FindControl<Button>("closeButton");
+        closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
 
-            var closeButton = this.FindControl<Button>("closeButton");
-            closeButton.Command = ReactiveCommand.Create(CloseButtonClicked);
+        Closing += ArchivedNotesWindow_Closing;
+    }
 
-            Closing += ArchivedNotesWindow_Closing;
-        }
-
-        private void SearchTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            _debounceTimer.Debounce(100, _ =>
-            {
-                var vm = (ArchivedNotesViewModel)DataContext;
-                vm.SearchTextChanged();
-            });
-        }
-
-        private void ArchivedNotesWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    private void SearchTextBox_KeyUp(object sender, KeyEventArgs e)
+    {
+        _debounceDispatcher.Debounce(100, _ =>
         {
             var vm = (ArchivedNotesViewModel)DataContext;
-            vm.Dispose();
-        }
+            vm.SearchTextChanged();
+        });
+    }
 
-        private void CloseButtonClicked()
-        {
-            Close();
-        }
+    private void ArchivedNotesWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        var vm = (ArchivedNotesViewModel)DataContext;
+        vm.Dispose();
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    private void CloseButtonClicked()
+    {
+        Close();
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

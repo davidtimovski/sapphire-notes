@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace SapphireNotes.Exceptions
+namespace SapphireNotes.Exceptions;
+
+public class ValidationException : Exception
 {
-    public class ValidationException : Exception
-    {
-        public ValidationException(string message) : base(message) { }
-    }
+    public ValidationException(string message) : base(message) { }
 }

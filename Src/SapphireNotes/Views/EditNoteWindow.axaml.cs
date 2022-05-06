@@ -3,49 +3,48 @@ using Avalonia.Markup.Xaml;
 using ReactiveUI;
 using SapphireNotes.ViewModels;
 
-namespace SapphireNotes.Views
+namespace SapphireNotes.Views;
+
+public class EditNoteWindow : Window
 {
-    public class EditNoteWindow : Window
+    public EditNoteWindow()
     {
-        public EditNoteWindow()
+        InitializeComponent();
+
+        var saveButton = this.FindControl<Button>("saveButton");
+        saveButton.Command = ReactiveCommand.Create(SaveButtonClicked);
+
+        var cancelButton = this.FindControl<Button>("cancelButton");
+        cancelButton.Command = ReactiveCommand.Create(CancelButtonClicked);
+    }
+
+    private void SaveButtonClicked()
+    {
+        var vm = (EditNoteViewModel)DataContext;
+
+        bool success;
+        if (vm.IsNew)
         {
-            InitializeComponent();
-
-            var saveButton = this.FindControl<Button>("saveButton");
-            saveButton.Command = ReactiveCommand.Create(SaveButtonClicked);
-
-            var cancelButton = this.FindControl<Button>("cancelButton");
-            cancelButton.Command = ReactiveCommand.Create(CancelButtonClicked);
+            success = vm.Create();
+        }
+        else
+        {
+            success = vm.Update();
         }
 
-        private void SaveButtonClicked()
-        {
-            var vm = (EditNoteViewModel)DataContext;
-
-            bool success;
-            if (vm.IsNew)
-            {
-                success = vm.Create();
-            }
-            else
-            {
-                success = vm.Update();
-            }
-
-            if (success)
-            {
-                Close();
-            }
-        }
-
-        private void CancelButtonClicked()
+        if (success)
         {
             Close();
         }
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    private void CancelButtonClicked()
+    {
+        Close();
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }
