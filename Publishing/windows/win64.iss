@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Sapphire Notes"
-#define MyAppVersion "0.8.0"
+#define MyAppVersion "0.8.1"
 #define MyAppPublisher "David Timovski"
 #define MyAppURL "https://www.davidtimovski.com/sapphire-notes"
 #define MyAppExeName "SapphireNotes.exe"
