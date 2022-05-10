@@ -24,7 +24,7 @@ public class EditNoteViewModel : ViewModelBase
         isNew = true;
         name = string.Empty;
 
-        selectedFontIndex = Array.IndexOf(_availableFonts, _preferencesService.Preferences.NotesFontFamily);
+        selectedFontIndex = Array.IndexOf(availableFonts, _preferencesService.Preferences.NotesFontFamily);
         availableFontSizes = Globals.AvailableFontSizes;
         selectedFontSizeIndex = Array.IndexOf(availableFontSizes, _preferencesService.Preferences.NotesFontSize);
     }
@@ -39,14 +39,14 @@ public class EditNoteViewModel : ViewModelBase
         name = note.Name;
         _editNote = note;
 
-        selectedFontIndex = Array.IndexOf(_availableFonts, note.Metadata.FontFamily);
+        selectedFontIndex = Array.IndexOf(availableFonts, note.Metadata.FontFamily);
         availableFontSizes = Globals.AvailableFontSizes;
         selectedFontSizeIndex = Array.IndexOf(availableFontSizes, note.Metadata.FontSize);
     }
 
     public bool Create()
     {
-        string fontFamily = _availableFonts[selectedFontIndex];
+        string fontFamily = availableFonts[selectedFontIndex];
         int fontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
@@ -66,7 +66,7 @@ public class EditNoteViewModel : ViewModelBase
 
     public bool Update()
     {
-        _editNote.Metadata.FontFamily = _availableFonts[selectedFontIndex];
+        _editNote.Metadata.FontFamily = availableFonts[selectedFontIndex];
         _editNote.Metadata.FontSize = availableFontSizes[selectedFontSizeIndex];
 
         try
@@ -130,11 +130,11 @@ public class EditNoteViewModel : ViewModelBase
         }
     }
 
-    private string[] _availableFonts = Globals.AvailableFonts;
+    private string[] availableFonts = Globals.AvailableFonts;
     private string[] AvailableFonts
     {
-        get => _availableFonts;
-        set => this.RaiseAndSetIfChanged(ref _availableFonts, value);
+        get => availableFonts;
+        set => this.RaiseAndSetIfChanged(ref availableFonts, value);
     }
 
     private int selectedFontIndex;

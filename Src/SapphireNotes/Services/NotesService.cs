@@ -147,7 +147,7 @@ public class NotesService : INotesService
 
         _notesMetadataService.Save();
 
-        Archived.Invoke(this, new ArchivedNoteEventArgs
+        Archived?.Invoke(this, new ArchivedNoteEventArgs
         {
             ArchivedNote = note
         });
